@@ -1,22 +1,18 @@
-/*
-* OpenGLSamples (openglsamples.sf.net) Examples
-* VC++ users should create a Win32 Console project and link
-* the program with glut32.lib, glu32.lib, opengl32.lib
-*
-* GLUT can be downloaded from http://www.xmission.com/~nate/glut.html
-* OpenGL is by default installed on your system.
-* For an installation of glut on windows for MS Visual Studio 2010 see: http://nafsadh.wordpress.com/2010/08/20/glut-in-ms-visual-studio-2010-msvs10/
-*
-*/
+// CS 164 Golf Game Engine
+// Leif Myer
+// Jonah Nobleza
 
 #include <stdio.h>
 #include <windows.h>	   // Standard header for MS Windows applications
 #include <GL/gl.h>		   // Open Graphics Library (OpenGL) header
 #include <GL/glut.h>	   // The GL Utility Toolkit (GLUT) Header
 
+// TODO: List of Levels
+// TODO: Curent level
+// TODO: Camera
+
+
 #define KEY_ESCAPE 27
-
-
 
 typedef struct {
 	int width;
@@ -30,17 +26,20 @@ typedef struct {
 
 glutWindow win;
 
-float g_rotation = 0;
-float g_rotation_speed = 0.2f;
-
 void display()
 {
 	// Clear Screen and Depth Buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	// Define a viewing transformation
+	// Update Camera Position
 	gluLookAt(4, 2, 0, 0, 0, 0, 0, 1, 0);
+
+	// TODO:
+	//camera.update
+	//graphics.update
+	//io.update
+	//physics.update
 
 
 	// Push and pop the current matrix stack. 
@@ -49,15 +48,12 @@ void display()
 	glPushMatrix();
 	glColor3f(1, 0, 0);
 	glTranslatef(0, 0, 0);
-	glRotatef(g_rotation, 0, 1, 0);
 	glRotatef(90, 0, 1, 0);
 
 	// Draw the teapot
 	glutSolidTeapot(1);
 	glPopMatrix();
 
-
-	g_rotation += g_rotation_speed;
 	glutSwapBuffers();
 }
 
@@ -107,6 +103,9 @@ void initialize()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
+
+	// test
+
 }
 
 
@@ -128,7 +127,7 @@ int main(int argc, char **argv)
 	// set window values
 	win.width = 640;
 	win.height = 480;
-	win.title = "OpenGL/GLUT Example. Visit http://openglsamples.sf.net ";
+	win.title = "Golf Game";
 	win.field_of_view_angle = 45;
 	win.z_near = 1.0f;
 	win.z_far = 500.0f;
