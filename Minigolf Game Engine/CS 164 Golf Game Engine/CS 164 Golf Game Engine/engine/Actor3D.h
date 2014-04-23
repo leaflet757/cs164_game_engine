@@ -12,6 +12,8 @@ protected:
 	glm::vec3 position;
 	glm::vec3 rotation;
 
+	//virtual void draw();
+
 public:
 	Actor3D();
 	Actor3D(const Actor3D& copy);
@@ -26,7 +28,7 @@ public:
 	void setPosition(float x, float y, float z);
 	void setRotation(float x, float y, float z);
 
-	virtual void draw(){}
+	void drawActor() {  }
 
 	Actor3D& operator=(const Actor3D& other);
 };
