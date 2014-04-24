@@ -82,22 +82,25 @@ void Graphics::clear()
 
 void Graphics::update(float delta)
 {
-	// Teapot Drawing
-	//glPushMatrix();
-	//glColor3f(1, 0, 0);
-	//glTranslatef(0, 0, 0);
-	//glRotatef(90, 0, 1, 0);
-
-	//// Draw the teapot
-	//glutSolidTeapot(1);
-	//glPopMatrix();
-	////!!!!!!!!!!!!!!!!!!!!!!
-
 	for (auto actor : drawables)
 	{
-		//actor.drawActor();
+		if (actor.isDrawable())
+		{
+			std::vector<glm::vec3> verts = actor.getVerticies();
+			// draw actor with verts in triangle strip for now
+
+			glBegin(GL_POLYGON);
+			for (glm::vec3 v : verts)
+			{
+				// does not handle 3d objects yet
+				glColor3f(1.0, 0.0, 1.0);
+				glVertex3f(v.x, v.y, v.z);
+			}
+			glEnd();
+		}
 	}
 
+	glFlush(); // may not be needed
 	glutSwapBuffers();
 }
 

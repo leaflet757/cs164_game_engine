@@ -31,12 +31,12 @@ public:
 
 	glutWindow win;
 
-	void init();
-	void createWindow();
-	void clear();
-	void update(float delta);
+	void											init();
+	void											createWindow();
+	void											clear();
+	void											update(float delta);
 
-	void add(Actor3D& actor);
-	void remove(Actor3D& actor);
+	void											add(Actor3D& actor);
+	void											remove(Actor3D& actor);
 };
 

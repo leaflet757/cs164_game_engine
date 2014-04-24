@@ -78,17 +78,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="engine\Actor3D.cpp" />
     <ClCompile Include="engine\Graphics.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Teapot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="engine\Actor3D.h" />
     <ClInclude Include="engine\Graphics.h" />
-    <ClInclude Include="Teapot.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="levels\hole.00.db" />
+    <None Include="levels\hole.01.db" />
+    <None Include="levels\hole.02.db" />
     <None Include="minimal.frag" />
     <None Include="minimal.vert" />
   </ItemGroup>

@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Actors">
       <UniqueIdentifier>{c8dd41fb-3d6e-44a8-89d3-9ddb5532e731}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\levels">
+      <UniqueIdentifier>{ea968e85-12d7-4cb1-875a-6fce7488b4fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -39,7 +42,7 @@
     <ClCompile Include="engine\Graphics.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>
-    <ClCompile Include="Teapot.cpp">
+    <ClCompile Include="Cube.cpp">
       <Filter>Source Files\Actors</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,7 +53,7 @@
     <ClInclude Include="engine\Graphics.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>
-    <ClInclude Include="Teapot.h">
+    <ClInclude Include="Cube.h">
       <Filter>Header Files\Actors</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,6 +63,15 @@
     </None>
     <None Include="minimal.vert">
       <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="levels\hole.00.db">
+      <Filter>Resource Files\levels</Filter>
+    </None>
+    <None Include="levels\hole.01.db">
+      <Filter>Resource Files\levels</Filter>
+    </None>
+    <None Include="levels\hole.02.db">
+      <Filter>Resource Files\levels</Filter>
     </None>
   </ItemGroup>
 </Project>

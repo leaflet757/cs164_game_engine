@@ -9,7 +9,7 @@
 
 #include "engine\Graphics.h"
 
-#include "Teapot.h"
+#include "Cube.h"
 
 Graphics* graphics;
 
@@ -46,7 +46,7 @@ void initialize()
 	// TODO: load files
 
 	// TODO: Initialize Actors
-	Teapot t;
+	Cube t;
 	graphics->add(t);
 	// TODO: initialize Keyboard
 
