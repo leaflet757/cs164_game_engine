@@ -78,35 +78,52 @@ void Graphics::clear()
 	// Clear Screen and Depth Buffer
 	glClearColor(0, 0.6, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_PROJECTION);
+	//glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 }
 
 void Graphics::update(float delta)
 {
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	//for (auto const &actor : drawables)
-	//{
-	//	if (actor.isDrawable())
-	//	{
-	//		std::vector<glm::vec3> verts = actor.getVertices();
-	//		// draw actor with verts in triangle strip for now
+	for (auto const &actor : drawables)
+	{
+		if (actor.isDrawable())
+		{
+			if (actor.hasCustomDraw())
+			{
+				actor.draw();
+			}
+			else
+			{
+				std::vector<glm::vec3> verts = actor.getVertices();
+				std::vector<glm::vec3> color = actor.getColor();
+				glm::vec3 pos = actor.getPosition();
+				glm::vec3 rotation = actor.getRotation();
+				glm::vec3 scale = actor.getScale();
 
-	//		glBegin(GL_POLYGON);
-	//		for (glm::vec3 v : verts)
-	//		{
-	//			// does not handle 3d objects yet
-	//			glColor3f(1.0, 0.0, 1.0);
-	//			glVertex3f(v.x, v.y, v.z);
-	//		}
-	//		glEnd();
-	//	}
-	//}
+				glPushMatrix();
+				glTranslated(pos.x, pos.y, pos.z);
+				glRotated(rotation.x, 1.0, 0.0, 0.0);
+				glRotated(rotation.y, 0.0, 1.0, 0.0);
+				glRotated(rotation.z, 0.0, 0.0, 1.0);
+				//glScaled(scale.x, scale.y, scale.z);
 
+				glBegin(GL_QUADS);
+				int i = 0;
+				for (const glm::vec3 &v : verts)
+				{
+					const glm::vec3 &c = color[i++];
+					//glColor3ub(0.0, 255, 0.0);
+					//glColor3f(c.r, c.g, c.b);
+					glVertex3f(v.x, v.y, v.z);
+				}
+				glEnd();
+				glPopMatrix();
+			}
+		}
+	}
 
+	//glutSolidCube(1);
 
-	//glFlush(); // may not be needed
 	glutSwapBuffers();
 }
 

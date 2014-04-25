@@ -4,11 +4,12 @@
 
 #include <stdio.h>
 #include <windows.h>	   // Standard header for MS Windows applications
-#include <GL/gl.h>		   // Open Graphics Library (OpenGL) header
-#include <GL/glut.h>	   // The GL Utility Toolkit (GLUT) Header
+#include <GL\GL.h>		   // Open Graphics Library (OpenGL) header
+#include <GL\glut.h>       // The GL Utility Toolkit (GLUT) Header
 #include "engine\Graphics.h"
 
 #include "Cube.h"
+#include "Ball.h"
 
 Graphics* graphics;
 
@@ -47,6 +48,8 @@ void initialize()
 	// TODO: Initialize Actors
 	Cube t;
 	graphics->add(t);
+	Ball b;
+	graphics->add(b);
 	// TODO: initialize Keyboard
 
 }
