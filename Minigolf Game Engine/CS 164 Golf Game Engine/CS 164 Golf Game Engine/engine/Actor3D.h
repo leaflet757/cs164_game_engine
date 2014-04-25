@@ -41,9 +41,13 @@ public:
 	// Set Functions
 	void											setPosition(float x, float y, float z);
 	void											setRotation(float x, float y, float z);
+	// setcolor, setscale
 
 	// Overridable Draw
 	virtual void									draw() const { } // ERROR HERE
+
+	// Overridable Update
+	virtual void									update(float delta) const { }
 
 	Actor3D& operator=(const Actor3D& other);
 };
