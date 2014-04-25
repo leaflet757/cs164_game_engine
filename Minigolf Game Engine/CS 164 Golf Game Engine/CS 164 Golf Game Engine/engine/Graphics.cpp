@@ -76,31 +76,37 @@ void Graphics::createWindow()
 void Graphics::clear()
 {
 	// Clear Screen and Depth Buffer
+	glClearColor(0, 0.6, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 }
 
 void Graphics::update(float delta)
 {
-	for (auto actor : drawables)
-	{
-		if (actor.isDrawable())
-		{
-			std::vector<glm::vec3> verts = actor.getVerticies();
-			// draw actor with verts in triangle strip for now
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	//for (auto const &actor : drawables)
+	//{
+	//	if (actor.isDrawable())
+	//	{
+	//		std::vector<glm::vec3> verts = actor.getVertices();
+	//		// draw actor with verts in triangle strip for now
 
-			glBegin(GL_POLYGON);
-			for (glm::vec3 v : verts)
-			{
-				// does not handle 3d objects yet
-				glColor3f(1.0, 0.0, 1.0);
-				glVertex3f(v.x, v.y, v.z);
-			}
-			glEnd();
-		}
-	}
+	//		glBegin(GL_POLYGON);
+	//		for (glm::vec3 v : verts)
+	//		{
+	//			// does not handle 3d objects yet
+	//			glColor3f(1.0, 0.0, 1.0);
+	//			glVertex3f(v.x, v.y, v.z);
+	//		}
+	//		glEnd();
+	//	}
+	//}
 
-	glFlush(); // may not be needed
+
+
+	//glFlush(); // may not be needed
 	glutSwapBuffers();
 }
 

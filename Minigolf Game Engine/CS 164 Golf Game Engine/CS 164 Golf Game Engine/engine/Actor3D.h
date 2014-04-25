@@ -21,7 +21,7 @@ protected:
 
 	// Set / Remove Vert Positions
 	void											addVert(glm::vec3 vert);
-	virtual void									addVert(float x, float y, float z);
+	void											addVert(float x, float y, float z);
 	// Removes specified Vertex
 	void											removeVert(glm::vec3 vert);
 
@@ -31,13 +31,13 @@ public:
 	~Actor3D();
 
 	// Conditionals
-	bool											isDrawable(){ return _isDrawable; }
+	bool											isDrawable() const { return _isDrawable; }
 
 	// Get functions
 	int												getID() const { return id; }
 	glm::vec3										getPosition() const { return position; }
 	glm::vec3										getRotation() const { return rotation; }
-	virtual std::vector<glm::vec3>&					getVerticies() const { return verts; }
+	std::vector<glm::vec3>							getVertices() const { return verts; }
 
 	// Set Functions
 	void											setPosition(float x, float y, float z);
