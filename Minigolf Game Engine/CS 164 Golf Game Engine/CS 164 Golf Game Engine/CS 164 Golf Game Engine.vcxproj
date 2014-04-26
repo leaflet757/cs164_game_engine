@@ -104,18 +104,31 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Cup.cpp" />
     <ClCompile Include="engine\Actor3D.cpp" />
     <ClCompile Include="engine\Graphics.cpp" />
+    <ClCompile Include="engine\IOManager.cpp" />
+    <ClCompile Include="engine\stdafx.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Tee.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="Cup.h" />
     <ClInclude Include="engine\Actor3D.h" />
     <ClInclude Include="engine\Graphics.h" />
+    <ClInclude Include="engine\IOManager.h" />
+    <ClInclude Include="engine\stdafx.h" />
+    <ClInclude Include="engine\targetver.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Tee.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="levels\hole.00.db" />

@@ -1,17 +1,16 @@
-#include "Tile.h"
+#include "Wall.h"
 
 
-Tile::Tile()
+Wall::Wall()
 {
 	_isDrawable = true;
 
 	x = std::vector<float>();
 	y = std::vector<float>();
 	z = std::vector<float>();
-	neighbors = std::vector<int>();
 }
 
 
-Tile::~Tile()
+Wall::~Wall()
 {
 }

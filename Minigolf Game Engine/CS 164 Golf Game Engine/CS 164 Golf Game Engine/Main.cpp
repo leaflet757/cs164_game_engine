@@ -4,20 +4,26 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 #include <windows.h>	   // Standard header for MS Windows applications
 #include <GL\GL.h>		   // Open Graphics Library (OpenGL) header
 #include <GL\glut.h>       // The GL Utility Toolkit (GLUT) Header
+
 #include "engine\Graphics.h"
+#include "engine\IOManager.h"
+#include "Level.h"
 
 #include "Camera.h"
 #include "Cube.h"
 #include "Ball.h"
 
 Graphics* graphics;
+IOManager* io;
 Camera camera;
 
 // What should be inlucded in this file:
 // TODO: List of Levels
+std::vector<Level>* levels;
 // TODO: Curent level
 
 #define KEY_ESCAPE 27
@@ -46,15 +52,26 @@ void update()
 	//physics.update
 }
 
-void initialize()
+void initialize(int argc, char **argv)
 {
+	graphics = new Graphics(argc, argv);
+
+	//TODO: add option to change window Size
+	graphics->createWindow();
 
 	graphics->init();
 
 	// Set-up camera
 	camera = Camera(4, 2, 0, 0, 0, 0, 0, 1, 0);
 
-	// TODO: load files
+	// Load Levels
+	io = new IOManager();
+	levels = io->loadLevels(argc, argv);
+
+	for (int i = 0; i < levels->size(); i++)
+	{
+		// add each tile to graphcis
+	}
 
 	// TODO: Initialize Actors
 	Cube t;
@@ -116,18 +133,12 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 
 int main(int argc, char **argv)
 {
-	graphics = new Graphics(argc, argv);
-
-	//TODO: add option to change window Size
-	graphics->createWindow();
-
 	// initialize and run program
-	initialize();
+	initialize(argc, argv);
 	glutDisplayFunc(update);						// register Display Function
 	glutIdleFunc(update);						// register Idle Function
 	glutKeyboardFunc(keyboard);						// register Keyboard Handler
 	//TODO: glutReshap
-	//glutKeyboardFunc(keyboard.update);
 	
 	glutMainLoop();							// run GLUT mainloop
 	
