@@ -10,6 +10,13 @@ IOManager::~IOManager()
 {
 }
 
+bool is_number(const std::string& s)
+{
+	std::string::const_iterator it = s.begin();
+	while (it != s.end() && isdigit(*it)) ++it;
+	return !s.empty() && it == s.end();
+}
+
 std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 {
 	std::vector<Level>* levels = new std::vector<Level>();
@@ -63,12 +70,42 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				tilesStore.push_back(newTile);
 				Wall newWall = Wall();
 				wallsStore.push_back(newWall);
-				in >> tilesStore[tilesStore.size() - 1].tileID >> tilesStore[tilesStore.size() - 1].edges; //stores next two numbers into id and edges.
-				if (tilesStore[tilesStore.size() - 1].tileID < 0 || tilesStore[tilesStore.size() - 1].edges < 1)
+				std::string stringID = std::string();
+				std::string stringEdges = std::string();
+
+				in >> stringID >> stringEdges; //store in ID and Edges strings
+
+				// checks if id is a positive integer
+				if(is_number(stringID))
 				{
-					std::cout << "Tile id cannot be a negative number, or Tile edges cannot be less than 1.";
+					if(atoi(stringID.c_str()) < 0)
+					{
+						std::cout << "Tile id cannot be a negative number.";
+						exit(-1);
+					}
+				} else {
+					std::cout << "Tile id has unknown characters.";
 					exit(-1);
 				}
+
+				// checks if edges is a positive integer
+				if(is_number(stringEdges))
+				{
+					if(atoi(stringEdges.c_str()) < 1)
+					{
+						std::cout << "Tile edges cannot be 0 or a negative number.";
+						exit(-1);
+					}
+				} else {
+					std::cout << "Tile edges have unknown character(s) in it.";
+					exit(-1);
+				}
+
+				//stores into tiles if it passes the checks
+				tilesStore[tilesStore.size()-1].tileID = atoi(stringID.c_str());
+				tilesStore[tilesStore.size()-1].edges = atoi(stringEdges.c_str());
+
+
 				counterCoordsAndNeigh = tilesStore[tilesStore.size() - 1].edges; //stores a counter for the next for loop.
 				float tempX = 0.0; // temporary variables to store in.
 				float tempY = 0.0;
@@ -83,7 +120,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				for(counter = 0; counter <= counterCoordsAndNeigh-1; counter++){ // stores each number afterward within the neighbor resize
 					in >> tempNeigh;
 					tilesStore[tilesStore.size()-1].neighbors.push_back(tempNeigh); // push neighbor onto vector
-					
+
 					// If this is 0 and less than the size of edges, we store a pair of coordinates
 					if (tempNeigh == 0 && tilesStore[tilesStore.size()-1].neighbors.size() < counterCoordsAndNeigh){ 
 						// Stores first coordinate

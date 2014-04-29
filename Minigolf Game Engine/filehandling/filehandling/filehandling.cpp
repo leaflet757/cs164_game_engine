@@ -9,6 +9,8 @@
 #include<sstream>
 #include<string>
 #include<vector>
+#include <stdio.h>
+#include <ctype.h>
 
 struct Tile
 {
@@ -81,6 +83,13 @@ Tee returnTee(Tee a)
 	return a;
 };
 
+bool is_number(const std::string& s)
+{
+    std::string::const_iterator it = s.begin();
+    while (it != s.end() && isdigit(*it)) ++it;
+    return !s.empty() && it == s.end();
+};
+
 //Checks - make sure no illegal characters, check if int is negative
 
 int main(int argc, char** argv)
@@ -128,12 +137,40 @@ int main(int argc, char** argv)
 			tilesStore.push_back(newTile);
 			Wall newWall = Wall();
 			wallsStore.push_back(newWall);
-			in >> tilesStore[tilesStore.size()-1].id >> tilesStore[tilesStore.size()-1].edges; //stores next two numbers into id and edges.
-			if(tilesStore[tilesStore.size()-1].id < 0 || tilesStore[tilesStore.size()-1].edges < 1)
+			std::string stringID = std::string();
+			std::string stringEdges = std::string();
+
+			//in >> tilesStore[tilesStore.size()-1].id >> tilesStore[tilesStore.size()-1].edges; //stores next two numbers into id and edges.
+			in >> stringID >> stringEdges;
+			if(is_number(stringID))
 			{
-				std::cout << "Tile id cannot be a negative number, or Tile edges cannot be less than 1.";
+				if(atoi(stringID.c_str()) < 0)
+				{
+					std::cout << "Tile id cannot be a negative number.";
+					exit(-1);
+				}
+			} else {
+				std::cout << "Tile id has unknown characters.";
 				exit(-1);
 			}
+
+			if(is_number(stringEdges))
+			{
+				if(atoi(stringEdges.c_str()) < 1)
+				{
+					std::cout << "Tile edges cannot be 0 or a negative number.";
+					exit(-1);
+				}
+			} else {
+				std::cout << "Tile edges have unknown character(s) in it.";
+				exit(-1);
+			}
+			
+			//atoi(stringEdges.c_str());
+
+			tilesStore[tilesStore.size()-1].id = atoi(stringID.c_str());
+			tilesStore[tilesStore.size()-1].edges = atoi(stringEdges.c_str());
+			
 			counterCoordsAndNeigh = tilesStore[tilesStore.size()-1].edges; //stores a counter for the next for loop.
 			float tempX = 0.0; // temporary variables to store in.
 			float tempY = 0.0;
@@ -193,7 +230,7 @@ int main(int argc, char** argv)
 			in >> cupStore.id; //If it's a cup, read in the cup's id.
 			if(cupStore.id < 0) 
 			{
-				std::cout << " Cup id cannot be a negative number.";
+				std::cout << "Cup id cannot be a negative number.";
 				exit(-1);
 			}
 			in >> cupStore.x >> cupStore.y >> cupStore.z;
