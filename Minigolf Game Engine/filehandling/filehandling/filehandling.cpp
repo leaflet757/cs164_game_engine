@@ -31,14 +31,20 @@ public:
 struct Wall
 {
 public:
-	std::vector<float> x;
-	std::vector<float> y;
-	std::vector<float> z;
+	std::vector<float> x1;
+	std::vector<float> y1;
+	std::vector<float> z1;
+	std::vector<float> x2;
+	std::vector<float> y2;
+	std::vector<float> z2;
 	Wall()
 	{
-		x = std::vector<float>();
-		y = std::vector<float>();
-		z = std::vector<float>();
+		x1 = std::vector<float>();
+		y1 = std::vector<float>();
+		z1 = std::vector<float>();
+		x2 = std::vector<float>();
+		y2 = std::vector<float>();
+		z2 = std::vector<float>();
 	}
 };
 
@@ -139,15 +145,39 @@ int main(int argc, char** argv)
 				tilesStore[tilesStore.size()-1].y.push_back(tempY);
 				tilesStore[tilesStore.size()-1].z.push_back(tempZ);
 			}
+			int wallCounter = 0;
 			for(counter = 0; counter <= counterCoordsAndNeigh-1; counter++){ // stores each number afterward within the neighbor resize
 				in >> tempNeigh;
-				tilesStore[tilesStore.size()-1].neighbors.push_back(tempNeigh);
-				if(tempNeigh == 0){ // If this is 0, we have a wall vertex.
-					wallsStore[wallsStore.size()-1].x.push_back(tilesStore[tilesStore.size()-1].x[counter]); // Stores x y z of 0 into wallsStore.
-					wallsStore[wallsStore.size()-1].y.push_back(tilesStore[tilesStore.size()-1].y[counter]);
-					wallsStore[wallsStore.size()-1].z.push_back(tilesStore[tilesStore.size()-1].z[counter]);
-				}
+				tilesStore[tilesStore.size()-1].neighbors.push_back(tempNeigh); // push neighbor onto vector
+				
+				if (tempNeigh == 0 && tilesStore[tilesStore.size()-1].neighbors.size() < counterCoordsAndNeigh){ // If this is 0 and less than the size of edges, we store a pair of coordinates
+						// Stores first coordinate
+						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
+						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
+						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
+						std::cout << wallsStore[wallsStore.size() - 1].x1[wallCounter] << " " << wallsStore[wallsStore.size() - 1].y1[wallCounter] << " " << wallsStore[wallsStore.size() - 1].z1[wallCounter] << " | ";
+						
+						// Stores second coordinate
+						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[counter+1]);
+						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[counter+1]);
+						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[counter+1]);
+						std::cout << wallsStore[wallsStore.size() - 1].x2[wallCounter] << " " << wallsStore[wallsStore.size() - 1].y2[wallCounter] << " " << wallsStore[wallsStore.size() - 1].z2[wallCounter] << "\n";
+						wallCounter+=1;
+					} else if (tempNeigh == 0 && tilesStore[tilesStore.size()-1].neighbors.size() == counterCoordsAndNeigh){ //If neighbor is 0 and we're at the last number, we get the current coordinates and the coordinates in the first slot.
+						// Stores first coordinate
+						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
+						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
+						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
+						std::cout << wallsStore[wallsStore.size() - 1].x1[wallCounter] << " " << wallsStore[wallsStore.size() - 1].y1[wallCounter] << " " << wallsStore[wallsStore.size() - 1].z1[wallCounter] << " | ";
+						// Stores second coordinate.
+						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[0]);
+						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[0]);
+						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[0]);
+						std::cout << wallsStore[wallsStore.size() - 1].x2[wallCounter] << " " << wallsStore[wallsStore.size() - 1].y2[wallCounter] << " " << wallsStore[wallsStore.size() - 1].z2[wallCounter] << "\n";
+						wallCounter+=1;
+					}
 			}
+			wallCounter = 0;
 		}
 		else if(type == "Tee" || type == "tee"){ //If it's a tee, read in the tee's id.
 			in >> teeStore.id;
@@ -179,7 +209,7 @@ int main(int argc, char** argv)
 
 	
 	//For Debug purposes
-	/*for(counter = 0; counter <= tilesStore.size()-1; counter++){
+	for(counter = 0; counter <= tilesStore.size()-1; counter++){
 			std::cout << tilesStore[counter].id << " " << tilesStore[counter].edges << " ";
 			for (int i = 0; i <= tilesStore[counter].x.size()-1; i++){
 				std::cout << tilesStore[counter].x[i] << " " << tilesStore[counter].y[i] << " " << tilesStore[counter].z[i];
@@ -190,7 +220,7 @@ int main(int argc, char** argv)
 	std::cout << std::endl;
 	std::cout << teeStore.id << " " << teeStore.x << " " << teeStore.y << " " << teeStore.z;
 	std::cout << std::endl;
-	for(counter = 0; counter <= wallsStore.size()-1; counter++){
+	/*for(counter = 0; counter <= wallsStore.size()-1; counter++){
 			for (int i = 0; i <= wallsStore[counter].x.size()-1; i++){
 				if(wallsStore[counter].x[i] != NULL){
 					std::cout << wallsStore[counter].x[i] << " " << wallsStore[counter].y[i] << " " << wallsStore[counter].z[i];

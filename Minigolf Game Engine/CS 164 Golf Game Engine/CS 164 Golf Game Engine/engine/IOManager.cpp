@@ -80,26 +80,30 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 					tilesStore[tilesStore.size() - 1].y.push_back(tempY);
 					tilesStore[tilesStore.size() - 1].z.push_back(tempZ);
 				}
-				for (counter = 0; counter <= counterCoordsAndNeigh - 1; counter++){ // stores each number afterward within the neighbor resize
+				for(counter = 0; counter <= counterCoordsAndNeigh-1; counter++){ // stores each number afterward within the neighbor resize
 					in >> tempNeigh;
-					tilesStore[tilesStore.size() - 1].neighbors.push_back(tempNeigh);
-					if (tempNeigh == 0 && wallsStore[wallsStore.size()-1].x1[counter] != counterCoordsAndNeigh-1){ // If this is 0, we have a wall vertex.
+					tilesStore[tilesStore.size()-1].neighbors.push_back(tempNeigh); // push neighbor onto vector
+					
+					// If this is 0 and less than the size of edges, we store a pair of coordinates
+					if (tempNeigh == 0 && tilesStore[tilesStore.size()-1].neighbors.size() < counterCoordsAndNeigh){ 
 						// Stores first coordinate
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
 						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
+
 						// Stores second coordinate
 						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[counter+1]);
 						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[counter+1]);
 						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[counter+1]);
-					}
 
-					if (tempNeigh == 0 && wallsStore[wallsStore.size()-1].x1[counter] != counterCoordsAndNeigh-1){
+					} 
+					//If neighbor is 0 and we're at the last number, we get the current coordinates and the coordinates in the first slot.
+					else if (tempNeigh == 0 && tilesStore[tilesStore.size()-1].neighbors.size() == counterCoordsAndNeigh){ 
 						// Stores first coordinate
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
 						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
-						// Stores second coordinate
+						// Stores second coordinate.
 						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[0]);
 						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[0]);
 						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[0]);
