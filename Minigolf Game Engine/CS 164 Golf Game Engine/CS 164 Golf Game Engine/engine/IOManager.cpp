@@ -10,11 +10,16 @@ IOManager::~IOManager()
 {
 }
 
-bool is_number(const std::string& s)
+bool is_int(const std::string& s)
 {
 	std::string::const_iterator it = s.begin();
 	while (it != s.end() && isdigit(*it)) ++it;
 	return !s.empty() && it == s.end();
+}
+
+bool is_float(const std::string& s)
+{
+    return( strspn( s.c_str(), "-.0123456789" ) == s.size() );
 }
 
 std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
@@ -76,11 +81,11 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				in >> stringID >> stringEdges; //store in ID and Edges strings
 
 				// checks if id is a positive integer
-				if(is_number(stringID))
+				if(is_int(stringID))
 				{
-					if(atoi(stringID.c_str()) < 0)
+					if(atoi(stringID.c_str()) < 1)
 					{
-						std::cout << "Tile id cannot be a negative number.";
+						std::cout << "Tile id cannot be 0 or a negative number.";
 						exit(-1);
 					}
 				} else {
@@ -89,7 +94,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				}
 
 				// checks if edges is a positive integer
-				if(is_number(stringEdges))
+				if(is_int(stringEdges))
 				{
 					if(atoi(stringEdges.c_str()) < 1)
 					{
@@ -107,22 +112,33 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 
 
 				counterCoordsAndNeigh = tilesStore[tilesStore.size() - 1].edges; //stores a counter for the next for loop.
-				float tempX = 0.0; // temporary variables to store in.
-				float tempY = 0.0;
-				float tempZ = 0.0;
-				int tempNeigh = 0;
+				
+				std::string stringX = std::string(); // temporary variables to store in.
+				std::string stringY = std::string();
+				std::string stringZ = std::string();
+				std::string stringNeigh = std::string();
+
 				for (counter = 0; counter <= counterCoordsAndNeigh - 1; counter++){ // checks white spaces for the next three values and stores into x, y, z temps.
-					in >> tempX >> tempY >> tempZ;
-					tilesStore[tilesStore.size() - 1].x.push_back(tempX); //Puts x, y, and z in.
-					tilesStore[tilesStore.size() - 1].y.push_back(tempY);
-					tilesStore[tilesStore.size() - 1].z.push_back(tempZ);
+					in >> stringX >> stringY >> stringZ;
+						if(is_float(stringX) && is_float(stringY) && is_float(stringZ)){ //Checks if they're floats before storing
+							tilesStore[tilesStore.size()-1].x.push_back(atof(stringX.c_str())); //Puts x, y, and z in.
+							tilesStore[tilesStore.size()-1].y.push_back(atof(stringY.c_str()));
+							tilesStore[tilesStore.size()-1].z.push_back(atof(stringZ.c_str()));
+					} else {
+						std::cout << "xyz points contain unknown characters.";
+						exit(-1);
+					}
 				}
 				for(counter = 0; counter <= counterCoordsAndNeigh-1; counter++){ // stores each number afterward within the neighbor resize
-					in >> tempNeigh;
-					tilesStore[tilesStore.size()-1].neighbors.push_back(tempNeigh); // push neighbor onto vector
-
+					in >> stringNeigh;
+					if(is_int(stringNeigh)){ //Checks if positive integer.
+						tilesStore[tilesStore.size()-1].neighbors.push_back(atoi(stringNeigh.c_str())); // push neighbor onto vector
+					} else {
+						std::cout << "Invalid character in neighbors.";
+						exit(-1);
+					}
 					// If this is 0 and less than the size of edges, we store a pair of coordinates
-					if (tempNeigh == 0 && tilesStore[tilesStore.size()-1].neighbors.size() < counterCoordsAndNeigh){ 
+					if (atoi(stringNeigh.c_str()) == 0 && tilesStore[tilesStore.size()-1].neighbors.size() < counterCoordsAndNeigh){ 
 						// Stores first coordinate
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
@@ -135,7 +151,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 
 					} 
 					//If neighbor is 0 and we're at the last number, we get the current coordinates and the coordinates in the first slot.
-					else if (tempNeigh == 0 && tilesStore[tilesStore.size()-1].neighbors.size() == counterCoordsAndNeigh){ 
+					else if (atoi(stringNeigh.c_str()) == 0 && tilesStore[tilesStore.size()-1].neighbors.size() == counterCoordsAndNeigh){ 
 						// Stores first coordinate
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
