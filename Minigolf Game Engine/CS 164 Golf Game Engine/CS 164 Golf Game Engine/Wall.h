@@ -8,8 +8,11 @@ public:
 	Wall();
 	~Wall();
 
-	std::vector<float> x;
-	std::vector<float> y;
-	std::vector<float> z;
+	std::vector<float> x1;
+	std::vector<float> y1;
+	std::vector<float> z1;
+	std::vector<float> x2;
+	std::vector<float> y2;
+	std::vector<float> z2;
 };
 

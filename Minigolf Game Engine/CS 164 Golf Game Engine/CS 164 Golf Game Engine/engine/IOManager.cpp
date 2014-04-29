@@ -83,10 +83,26 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				for (counter = 0; counter <= counterCoordsAndNeigh - 1; counter++){ // stores each number afterward within the neighbor resize
 					in >> tempNeigh;
 					tilesStore[tilesStore.size() - 1].neighbors.push_back(tempNeigh);
-					if (tempNeigh == 0){ // If this is 0, we have a wall vertex.
-						wallsStore[wallsStore.size() - 1].x.push_back(tilesStore[tilesStore.size() - 1].x[counter]); // Stores x y z of 0 into wallsStore.
-						wallsStore[wallsStore.size() - 1].y.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
-						wallsStore[wallsStore.size() - 1].z.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
+					if (tempNeigh == 0 && wallsStore[wallsStore.size()-1].x1[counter] != counterCoordsAndNeigh-1){ // If this is 0, we have a wall vertex.
+						// Stores first coordinate
+						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
+						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
+						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
+						// Stores second coordinate
+						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[counter+1]);
+						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[counter+1]);
+						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[counter+1]);
+					}
+
+					if (tempNeigh == 0 && wallsStore[wallsStore.size()-1].x1[counter] != counterCoordsAndNeigh-1){
+						// Stores first coordinate
+						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
+						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
+						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
+						// Stores second coordinate
+						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[0]);
+						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[0]);
+						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[0]);
 					}
 				}
 			}
