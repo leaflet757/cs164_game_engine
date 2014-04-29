@@ -19,7 +19,7 @@ bool is_int(const std::string& s)
 
 bool is_float(const std::string& s)
 {
-    return( strspn( s.c_str(), "-.0123456789" ) == s.size() );
+	return( strspn( s.c_str(), "-.0123456789" ) == s.size() );
 }
 
 std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
@@ -112,7 +112,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 
 
 				counterCoordsAndNeigh = tilesStore[tilesStore.size() - 1].edges; //stores a counter for the next for loop.
-				
+
 				std::string stringX = std::string(); // temporary variables to store in.
 				std::string stringY = std::string();
 				std::string stringZ = std::string();
@@ -120,10 +120,10 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 
 				for (counter = 0; counter <= counterCoordsAndNeigh - 1; counter++){ // checks white spaces for the next three values and stores into x, y, z temps.
 					in >> stringX >> stringY >> stringZ;
-						if(is_float(stringX) && is_float(stringY) && is_float(stringZ)){ //Checks if they're floats before storing
-							tilesStore[tilesStore.size()-1].x.push_back(atof(stringX.c_str())); //Puts x, y, and z in.
-							tilesStore[tilesStore.size()-1].y.push_back(atof(stringY.c_str()));
-							tilesStore[tilesStore.size()-1].z.push_back(atof(stringZ.c_str()));
+					if(is_float(stringX) && is_float(stringY) && is_float(stringZ)){ //Checks if they're floats before storing
+						tilesStore[tilesStore.size()-1].x.push_back(atof(stringX.c_str())); //Puts x, y, and z in.
+						tilesStore[tilesStore.size()-1].y.push_back(atof(stringY.c_str()));
+						tilesStore[tilesStore.size()-1].z.push_back(atof(stringZ.c_str()));
 					} else {
 						std::cout << "xyz points contain unknown characters.";
 						exit(-1);
@@ -164,32 +164,91 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				}
 			}
 			else if (type == "Tee" || type == "tee"){ //If it's a tee, read in the tee's id.
-				in >> teeStore.tID;
-				if (teeStore.tID < 0)
-				{
-					std::cout << "Tee id cannot be a negative number.";
+				numTee = numTee + 1;
+				std::string teeID = std::string(); // temporary variables
+				std::string teeX = std::string();
+				std::string teeY = std::string();
+				std::string teeZ = std::string();
+
+				//read in first.
+				in >> teeID;
+
+				if(is_int(teeID)){ //if it's a positive intefer, store it.
+					teeStore.tID = atoi(teeID.c_str());
+					if(teeStore.tID < 1) //if the ID is 0 or less, error.
+					{
+						std::cout << "Tee id cannot be 0 or a negative number.";
+						exit(-1);
+					}
+				} else {
+					std::cout << "Tee id contains invalid characters.";
 					exit(-1);
 				}
-				in >> teeStore.x >> teeStore.y >> teeStore.z; // read the whitespace-separated floats + store.
+				in >> teeX >> teeY >> teeZ; // read the whitespace-separated floats + store.
+				if(is_float(teeX) && is_float(teeY) && is_float(teeZ)){ // checks if they're all valid floats and stores them
+					teeStore.x = atof(teeX.c_str());
+					teeStore.y = atof(teeY.c_str());
+					teeStore.z = atof(teeZ.c_str());
+				} else {
+					std::cout << "Tee coordinates contain invalid characters.";
+					exit(-1);
+				}
 			}
 			else if (type == "Cup" || type == "cup")
 			{
-				in >> cupStore.cupID; //If it's a cup, read in the cup's id.
-				if (cupStore.cupID < 0)
-				{
-					std::cout << " Cup id cannot be a negative number.";
+				numCup = numCup + 1;
+				std::string cupID = std::string(); //temporary cup variables
+				std::string cupX = std::string();
+				std::string cupY = std::string();
+				std::string cupZ = std::string();
+
+				in >> cupID;
+
+				if(is_int(cupID)){ //if it's a positive integer, we store it. else, error.
+					cupStore.cupID = atoi(cupID.c_str());
+					if(cupStore.cupID < 1)  //cup id cannot be 0 or negative.
+					{
+						std::cout << "Cup id cannot be 0 or a negative number.";
+						exit(-1);
+					}
+				} else {
+					std::cout << "Cup id contains invalid characters.";
 					exit(-1);
 				}
-				in >> cupStore.x >> cupStore.y >> cupStore.z;
+				in >> cupX >> cupY >> cupZ; // read the whitespace-separated floats + store.
+				if(is_float(cupX) && is_float(cupY) && is_float(cupZ)){ //checks if they're all floats. If so, store.
+					cupStore.x = atof(cupX.c_str());
+					cupStore.y = atof(cupY.c_str());
+					cupStore.z = atof(cupZ.c_str());
+				} else {
+					std::cout << "Cup coordinates contain invalid characters.";
+					exit(-1);
+				}
 			}
 			else {
 				std::cout << "Invalid entry or invalid length.";
 				exit(-1);
 			}
-			if (numTiles == 0){
-				std::cout << "You need at least one tile.";
-				exit(-1);
-			}
+		}
+		if (numTiles == 0){ //if there are no tiles, error.
+			std::cout << "You need at least one tile.";
+			exit(-1);
+		}
+		if (numTee > 1){
+			std::cout << "You cannot have more than one tee.";
+			exit(-1);
+		}
+		if (numCup > 1) {
+			std::cout << "You cannot have more than one cup.";
+			exit(-1);
+		}
+		if (numTee == 0){
+			std::cout << "You need one tee.";
+			exit(-1);
+		}
+		if (numCup == 0) {
+			std::cout << "You need one cup.";
+			exit(-1);
 		}
 		Level level(tilesStore, wallsStore, cupStore, teeStore);
 		levels->push_back(level);

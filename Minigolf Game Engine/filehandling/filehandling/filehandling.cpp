@@ -238,32 +238,92 @@ int main(int argc, char** argv)
 			wallCounter = 0;
 		}
 		else if(type == "Tee" || type == "tee"){ //If it's a tee, read in the tee's id.
-			in >> teeStore.id;
-			if(teeStore.id < 0) 
-			{
-				std::cout << "Tee id cannot be a negative number.";
+			numTee = numTee + 1;
+
+			std::string teeID = std::string();
+			std::string teeX = std::string();
+			std::string teeY = std::string();
+			std::string teeZ = std::string();
+
+			in >> teeID;
+			
+			if(is_int(teeID)){
+				teeStore.id = atoi(teeID.c_str());
+				if(teeStore.id < 1) 
+				{
+				std::cout << "Tee id cannot be 0 or a negative number.";
+				exit(-1);
+				}
+			} else {
+				std::cout << "Tee id contains invalid characters.";
 				exit(-1);
 			}
-			in >> teeStore.x >> teeStore.y >> teeStore.z; // read the whitespace-separated floats + store.
+			in >> teeX >> teeY >> teeZ; // read the whitespace-separated floats + store.
+			if(is_float(teeX) && is_float(teeY) && is_float(teeZ)){
+				teeStore.x = atof(teeX.c_str());
+				teeStore.y = atof(teeY.c_str());
+				teeStore.z = atof(teeZ.c_str());
+			} else {
+				std::cout << "Tee coordinates contain invalid characters.";
+				exit(-1);
+			}
 		}
 		else if(type == "Cup" || type == "cup")
 		{
-			in >> cupStore.id; //If it's a cup, read in the cup's id.
-			if(cupStore.id < 0) 
-			{
-				std::cout << "Cup id cannot be a negative number.";
+			numCup = numCup + 1;
+			std::string cupID = std::string();
+			std::string cupX = std::string();
+			std::string cupY = std::string();
+			std::string cupZ = std::string();
+
+			in >> cupID;
+			
+			if(is_int(cupID)){
+				cupStore.id = atoi(cupID.c_str());
+				if(cupStore.id < 1) 
+				{
+				std::cout << "Cup id cannot be 0 or a negative number.";
+				exit(-1);
+				}
+			} else {
+				std::cout << "Cup id contains invalid characters.";
 				exit(-1);
 			}
-			in >> cupStore.x >> cupStore.y >> cupStore.z;
+			in >> cupX >> cupY >> cupZ; // read the whitespace-separated floats + store.
+			if(is_float(cupX) && is_float(cupY) && is_float(cupZ)){
+				cupStore.x = atof(cupX.c_str());
+				cupStore.y = atof(cupY.c_str());
+				cupStore.z = atof(cupZ.c_str());
+			} else {
+				std::cout << "Cup coordinates contain invalid characters.";
+				exit(-1);
+			}
 		} else {
 			std::cout << "Invalid entry or invalid length.";
 			exit(-1);
+		}
 		}
 		if(numTiles == 0){
 			std::cout << "You need at least one tile.";
 			exit(-1);
 		}
-	}
+		if (numTee > 1){
+				std::cout << "You cannot have more than one tee.";
+				exit(-1);
+			}
+			if (numCup > 1) {
+				std::cout << "You cannot have more than one cup.";
+				exit(-1);
+			}
+			if (numTee == 0) {
+				std::cout << "You need one tee.";
+				exit(-1);
+			}
+			if (numCup == 0) {
+				std::cout << "You need one cup.";
+				exit(-1);
+			}
+	
 
 	
 	//For Debug purposes
