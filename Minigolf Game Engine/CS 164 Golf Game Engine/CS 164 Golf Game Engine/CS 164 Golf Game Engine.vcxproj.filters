@@ -135,5 +135,8 @@
     <Text Include="README.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="levels\levels.txt">
+      <Filter>Resource Files\levels</Filter>
+    </Text>
   </ItemGroup>
 </Project>

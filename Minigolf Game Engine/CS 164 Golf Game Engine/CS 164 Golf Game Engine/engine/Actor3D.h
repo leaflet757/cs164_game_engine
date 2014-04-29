@@ -43,6 +43,8 @@ public:
 	void											setRotation(float x, float y, float z);
 	// setcolor, setscale
 
+	void											addVert(float x, float y, float z);
+
 	// Overridable Draw
 	virtual void									draw() const { } // ERROR HERE
 

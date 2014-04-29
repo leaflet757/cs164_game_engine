@@ -17,3 +17,20 @@ Level::Level()
 Level::~Level()
 {
 }
+
+void Level::buildVerts()
+{
+	for (int i = 0; i < tilesStore.size(); i++)
+	{
+		tilesStore[i].addVert(tilesStore[i].x[i], tilesStore[i].y[i], tilesStore[i].z[i]);
+	}
+
+	for (int i = 0; i < wallsStore.size(); i++)
+	{
+		// something with walls
+	}
+
+	//cupStore.setPosition(cupStore.x, cupStore.y, cupStore.z);
+
+	//teeStore.setPosition(teeStore.x, teeStore.y, teeStore.z);
+}

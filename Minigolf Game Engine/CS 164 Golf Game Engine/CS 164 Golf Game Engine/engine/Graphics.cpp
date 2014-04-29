@@ -113,7 +113,7 @@ void Graphics::update(float delta)
 				{
 					const glm::vec3 &c = color[i++];
 					//glColor3ub(0.0, 255, 0.0);
-					//glColor3f(c.r, c.g, c.b);
+					glColor3f(c.r, c.g, c.b);
 					glVertex3f(v.x, v.y, v.z);
 				}
 				glEnd();

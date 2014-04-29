@@ -67,26 +67,22 @@ void initialize(int argc, char **argv)
 	// Load Levels
 	io = new IOManager();
 	levels = io->loadLevels(argc, argv);
-
-	for (int i = 0; i < levels->size(); i++)
-	{
-		// add each tile to graphcis
-	}
+	
 
 	// TODO: Initialize Actors
 	Cube t;
 	graphics->add(t);
 	Cube a;
-	a.setPosition(1, 0, 0);
+	//a.setPosition(2, 0, 0);
 	graphics->add(a);
 	Cube s;
-	s.setPosition(-1,0,0);
+	s.setPosition(-2,0,0);
 	graphics->add(s);
 	Cube d;
-	d.setPosition(0, -1, 0);
+	d.setPosition(-2, 0, -2);
 	graphics->add(d);
 	Cube r;
-	r.setPosition(0, 1, 0);
+	r.setPosition(-2, 0, 2);
 	graphics->add(r);
 	Ball b;
 	graphics->add(b);

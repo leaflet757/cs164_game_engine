@@ -1,5 +1,6 @@
 #pragma once
 
+#include <glm\vec3.hpp>
 #include <vector>
 
 #include "Tile.h"
@@ -19,5 +20,7 @@ public:
 	std::vector<Wall> wallsStore;
 	Cup cupStore;
 	Tee teeStore;
+
+	void buildVerts();
 };
 

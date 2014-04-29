@@ -53,3 +53,8 @@ Actor3D& Actor3D::operator=(const Actor3D& other)
 	rotation = other.rotation;
 	return *this;
 }
+
+void Actor3D::addVert(float x, float y, float z)
+{
+	verts.push_back(glm::vec3(x, y, z));
+}
