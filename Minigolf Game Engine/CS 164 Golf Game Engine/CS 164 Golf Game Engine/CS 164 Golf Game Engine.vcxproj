@@ -66,8 +66,7 @@
       <AdditionalDependencies>glew32.lib;glew32s.lib;SDL2.lib;SDL2main.lib;SDL2test.lib;freeglut.lib;freeglut_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>levels.txt</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy/b/y "$(ProjectDir)include\*.dll" "$(TargetDir)"</Command>

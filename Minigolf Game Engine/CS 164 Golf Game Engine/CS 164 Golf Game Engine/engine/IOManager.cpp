@@ -14,8 +14,6 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 {
 	std::vector<Level>* levels = new std::vector<Level>();
 
-	for (int i = 1; i < argc; i++)
-	{
 		//Storage for Tiles/Cups/Tee
 		std::vector<Tile> tilesStore = std::vector<Tile>();
 		std::vector<Wall> wallsStore = std::vector<Wall>();
@@ -37,7 +35,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 		std::ifstream fileName;
 
 		std::string str = "";
-		str.append((char *)argv[i]);
+		str.append((char *)argv[1]);
 
 		// open the file
 		fileName.open(str);
@@ -83,7 +81,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				for (counter = 0; counter <= counterCoordsAndNeigh - 1; counter++){ // stores each number afterward within the neighbor resize
 					in >> tempNeigh;
 					tilesStore[tilesStore.size() - 1].neighbors.push_back(tempNeigh);
-					if (tempNeigh == 0 && wallsStore[wallsStore.size()-1].x1[counter] != counterCoordsAndNeigh-1){ // If this is 0, we have a wall vertex.
+					if (tempNeigh == 0 && wallsStore[wallsStore.size() - 1].x1[counter] != counterCoordsAndNeigh - 1){ // If this is 0, we have a wall vertex.
 						// Stores first coordinate
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
@@ -133,10 +131,11 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				std::cout << "You need at least one tile.";
 				exit(-1);
 			}
+			Level level(tilesStore, wallsStore, cupStore, teeStore);
+			levels->push_back(level);
 		}
-		Level level(tilesStore, wallsStore, cupStore, teeStore);
-		levels->push_back(level);
-	}
+		
+	
 
 	return levels;
 }
