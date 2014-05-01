@@ -15,5 +15,6 @@ public:
 	std::vector<float> y;
 	std::vector<float> z;
 	std::vector<int> neighbors;
+	std::vector<glm::vec3> xyz;
 };
 

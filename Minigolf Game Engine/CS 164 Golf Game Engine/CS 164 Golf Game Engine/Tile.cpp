@@ -9,6 +9,7 @@ Tile::Tile()
 	y = std::vector<float>();
 	z = std::vector<float>();
 	neighbors = std::vector<int>();
+	xyz = std::vector<glm::vec3>(); //will hold xyz vec3 just in case. comment out later.
 }
 
 

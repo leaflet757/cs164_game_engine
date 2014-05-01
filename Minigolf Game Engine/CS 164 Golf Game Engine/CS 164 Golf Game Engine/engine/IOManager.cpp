@@ -124,6 +124,8 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 						tilesStore[tilesStore.size()-1].x.push_back(atof(stringX.c_str())); //Puts x, y, and z in.
 						tilesStore[tilesStore.size()-1].y.push_back(atof(stringY.c_str()));
 						tilesStore[tilesStore.size()-1].z.push_back(atof(stringZ.c_str()));
+						tilesStore[tilesStore.size()-1].xyz.push_back(glm::vec3(atof(stringX.c_str()), atof(stringY.c_str()), atof(stringZ.c_str()))); //just in case
+						tilesStore[tilesStore.size()-1].addVert(atof(stringX.c_str()), atof(stringY.c_str()), atof(stringZ.c_str())); //using addVert
 					} else {
 						std::cout << "xyz points contain unknown characters.";
 						exit(-1);
@@ -143,12 +145,14 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
 						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
-
+						wallsStore[wallsStore.size() - 1].xyz_1.push_back(glm::vec3(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter], tilesStore[tilesStore.size() - 1].z[counter]));
+						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter], tilesStore[tilesStore.size() - 1].z[counter]);
 						// Stores second coordinate
 						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[counter+1]);
 						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[counter+1]);
 						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[counter+1]);
-
+						wallsStore[wallsStore.size() - 1].xyz_2.push_back(glm::vec3(tilesStore[tilesStore.size() - 1].x[counter+1], tilesStore[tilesStore.size() - 1].y[counter+1], tilesStore[tilesStore.size() - 1].z[counter+1]));
+						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter+1], tilesStore[tilesStore.size() - 1].y[counter+1], tilesStore[tilesStore.size() - 1].z[counter+1]);
 					} 
 					//If neighbor is 0 and we're at the last number, we get the current coordinates and the coordinates in the first slot.
 					else if (atoi(stringNeigh.c_str()) == 0 && tilesStore[tilesStore.size()-1].neighbors.size() == counterCoordsAndNeigh){ 
@@ -156,10 +160,14 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
 						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
+						wallsStore[wallsStore.size() - 1].xyz_1.push_back(glm::vec3(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter], tilesStore[tilesStore.size() - 1].z[counter]));
+						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter], tilesStore[tilesStore.size() - 1].z[counter]);
 						// Stores second coordinate.
 						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[0]);
 						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[0]);
 						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[0]);
+						wallsStore[wallsStore.size() - 1].xyz_2.push_back(glm::vec3(tilesStore[tilesStore.size() - 1].x[0], tilesStore[tilesStore.size() - 1].y[0], tilesStore[tilesStore.size() - 1].z[0]));
+						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[0], tilesStore[tilesStore.size() - 1].y[0], tilesStore[tilesStore.size() - 1].z[0]);
 					}
 				}
 			}
@@ -189,6 +197,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 					teeStore.x = atof(teeX.c_str());
 					teeStore.y = atof(teeY.c_str());
 					teeStore.z = atof(teeZ.c_str());
+					teeStore.addVert(atof(teeX.c_str()), atof(teeY.c_str()), atof(teeZ.c_str()));
 				} else {
 					std::cout << "Tee coordinates contain invalid characters.";
 					exit(-1);
@@ -220,6 +229,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 					cupStore.x = atof(cupX.c_str());
 					cupStore.y = atof(cupY.c_str());
 					cupStore.z = atof(cupZ.c_str());
+					cupStore.addVert(atof(cupX.c_str()), atof(cupY.c_str()), atof(cupZ.c_str()));
 				} else {
 					std::cout << "Cup coordinates contain invalid characters.";
 					exit(-1);

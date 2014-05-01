@@ -14,5 +14,7 @@ public:
 	std::vector<float> x2;
 	std::vector<float> y2;
 	std::vector<float> z2;
+	std::vector<glm::vec3> xyz_1;
+	std::vector<glm::vec3> xyz_2;
 };
 
