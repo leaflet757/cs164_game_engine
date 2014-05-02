@@ -261,7 +261,6 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 			exit(-1);
 		}
 		Level level(tilesStore, wallsStore, cupStore, teeStore);
-		//level.buildVerts();
 		levels->push_back(level);
 	}
 

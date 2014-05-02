@@ -7,13 +7,23 @@
 class Camera : public Actor3D
 {
 private:
+	// Glut camera lookat
 	glm::vec3 lookAt;
-	glm::vec3 direction;
-	// tODO: direction
+	// Glut camera up
 	glm::vec3 up;
+
+
+	// Forward direction
+	glm::vec3 directionF;
+	glm::vec3 directionU;
+	glm::vec3 directionS;
 
 	// TODO: More physics stuff to be abstracted
 	glm::vec3 velocity;
+
+	void setDirectionU(glm::vec3&);
+	void setDirectionS(glm::vec3&);
+
 
 public:
 	Camera() { };

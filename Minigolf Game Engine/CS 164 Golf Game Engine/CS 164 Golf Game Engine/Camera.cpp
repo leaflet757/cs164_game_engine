@@ -14,15 +14,40 @@ Camera::Camera(double eyex,
 	position = glm::vec3(eyex, eyey, eyez);
 	lookAt = glm::vec3(centerx, centery, centerz);
 	this->up = glm::vec3(upx, upy, upz);
-	direction = glm::vec3();
-	direction.x = (position.x - lookAt.x) / (position - lookAt).length();
-	direction.y = (position.y - lookAt.y) / (position - lookAt).length();
-	direction.z = (position.z - lookAt.z) / (position - lookAt).length();
+	directionF = glm::vec3();
+	directionF.x = (position.x - lookAt.x) / (position - lookAt).length();
+	directionF.y = (position.y - lookAt.y) / (position - lookAt).length();
+	directionF.z = (position.z - lookAt.z) / (position - lookAt).length();
+	directionS = glm::vec3();
+	setDirectionS(directionS);
+	directionU = glm::vec3();
+	setDirectionU(directionU);
+
 	velocity = glm::vec3(0.1);
 }
 
 Camera::~Camera()
 {
+}
+
+void Camera::setDirectionS(glm::vec3& s)
+{
+	s.x = (directionF.y * up.z) - (directionF.z * up.y);
+	s.y = -1 * (directionF.x * up.z) - (directionF.z * up.x);
+	s.z = (directionF.x - up.y) - (directionF.y * up.x);
+	s.x = s.x / s.length();
+	s.y = s.y / s.length();
+	s.z = s.z / s.length();
+}
+
+void Camera::setDirectionU(glm::vec3& u)
+{
+	u.x = (directionF.y * directionS.z) - (directionF.z * directionS.y);
+	u.y = -1 * (directionF.x * directionS.z) - (directionF.z * directionS.x);
+	u.z = (directionF.x - directionS.y) - (directionF.y * directionS.x);
+	u.x = u.x / u.length();
+	u.y = u.y / u.length();
+	u.z = u.z / u.length();
 }
 
 void Camera::update(float delta) const
@@ -55,65 +80,65 @@ void Camera::setVelocity(float x, float y, float z)
 
 void Camera::forward()
 {
-	setPosition(-velocity.x * direction.x + position.x,
-		-velocity.y * direction.y + position.y,
-		-velocity.z * direction.z + position.z);
+	setPosition(-velocity.x * directionF.x + position.x,
+		-velocity.y * directionF.y + position.y,
+		-velocity.z * directionF.z + position.z);
 	
-	setLookAt(-velocity.x * direction.x + lookAt.x,
-		-velocity.y * direction.y + lookAt.y,
-		-velocity.z * direction.z + lookAt.z);
+	setLookAt(-velocity.x * directionF.x + lookAt.x,
+		-velocity.y * directionF.y + lookAt.y,
+		-velocity.z * directionF.z + lookAt.z);
 }
 void Camera::backward()
 {
-	setPosition(velocity.x * direction.x + position.x,
-		velocity.y * direction.y + position.y,
-		velocity.z * direction.z + position.z);
+	setPosition(velocity.x * directionF.x + position.x,
+		velocity.y * directionF.y + position.y,
+		velocity.z * directionF.z + position.z);
 
-	setLookAt(velocity.x * direction.x + lookAt.x,
-		velocity.y * direction.y + lookAt.y,
-		velocity.z * direction.z + lookAt.z);
+	setLookAt(velocity.x * directionF.x + lookAt.x,
+		velocity.y * directionF.y + lookAt.y,
+		velocity.z * directionF.z + lookAt.z);
 }
 
 void Camera::leftMove()
 {
-	setPosition(velocity.x * direction.x + position.x,
-		velocity.y * direction.y + position.y,
-		velocity.z * direction.z + position.z);
+	setPosition(velocity.x * directionS.x + position.x,
+		velocity.y * directionS.y + position.y,
+		velocity.z * directionS.z + position.z);
 
-	setLookAt(velocity.x * direction.x + lookAt.x,
-		velocity.y * direction.y + lookAt.y,
-		velocity.z * direction.z + lookAt.z);
+	setLookAt(velocity.x * directionS.x + lookAt.x,
+		velocity.y * directionS.y + lookAt.y,
+		velocity.z * directionS.z + lookAt.z);
 }
 
 void Camera::rightMove()
 {
-	setPosition(velocity.x * direction.x + position.x,
-		velocity.y * direction.y + position.y,
-		velocity.z * direction.z + position.z);
+	setPosition(-velocity.x * directionS.x + position.x,
+		-velocity.y * directionS.y + position.y,
+		-velocity.z * directionS.z + position.z);
 
-	setLookAt(velocity.x * direction.x + lookAt.x,
-		velocity.y * direction.y + lookAt.y,
-		velocity.z * direction.z + lookAt.z);
+	setLookAt(-velocity.x * directionS.x + lookAt.x,
+		-velocity.y * directionS.y + lookAt.y,
+		-velocity.z * directionS.z + lookAt.z);
 }
 
 void Camera::upMove()
 {
-	setPosition(position.x,
-		velocity.y * 1.0 + position.y,
-		position.z);
+	setPosition(-velocity.x * directionU.x + position.x,
+		-velocity.y * directionU.y + position.y,
+		-velocity.z * directionU.z + position.z);
 
-	setLookAt(lookAt.x,
-		velocity.y * 1.0 + lookAt.y,
-		lookAt.z);
+	setLookAt(-velocity.x * directionU.x + lookAt.x,
+		-velocity.y * directionU.y + lookAt.y,
+		-velocity.z * directionU.z + lookAt.z);
 }
 
 void Camera::downMove()
 {
-	setPosition(position.x,
-		velocity.y * -1.0 + position.y,
-		position.z);
+	setPosition(-velocity.x * directionU.x + position.x,
+		-velocity.y * directionU.y + position.y,
+		-velocity.z * directionU.z + position.z);
 
-	setLookAt(lookAt.x,
-		velocity.y * -1.0 + lookAt.y,
-		lookAt.z);
+	setLookAt(-velocity.x * directionU.x + lookAt.x,
+		-velocity.y * directionU.y + lookAt.y,
+		-velocity.z * directionU.z + lookAt.z);
 }

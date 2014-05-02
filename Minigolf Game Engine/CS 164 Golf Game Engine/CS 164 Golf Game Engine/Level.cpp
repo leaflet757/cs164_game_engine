@@ -34,3 +34,23 @@ void Level::buildVerts()
 
 	//teeStore.setPosition(teeStore.x, teeStore.y, teeStore.z);
 }
+
+void Level::addTile(Tile& tile)
+{
+	tilesStore.push_back(tile);
+}
+
+void Level::addWall(Wall& wall)
+{
+	wallsStore.push_back(wall);
+}
+
+void Level::setCup(Cup& cup)
+{
+	cupStore = cup;
+}
+
+void Level::setTee(Tee& tee)
+{
+	teeStore = tee;
+}

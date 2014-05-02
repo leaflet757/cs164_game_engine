@@ -21,6 +21,11 @@ public:
 	Cup cupStore;
 	Tee teeStore;
 
+	void addWall(Wall& wall);
+	void addTile(Tile& tile);
+	void setCup(Cup& cup);
+	void setTee(Tee& tee);
+
 	void buildVerts();
 };
 

@@ -15,5 +15,5 @@ Ball::~Ball()
 void Ball::draw() const
 {
 	glColor3b(1, 0, 0);
-	glutSolidSphere(1, 8, 8);
+	glutSolidSphere(20, 16, 16);
 }
