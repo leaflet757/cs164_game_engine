@@ -170,7 +170,7 @@ void initialize(int argc, char **argv)
 	graphics->add(ball);
 
 	// Debug
-	createTestLevel();
+	//createTestLevel();
 	
 	// TODO: initialize Keyboard
 

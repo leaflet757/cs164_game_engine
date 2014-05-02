@@ -48,7 +48,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 
 		std::ifstream fileName;
 
-		std::string str = "";
+		std::string str = "./levels/";
 		str.append((char *)argv[i]);
 
 		// open the file
