@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <glm\vec3.hpp>
 #include <vector>
 
@@ -46,7 +47,7 @@ public:
 	void											addVert(float x, float y, float z);
 
 	// Overridable Draw
-	virtual void									draw() const { } // ERROR HERE
+	virtual void									draw() const { std::cout << "actor3d draw" << std::endl; }
 
 	// Overridable Update
 	virtual void									update(float delta) const { }

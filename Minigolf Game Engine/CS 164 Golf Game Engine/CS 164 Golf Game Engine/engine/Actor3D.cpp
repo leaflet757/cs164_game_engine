@@ -21,6 +21,7 @@ _isDrawable(copy._isDrawable),
 useCustomDraw(copy.useCustomDraw),
 position(copy.position),
 rotation(copy.rotation),
+scale(copy.scale),
 verts(copy.verts),
 color(copy.color),
 normals(copy.normals)

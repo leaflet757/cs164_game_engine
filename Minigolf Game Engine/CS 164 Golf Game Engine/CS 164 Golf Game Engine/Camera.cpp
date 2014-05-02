@@ -24,6 +24,7 @@ Camera::Camera(double eyex,
 	setDirectionU(directionU);
 
 	velocity = glm::vec3(0.1);
+	velocity.z = 0.3;
 }
 
 Camera::~Camera()

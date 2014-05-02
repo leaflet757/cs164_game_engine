@@ -54,22 +54,8 @@ void update()
 	//physics.update
 }
 
-void initialize(int argc, char **argv)
+void createTestLevel()
 {
-	graphics = new Graphics(argc, argv);
-
-	//TODO: add option to change window Size
-	graphics->createWindow();
-
-	graphics->init();
-
-	// Set-up camera
-	camera = Camera(4, 2, 0, 0, 0, 0, 0, 1, 0);
-
-	// Load Levels
-	io = new IOManager();
-	//levels = io->loadLevels(argc, argv);
-
 	Tile t;
 	t.addVert(-1.0, 0.0, 1.0);
 	t.addVert(-1.0, 0.0, -1.0);
@@ -83,7 +69,7 @@ void initialize(int argc, char **argv)
 	//graphics->add(w);
 	Wall w2;
 	w2.setPosition(1, 0, 0);
-	w2.setRotation(0,90,0);
+	w2.setRotation(0, 90, 0);
 	//graphics->add(w2);
 	Wall w3;
 	w3.setPosition(0, 0, 0);
@@ -162,7 +148,30 @@ void initialize(int argc, char **argv)
 	currentLevel->addWall(w8);
 	currentLevel->addWall(w9);
 	currentLevel->addWall(w10);
+}
 
+void initialize(int argc, char **argv)
+{
+	graphics = new Graphics(argc, argv);
+
+	//TODO: add option to change window Size
+	graphics->createWindow();
+
+	graphics->init();
+
+	// Set-up camera
+	camera = Camera(4, 2, 0, 0, 0, 0, 0, 1, 0);
+
+	// Load Levels
+	io = new IOManager();
+	//levels = io->loadLevels(argc, argv);
+
+	Ball ball;
+	graphics->add(ball);
+
+	// Debug
+	createTestLevel();
+	
 	// TODO: initialize Keyboard
 
 }
@@ -202,7 +211,6 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		camera.downMove();
 		break;
 	case KEY_B:
-		// back a level
 		graphics->remove(currentLevel->cupStore);
 		graphics->remove(currentLevel->teeStore);
 		for (Tile& i : currentLevel->tilesStore)
@@ -216,6 +224,7 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		break;
 	case KEY_N:
 		// next Level
+		std::cout << "Next Level" << std::endl;
 		graphics->add(currentLevel->cupStore);
 		graphics->add(currentLevel->teeStore);
 		for (Tile& i : currentLevel->tilesStore)

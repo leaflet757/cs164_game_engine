@@ -97,18 +97,18 @@ void Graphics::update(float delta)
 			}
 			else
 			{
-				std::vector<glm::vec3> verts = actor.getVertices();
-				std::vector<glm::vec3> color = actor.getColor();
-				glm::vec3 pos = actor.getPosition();
-				glm::vec3 rotation = actor.getRotation();
-				glm::vec3 scale = actor.getScale();
+				std::vector<glm::vec3>& verts = actor.getVertices();
+				std::vector<glm::vec3>& color = actor.getColor();
+				glm::vec3& pos = actor.getPosition();
+				glm::vec3& rotation = actor.getRotation();
+				glm::vec3& scale = actor.getScale();
 
 				glPushMatrix();
+				glScaled(scale.x, scale.y, scale.z);
 				glTranslated(pos.x, pos.y, pos.z);
 				glRotated(rotation.x, 1.0, 0.0, 0.0);
 				glRotated(rotation.y, 0.0, 1.0, 0.0);
 				glRotated(rotation.z, 0.0, 0.0, 1.0);
-				//glScaled(scale.x, scale.y, scale.z);
 
 				glBegin(GL_QUADS);
 				int i = 0;
@@ -125,8 +125,6 @@ void Graphics::update(float delta)
 		}
 	}
 
-	//glutSolidCube(1);
-
 	glutSwapBuffers();
 }
 
@@ -135,6 +133,7 @@ void Graphics::add(Actor3D& actor)
 	drawables.push_back(actor);
 }
 
+// TODO: Remove does not work so do not use yet
 void Graphics::remove(Actor3D& actor)
 {
 	drawables.erase(drawables.begin() + actor.getID());

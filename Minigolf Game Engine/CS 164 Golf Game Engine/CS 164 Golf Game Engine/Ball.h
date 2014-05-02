@@ -10,6 +10,6 @@ public:
 	Ball();
 	~Ball();
 
-	virtual void draw() const;
+	void draw() const;
 };
 
