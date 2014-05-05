@@ -47,7 +47,7 @@ public:
 	void											addVert(float x, float y, float z);
 
 	// Overridable Draw
-	virtual void									draw() const { std::cout << "actor3d draw" << std::endl; }
+	virtual void									draw() const { }
 
 	// Overridable Update
 	virtual void									update(float delta) const { }

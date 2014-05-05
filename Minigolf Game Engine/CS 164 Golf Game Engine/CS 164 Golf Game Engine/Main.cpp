@@ -63,19 +63,19 @@ void createTestLevel()
 	t.addVert(1.0, 0.0, 1.0);
 	t.tileID = 0;
 	t.neighbors.push_back(1);
-	//graphics->add(t);
+	graphics->add(t);
 	Wall w;
 	w.setPosition(0, 0, 1);
-	//graphics->add(w);
+	graphics->add(w);
 	Wall w2;
 	w2.setPosition(1, 0, 0);
 	w2.setRotation(0, 90, 0);
-	//graphics->add(w2);
+	graphics->add(w2);
 	Wall w3;
 	w3.setPosition(0, 0, 0);
 	w3.setPosition(-1, 0, 0);
 	w3.setRotation(0, 90, 0);
-	//graphics->add(w3);
+	graphics->add(w3);
 	Tile p;
 	p.addVert(-1.0, 0.0, 1.0);
 	p.addVert(-1.0, 0.0, -1.0);
@@ -83,7 +83,7 @@ void createTestLevel()
 	p.addVert(1.0, 0.0, 1.0);
 	p.tileID = 1;
 	p.setPosition(0, 0, -2);
-	//graphics->add(p);
+	graphics->add(p);
 	Tile q;
 	q.addVert(-1.0, 0.0, 1.0);
 	q.addVert(-1.0, 0.0, -1.0);
@@ -91,18 +91,18 @@ void createTestLevel()
 	q.addVert(1.0, 0.0, 1.0);
 	q.setPosition(-2, 0, -2);
 	q.tileID = 2;
-	//graphics->add(q);
+	graphics->add(q);
 	Wall w4;
 	w4.setPosition(2, 0, -1);
-	//graphics->add(w4);
+	graphics->add(w4);
 	Wall w5;
 	w5.setPosition(3, 0, -2);
 	w5.setRotation(0, 90, 0);
-	//graphics->add(w5);
+	graphics->add(w5);
 	Wall w6;
 	w6.setPosition(0, 0, 0);
 	w6.setPosition(2, 0, -3);
-	//graphics->add(w6);
+	graphics->add(w6);
 	Tile r;
 	r.addVert(-1.0, 0.0, 1.0);
 	r.addVert(-1.0, 0.0, -1.0);
@@ -110,27 +110,27 @@ void createTestLevel()
 	r.addVert(1.0, 0.0, 1.0);
 	r.setPosition(2, 0, -2);
 	r.tileID = 3;
-	//graphics->add(r);
+	graphics->add(r);
 	Wall w7;
 	w7.setPosition(-2, 0, -1);
-	//graphics->add(w7);
+	graphics->add(w7);
 	Wall w8;
 	w8.setPosition(-3, 0, -2);
 	w8.setRotation(0, 90, 0);
-	//graphics->add(w8);
+	graphics->add(w8);
 	Wall w9;
 	w9.setPosition(0, 0, 0);
 	w9.setPosition(-2, 0, -3);
-	//graphics->add(w9);
+	graphics->add(w9);
 	Wall w10;
 	w10.setPosition(0, 0, -3);
-	//graphics->add(w10);
+	graphics->add(w10);
 	Tee tee;
 	tee.setPosition(0, 0.001, 0);
-	//graphics->add(tee);
+	graphics->add(tee);
 	Cup cup;
 	cup.setPosition(-2, 0.0001, -2);
-	//graphics->add(cup);
+	graphics->add(cup);
 	currentLevel = new Level();
 	currentLevel->addTile(t);
 	currentLevel->addTile(p);
@@ -170,7 +170,7 @@ void initialize(int argc, char **argv)
 	graphics->add(ball);
 
 	// Debug
-	//createTestLevel();
+	createTestLevel();
 	
 	// TODO: initialize Keyboard
 
@@ -245,9 +245,8 @@ void mouse_event(int button, int state, int x, int y)
 {
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
-		mPrevx = x;
-		mPrevy = y;
 		printf("Right button down \n");
+		glm::vec3 &pos = camera.getPosition();
 		if (x < mPrevx)
 		{
 			// left

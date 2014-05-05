@@ -25,6 +25,7 @@ Camera::Camera(double eyex,
 
 	velocity = glm::vec3(0.1);
 	velocity.z = 0.3;
+	velocity.y = 0.3;
 }
 
 Camera::~Camera()
@@ -43,9 +44,9 @@ void Camera::setDirectionS(glm::vec3& s)
 
 void Camera::setDirectionU(glm::vec3& u)
 {
-	u.x = (directionF.y * directionS.z) - (directionF.z * directionS.y);
-	u.y = -1 * (directionF.x * directionS.z) - (directionF.z * directionS.x);
-	u.z = (directionF.x - directionS.y) - (directionF.y * directionS.x);
+	u.x = (directionS.y * directionF.z) - (directionS.z * directionF.y);
+	u.y = -1 * ((directionS.x * directionF.z) - (directionS.z * directionF.x));
+	u.z = (directionS.x * directionF.y) - (directionS.y * directionF.x);
 	u.x = u.x / u.length();
 	u.y = u.y / u.length();
 	u.z = u.z / u.length();
@@ -135,11 +136,11 @@ void Camera::upMove()
 
 void Camera::downMove()
 {
-	setPosition(-velocity.x * directionU.x + position.x,
-		-velocity.y * directionU.y + position.y,
-		-velocity.z * directionU.z + position.z);
+	setPosition(velocity.x * directionU.x + position.x,
+		velocity.y * directionU.y + position.y,
+		velocity.z * directionU.z + position.z);
 
-	setLookAt(-velocity.x * directionU.x + lookAt.x,
-		-velocity.y * directionU.y + lookAt.y,
-		-velocity.z * directionU.z + lookAt.z);
+	setLookAt(velocity.x * directionU.x + lookAt.x,
+		velocity.y * directionU.y + lookAt.y,
+		velocity.z * directionU.z + lookAt.z);
 }
