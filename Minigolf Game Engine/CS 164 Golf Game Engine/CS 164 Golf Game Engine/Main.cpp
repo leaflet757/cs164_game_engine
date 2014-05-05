@@ -239,33 +239,53 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 	default:
 		break;
 	}
+	
 }
 
+bool isDown = false;
 void mouse_event(int button, int state, int x, int y)
 {
+	printf("Right button down \n");
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
 	{
-		printf("Right button down \n");
+		isDown = true;
+	}
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP)
+	{
+		isDown = false;
+	}
+}
+
+void mouse_motion(int x, int y)
+{
+	if (isDown)
+	{
+		std::cout << x << std::endl;
+		std::cout << y << std::endl;
 		glm::vec3 &pos = camera.getPosition();
 		if (x < mPrevx)
 		{
 			// left
+			camera.tilt(0.3, false, false, true, false);
 		}
 		if (x > mPrevx)
 		{
 			// right
+			camera.tilt(0.3, false, false, false, true);
 		}
 		if (y < mPrevy)
 		{
 			// down
+			camera.tilt(0.3, true, false, false, false);
 		}
 		if (y > mPrevy)
 		{
 			// up
+			camera.tilt(0.3, false, true, false, false);
 		}
-		mPrevx = x;
-		mPrevy = y;
 	}
+	mPrevx = x;
+	mPrevy = y;
 }
 
 int main(int argc, char **argv)
@@ -276,6 +296,7 @@ int main(int argc, char **argv)
 	glutIdleFunc(update);						// register Idle Function
 	glutKeyboardFunc(keyboard);						// register Keyboard Handler
 	glutMouseFunc(mouse_event);
+	glutMotionFunc(mouse_motion);
 	//TODO: glutReshap
 	
 	glutMainLoop();							// run GLUT mainloop

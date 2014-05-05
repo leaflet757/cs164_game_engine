@@ -49,6 +49,7 @@ public:
 	// Should be movable component instead of sepporate Method
 	void setLookAt(float x, float y, float z);
 	void setUp(float x, float y, float z);
+	void tilt(float amount, bool up, bool down, bool left, bool right);
 
 	void setVelocity(float x, float y, float z);
 

@@ -144,3 +144,23 @@ void Camera::downMove()
 		velocity.y * directionU.y + lookAt.y,
 		velocity.z * directionU.z + lookAt.z);
 }
+
+void Camera::tilt(float amount, bool up, bool down, bool left, bool right)
+{
+	if (up)
+	{
+		setLookAt(lookAt.x - amount * directionU.x, lookAt.y - amount * directionU.y, lookAt.z - amount * directionU.z);
+	}
+	if (down)
+	{
+		setLookAt(lookAt.x + amount * directionU.x, lookAt.y + amount * directionU.y, lookAt.z + amount * directionU.z);
+	}
+	if (left)
+	{
+		setLookAt(lookAt.x - amount * directionS.x, lookAt.y - amount * directionS.y, lookAt.z - amount * directionS.z);
+	}
+	if (right)
+	{
+		setLookAt(lookAt.x + amount * directionS.x, lookAt.y + amount * directionS.y, lookAt.z + amount * directionS.z);
+	}
+}
