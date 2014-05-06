@@ -2,6 +2,7 @@
 
 #include <glm\vec3.hpp>
 #include <GL\glut.h>
+
 #include "engine\Actor3D.h"
 
 class Camera : public Actor3D
@@ -21,9 +22,13 @@ private:
 	// TODO: More physics stuff to be abstracted
 	glm::vec3 velocity;
 
+	void setDirectionF(glm::vec3&);
 	void setDirectionU(glm::vec3&);
 	void setDirectionS(glm::vec3&);
 
+	void rotateAboutCenter(float x, float y, float z,
+		float a, float b, float c,
+		float u, float v, float w, float theta);
 
 public:
 	Camera() { };
@@ -49,7 +54,7 @@ public:
 	// Should be movable component instead of sepporate Method
 	void setLookAt(float x, float y, float z);
 	void setUp(float x, float y, float z);
-	void tilt(float amount, bool up, bool down, bool left, bool right);
+	void tilt(float angle, bool up, bool down, bool left, bool right);
 
 	void setVelocity(float x, float y, float z);
 

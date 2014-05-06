@@ -13,23 +13,29 @@ Camera::Camera(double eyex,
 {
 	position = glm::vec3(eyex, eyey, eyez);
 	lookAt = glm::vec3(centerx, centery, centerz);
-	this->up = glm::vec3(upx, upy, upz);
+	up = glm::vec3(upx, upy, upz);
 	directionF = glm::vec3();
-	directionF.x = (position.x - lookAt.x) / (position - lookAt).length();
-	directionF.y = (position.y - lookAt.y) / (position - lookAt).length();
-	directionF.z = (position.z - lookAt.z) / (position - lookAt).length();
+	setDirectionF(directionF);
 	directionS = glm::vec3();
 	setDirectionS(directionS);
 	directionU = glm::vec3();
 	setDirectionU(directionU);
 
-	velocity = glm::vec3(0.1);
-	velocity.z = 0.3;
-	velocity.y = 0.3;
+	velocity = glm::vec3(0.5);
 }
 
 Camera::~Camera()
 {
+}
+
+void Camera::setDirectionF(glm::vec3& f)
+{
+	directionF.x = (position.x - lookAt.x) / (position - lookAt).length();
+	directionF.y = (position.y - lookAt.y) / (position - lookAt).length();
+	directionF.z = (position.z - lookAt.z) / (position - lookAt).length();
+	directionF.x = directionF.x / directionF.length();
+	directionF.y = directionF.y / directionF.length();
+	directionF.z = directionF.z / directionF.length();
 }
 
 void Camera::setDirectionS(glm::vec3& s)
@@ -85,7 +91,7 @@ void Camera::forward()
 	setPosition(-velocity.x * directionF.x + position.x,
 		-velocity.y * directionF.y + position.y,
 		-velocity.z * directionF.z + position.z);
-	
+
 	setLookAt(-velocity.x * directionF.x + lookAt.x,
 		-velocity.y * directionF.y + lookAt.y,
 		-velocity.z * directionF.z + lookAt.z);
@@ -103,17 +109,6 @@ void Camera::backward()
 
 void Camera::leftMove()
 {
-	setPosition(velocity.x * directionS.x + position.x,
-		velocity.y * directionS.y + position.y,
-		velocity.z * directionS.z + position.z);
-
-	setLookAt(velocity.x * directionS.x + lookAt.x,
-		velocity.y * directionS.y + lookAt.y,
-		velocity.z * directionS.z + lookAt.z);
-}
-
-void Camera::rightMove()
-{
 	setPosition(-velocity.x * directionS.x + position.x,
 		-velocity.y * directionS.y + position.y,
 		-velocity.z * directionS.z + position.z);
@@ -121,6 +116,17 @@ void Camera::rightMove()
 	setLookAt(-velocity.x * directionS.x + lookAt.x,
 		-velocity.y * directionS.y + lookAt.y,
 		-velocity.z * directionS.z + lookAt.z);
+}
+
+void Camera::rightMove()
+{
+	setPosition(velocity.x * directionS.x + position.x,
+		velocity.y * directionS.y + position.y,
+		velocity.z * directionS.z + position.z);
+
+	setLookAt(velocity.x * directionS.x + lookAt.x,
+		velocity.y * directionS.y + lookAt.y,
+		velocity.z * directionS.z + lookAt.z);
 }
 
 void Camera::upMove()
@@ -145,22 +151,47 @@ void Camera::downMove()
 		velocity.z * directionU.z + lookAt.z);
 }
 
-void Camera::tilt(float amount, bool up, bool down, bool left, bool right)
+void Camera::tilt(float angle, bool up, bool down, bool left, bool right)
 {
 	if (up)
 	{
-		setLookAt(lookAt.x - amount * directionU.x, lookAt.y - amount * directionU.y, lookAt.z - amount * directionU.z);
+		rotateAboutCenter(lookAt.x, lookAt.y, lookAt.z, 
+			position.x, position.y, position.z, 
+			directionS.x, directionS.y, directionS.z, angle);
 	}
 	if (down)
 	{
-		setLookAt(lookAt.x + amount * directionU.x, lookAt.y + amount * directionU.y, lookAt.z + amount * directionU.z);
+		rotateAboutCenter(lookAt.x, lookAt.y, lookAt.z, 
+			position.x, position.y, position.z, 
+			directionS.x, directionS.y, directionS.z, -angle);
 	}
-	if (left)
+	/*if (left)
 	{
-		setLookAt(lookAt.x - amount * directionS.x, lookAt.y - amount * directionS.y, lookAt.z - amount * directionS.z);
+		rotateAboutCenter(lookAt.x, lookAt.y, lookAt.z, 
+			position.x, position.y, position.z, 
+			directionU.x, directionU.y, directionU.z, -angle);
 	}
 	if (right)
 	{
-		setLookAt(lookAt.x + amount * directionS.x, lookAt.y + amount * directionS.y, lookAt.z + amount * directionS.z);
-	}
+		rotateAboutCenter(lookAt.x, lookAt.y, lookAt.z, 
+			position.x, position.y, position.z, 
+			directionU.x, directionU.y, directionU.z, angle);
+	}*/
+	setDirectionF(directionF);
+	setDirectionS(directionS);
+	setDirectionU(directionU);
+}
+
+void Camera::rotateAboutCenter(float x, float y, float z, 
+	float a, float b, float c, 
+	float u, float v, float w, float theta)
+{
+	lookAt.x = a*(pow(v, 2) + pow(w, 2) - u*(b*v + c*w - u*x - v*y - w*z))*
+		(1 - cos(theta)) + x*cos(theta) + (-c*v + b*w - w*y + v*z)*sin(theta);
+
+	lookAt.y = b*(pow(u, 2) + pow(w, 2) - v*(a*u + c*w - u*x - v*y - w*z))*
+		(1 - cos(theta)) + y*cos(theta) + (c*u + a*w - w*x + u*z)*sin(theta);;
+
+	lookAt.z = c*(pow(u, 2) + pow(v, 2) - w*(a*u + b*v - u*x - v*y - w*z))*
+		(1 - cos(theta)) + z*cos(theta) + (-b*u + a*v - v*x + u*y)*sin(theta);;
 }

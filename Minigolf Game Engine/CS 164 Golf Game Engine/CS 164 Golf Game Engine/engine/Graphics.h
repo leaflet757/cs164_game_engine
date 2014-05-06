@@ -23,7 +23,7 @@ typedef struct {
 class Graphics
 {
 private:
-	std::vector<Actor3D> drawables;
+	std::vector<Actor3D*> drawables;
 
 public:
 	Graphics(int argc, char** argv);
@@ -36,7 +36,6 @@ public:
 	void											clear();
 	void											update(float delta);
 
-	void											add(Actor3D& actor);
-	void											remove(Actor3D& actor);
+	void											add(Actor3D* actor);
 };
 

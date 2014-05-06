@@ -13,8 +13,14 @@ Ball::~Ball()
 
 void Ball::draw() const
 {
-	/*glColor3b(1, 0.5, 0);
-	glutSolidSphere(0.1, 8, 8);*/
+	glPushMatrix();
+	glColor3b(1, 0.5, 0);
+	glTranslatef(0, 0.1, 0);
+	glutSolidSphere(0.1, 8, 8);
+	glPopMatrix();
+}
 
-	std::cout << "The ball is drawing" << std::endl;
+void Ball::tick(float delta) const
+{
+	std::cout << "The ball is ticking" << std::endl;
 }

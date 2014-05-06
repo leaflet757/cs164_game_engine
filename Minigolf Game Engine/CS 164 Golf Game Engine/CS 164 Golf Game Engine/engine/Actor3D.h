@@ -3,6 +3,7 @@
 #include <iostream>
 #include <glm\vec3.hpp>
 #include <vector>
+#include <cmath>
 
 class Actor3D
 {
@@ -21,6 +22,8 @@ protected:
 	std::vector<glm::vec3>							verts;
 	std::vector<glm::vec3>							color;
 	std::vector<glm::vec3>							normals;
+
+	// TODO: Creat more things related to phys, like bool mover and velocity
 
 public:
 	Actor3D();
@@ -50,7 +53,7 @@ public:
 	virtual void									draw() const { }
 
 	// Overridable Update
-	virtual void									update(float delta) const { }
+	virtual void									tick(float delta) const { }
 
 	Actor3D& operator=(const Actor3D& other);
 };

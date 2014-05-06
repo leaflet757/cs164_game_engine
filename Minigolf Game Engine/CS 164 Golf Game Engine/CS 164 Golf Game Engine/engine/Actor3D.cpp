@@ -17,15 +17,16 @@ normals()
 
 Actor3D::Actor3D(const Actor3D& copy) :
 id(copy.id),
-_isDrawable(copy._isDrawable),
 useCustomDraw(copy.useCustomDraw),
 position(copy.position),
 rotation(copy.rotation),
 scale(copy.scale),
-verts(copy.verts),
 color(copy.color),
 normals(copy.normals)
 {
+	_isDrawable = copy.isDrawable();
+
+	verts = copy.verts;
 }
 
 Actor3D::~Actor3D()

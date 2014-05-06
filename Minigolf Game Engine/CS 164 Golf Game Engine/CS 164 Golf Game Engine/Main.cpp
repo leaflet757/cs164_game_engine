@@ -11,6 +11,8 @@
 
 #include "engine\Graphics.h"
 #include "engine\IOManager.h"
+#include "engine\Ticker.h"
+#include "engine\Physics.h"
 #include "Level.h"
 
 #include "Camera.h"
@@ -19,6 +21,9 @@
 
 Graphics* graphics;
 IOManager* io;
+Ticker* ticker;
+Physics* physics;
+
 Camera camera;
 
 // What should be inlucded in this file:
@@ -46,93 +51,92 @@ void update()
 	prevTime = currentTime;
 
 	graphics->clear();
-	// TODO:
+
 	camera.update(delta);
-	//gluLookAt(4, 2, 0, 0, 0, 0, 0, 1, 0);
-	//Ticker.update
-	graphics->update(delta);
+	ticker->update(delta);
 	//physics.update
+	graphics->update(delta);
 }
 
 void createTestLevel()
 {
-	Tile t;
-	t.addVert(-1.0, 0.0, 1.0);
-	t.addVert(-1.0, 0.0, -1.0);
-	t.addVert(1.0, 0.0, -1.0);
-	t.addVert(1.0, 0.0, 1.0);
-	t.tileID = 0;
-	t.neighbors.push_back(1);
+	Tile *t = new Tile();
+	t->addVert(-1.0, 0.0, 1.0);
+	t->addVert(-1.0, 0.0, -1.0);
+	t->addVert(1.0, 0.0, -1.0);
+	t->addVert(1.0, 0.0, 1.0);
+	t->tileID = 0;
+	t->neighbors.push_back(1);
 	graphics->add(t);
-	Wall w;
-	w.setPosition(0, 0, 1);
+	Wall *w = new Wall();
+	w->setPosition(0, 0, 1);
 	graphics->add(w);
-	Wall w2;
-	w2.setPosition(1, 0, 0);
-	w2.setRotation(0, 90, 0);
+	Wall *w2 = new Wall();
+	w2->setPosition(1, 0, 0);
+	w2->setRotation(0, 90, 0);
 	graphics->add(w2);
-	Wall w3;
-	w3.setPosition(0, 0, 0);
-	w3.setPosition(-1, 0, 0);
-	w3.setRotation(0, 90, 0);
+	Wall *w3 = new Wall();
+	w3->setPosition(0, 0, 0);
+	w3->setPosition(-1, 0, 0);
+	w3->setRotation(0, 90, 0);
 	graphics->add(w3);
-	Tile p;
-	p.addVert(-1.0, 0.0, 1.0);
-	p.addVert(-1.0, 0.0, -1.0);
-	p.addVert(1.0, 0.0, -1.0);
-	p.addVert(1.0, 0.0, 1.0);
-	p.tileID = 1;
-	p.setPosition(0, 0, -2);
+	Tile *p = new Tile();
+	p->addVert(-1.0, 0.0, 1.0);
+	p->addVert(-1.0, 0.0, -1.0);
+	p->addVert(1.0, 0.0, -1.0);
+	p->addVert(1.0, 0.0, 1.0);
+	p->tileID = 1;
+	p->setPosition(0, 0, -2);
 	graphics->add(p);
-	Tile q;
-	q.addVert(-1.0, 0.0, 1.0);
-	q.addVert(-1.0, 0.0, -1.0);
-	q.addVert(1.0, 0.0, -1.0);
-	q.addVert(1.0, 0.0, 1.0);
-	q.setPosition(-2, 0, -2);
-	q.tileID = 2;
+	Tile *q = new Tile();
+	q->addVert(-1.0, 0.0, 1.0);
+	q->addVert(-1.0, 0.0, -1.0);
+	q->addVert(1.0, 0.0, -1.0);
+	q->addVert(1.0, 0.0, 1.0);
+	q->setPosition(-2, 0, -2);
+	q->tileID = 2;
 	graphics->add(q);
-	Wall w4;
-	w4.setPosition(2, 0, -1);
+	Wall *w4 = new Wall();
+	w4->setPosition(2, 0, -1);
 	graphics->add(w4);
-	Wall w5;
-	w5.setPosition(3, 0, -2);
-	w5.setRotation(0, 90, 0);
+	Wall *w5 = new Wall();
+	w5->setPosition(3, 0, -2);
+	w5->setRotation(0, 90, 0);
 	graphics->add(w5);
-	Wall w6;
-	w6.setPosition(0, 0, 0);
-	w6.setPosition(2, 0, -3);
+	Wall *w6 = new Wall();
+	w6->setPosition(0, 0, 0);
+	w6->setPosition(2, 0, -3);
 	graphics->add(w6);
-	Tile r;
-	r.addVert(-1.0, 0.0, 1.0);
-	r.addVert(-1.0, 0.0, -1.0);
-	r.addVert(1.0, 0.0, -1.0);
-	r.addVert(1.0, 0.0, 1.0);
-	r.setPosition(2, 0, -2);
-	r.tileID = 3;
+	Tile *r = new Tile();
+	r->addVert(-1.0, 0.0, 1.0);
+	r->addVert(-1.0, 0.0, -1.0);
+	r->addVert(1.0, 0.0, -1.0);
+	r->addVert(1.0, 0.0, 1.0);
+	r->setPosition(2, 0, -2);
+	r->tileID = 3;
 	graphics->add(r);
-	Wall w7;
-	w7.setPosition(-2, 0, -1);
+	Wall *w7 = new Wall();
+	w7->setPosition(-2, 0, -1);
 	graphics->add(w7);
-	Wall w8;
-	w8.setPosition(-3, 0, -2);
-	w8.setRotation(0, 90, 0);
+	Wall *w8 = new Wall();
+	w8->setPosition(-3, 0, -2);
+	w8->setRotation(0, 90, 0);
 	graphics->add(w8);
-	Wall w9;
-	w9.setPosition(0, 0, 0);
-	w9.setPosition(-2, 0, -3);
+	Wall *w9 = new Wall();
+	w9->setPosition(0, 0, 0);
+	w9->setPosition(-2, 0, -3);
 	graphics->add(w9);
-	Wall w10;
-	w10.setPosition(0, 0, -3);
+	Wall *w10 = new Wall();
+	w10->setPosition(0, 0, -3);
 	graphics->add(w10);
-	Tee tee;
-	tee.setPosition(0, 0.001, 0);
+	Tee *tee = new Tee();
+	tee->setPosition(0, 0.001, 0);
 	graphics->add(tee);
-	Cup cup;
-	cup.setPosition(-2, 0.0001, -2);
+	Cup *cup = new Cup();
+	cup->setPosition(-2, 0.0001, -2);
 	graphics->add(cup);
 	currentLevel = new Level();
-	currentLevel->addTile(t);
+	/*currentLevel->addTile(t);
 	currentLevel->addTile(p);
 	currentLevel->addTile(q);
 	currentLevel->addTile(r);
@@ -147,7 +151,7 @@ void createTestLevel()
 	currentLevel->addWall(w7);
 	currentLevel->addWall(w8);
 	currentLevel->addWall(w9);
-	currentLevel->addWall(w10);
+	currentLevel->addWall(w10);*/
 }
 
 void initialize(int argc, char **argv)
@@ -166,7 +170,13 @@ void initialize(int argc, char **argv)
 	io = new IOManager();
 	//levels = io->loadLevels(argc, argv);
 
-	Ball ball;
+	// Set up ticker
+	ticker = new Ticker();
+
+	// Set up Physics
+	physics = new Physics();
+
+	Ball *ball = new Ball();
 	graphics->add(ball);
 
 	// Debug
@@ -211,30 +221,11 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		camera.downMove();
 		break;
 	case KEY_B:
-		graphics->remove(currentLevel->cupStore);
-		graphics->remove(currentLevel->teeStore);
-		for (Tile& i : currentLevel->tilesStore)
-		{
-			graphics->remove(i);
-		}
-		for (Wall& i : currentLevel->wallsStore)
-		{
-			graphics->remove(i);
-		}
+		
 		break;
 	case KEY_N:
 		// next Level
-		std::cout << "Next Level" << std::endl;
-		graphics->add(currentLevel->cupStore);
-		graphics->add(currentLevel->teeStore);
-		for (Tile& i : currentLevel->tilesStore)
-		{
-			graphics->add(i);
-		}
-		for (Wall& i : currentLevel->wallsStore)
-		{
-			graphics->add(i);
-		}
+		
 		break;
 	default:
 		break;
@@ -260,28 +251,25 @@ void mouse_motion(int x, int y)
 {
 	if (isDown)
 	{
-		std::cout << x << std::endl;
-		std::cout << y << std::endl;
-		glm::vec3 &pos = camera.getPosition();
 		if (x < mPrevx)
 		{
 			// left
-			camera.tilt(0.3, false, false, true, false);
+			camera.tilt(0.1, false, false, true, false);
 		}
 		if (x > mPrevx)
 		{
 			// right
-			camera.tilt(0.3, false, false, false, true);
+			camera.tilt(0.1, false, false, false, true);
 		}
 		if (y < mPrevy)
 		{
 			// down
-			camera.tilt(0.3, true, false, false, false);
+			camera.tilt(0.1, true, false, false, false);
 		}
 		if (y > mPrevy)
 		{
 			// up
-			camera.tilt(0.3, false, true, false, false);
+			camera.tilt(0.1, false, true, false, false);
 		}
 	}
 	mPrevx = x;

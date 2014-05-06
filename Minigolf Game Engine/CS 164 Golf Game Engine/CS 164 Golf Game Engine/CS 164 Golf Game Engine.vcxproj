@@ -108,7 +108,9 @@
     <ClCompile Include="engine\Actor3D.cpp" />
     <ClCompile Include="engine\Graphics.cpp" />
     <ClCompile Include="engine\IOManager.cpp" />
+    <ClCompile Include="engine\Physics.cpp" />
     <ClCompile Include="engine\stdafx.cpp" />
+    <ClCompile Include="engine\Ticker.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Tee.cpp" />
@@ -123,8 +125,10 @@
     <ClInclude Include="engine\Actor3D.h" />
     <ClInclude Include="engine\Graphics.h" />
     <ClInclude Include="engine\IOManager.h" />
+    <ClInclude Include="engine\Physics.h" />
     <ClInclude Include="engine\stdafx.h" />
     <ClInclude Include="engine\targetver.h" />
+    <ClInclude Include="engine\Ticker.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Tee.h" />
     <ClInclude Include="Tile.h" />

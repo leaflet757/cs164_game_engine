@@ -11,5 +11,6 @@ public:
 	~Ball();
 
 	void draw() const;
+	void tick(float delta) const;
 };
 

@@ -89,19 +89,19 @@ void Graphics::update(float delta)
 {
 	for (auto const &actor : drawables)
 	{
-		if (actor.isDrawable())
+		if (actor->isDrawable())
 		{
-			if (actor.hasCustomDraw())
+			if (actor->hasCustomDraw())
 			{
-				actor.draw();
+				actor->draw();
 			}
 			else
 			{
-				std::vector<glm::vec3>& verts = actor.getVertices();
-				std::vector<glm::vec3>& color = actor.getColor();
-				glm::vec3& pos = actor.getPosition();
-				glm::vec3& rotation = actor.getRotation();
-				glm::vec3& scale = actor.getScale();
+				std::vector<glm::vec3>& verts = actor->getVertices();
+				std::vector<glm::vec3>& color = actor->getColor();
+				glm::vec3& pos = actor->getPosition();
+				glm::vec3& rotation = actor->getRotation();
+				glm::vec3& scale = actor->getScale();
 
 				glPushMatrix();
 				glScaled(scale.x, scale.y, scale.z);
@@ -128,13 +128,7 @@ void Graphics::update(float delta)
 	glutSwapBuffers();
 }
 
-void Graphics::add(Actor3D& actor)
+void Graphics::add(Actor3D *actor)
 {
 	drawables.push_back(actor);
-}
-
-// TODO: Remove does not work so do not use yet
-void Graphics::remove(Actor3D& actor)
-{
-	drawables.erase(drawables.begin() + actor.getID());
 }
