@@ -110,6 +110,11 @@ void Graphics::update(float delta)
 				glRotated(rotation.y, 0.0, 1.0, 0.0);
 				glRotated(rotation.z, 0.0, 0.0, 1.0);
 
+				if (actor->isWall)
+				{
+					std::cout << "wall";
+				}
+
 				glBegin(GL_QUADS);
 				int i = 0;
 				for (const glm::vec3 &v : verts)

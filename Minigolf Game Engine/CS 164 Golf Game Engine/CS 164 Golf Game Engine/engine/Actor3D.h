@@ -30,6 +30,8 @@ public:
 	Actor3D(const Actor3D& copy);
 	~Actor3D();
 
+	bool isWall;
+
 	// Conditionals
 	bool											isDrawable() const { return _isDrawable; }
 	bool											hasCustomDraw() const { return useCustomDraw; }

@@ -13,6 +13,7 @@ verts(),
 color(),
 normals()
 {
+	isWall = false;
 }
 
 Actor3D::Actor3D(const Actor3D& copy) :
@@ -25,7 +26,7 @@ color(copy.color),
 normals(copy.normals)
 {
 	_isDrawable = copy.isDrawable();
-
+	isWall = copy.isWall;
 	verts = copy.verts;
 }
 

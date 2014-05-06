@@ -28,8 +28,8 @@ Camera camera;
 
 // What should be inlucded in this file:
 // TODO: List of Levels
-std::vector<Level>* levels;
-Level* currentLevel;
+std::vector<Level> *levels;
+Level* currentLevel = nullptr;
 
 #define KEY_ESCAPE 27
 #define KEY_W 119
@@ -168,7 +168,25 @@ void initialize(int argc, char **argv)
 
 	// Load Levels
 	io = new IOManager();
-	//levels = io->loadLevels(argc, argv);
+	levels = io->loadLevels(argc, argv);
+	
+	Tee tee;
+	for (auto & l = levels->begin(); l < levels->end(); ++l)
+	{
+		if (currentLevel == nullptr)
+		{
+			currentLevel = &(*l);
+			for (auto & t : l->tilesStore)
+			{
+				graphics->add(&t);
+			}
+			for (auto & w : l->wallsStore)
+			{
+				graphics->add(&w);
+			}
+			tee = l->teeStore;
+		}
+	}
 
 	// Set up ticker
 	ticker = new Ticker();
@@ -180,10 +198,9 @@ void initialize(int argc, char **argv)
 	graphics->add(ball);
 
 	// Debug
-	createTestLevel();
+	//createTestLevel();
 	
 	// TODO: initialize Keyboard
-
 }
 
 int mPrevx;
