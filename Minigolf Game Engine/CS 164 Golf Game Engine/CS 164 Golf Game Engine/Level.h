@@ -10,6 +10,7 @@
 
 class Level
 {
+
 public:
 	Level(std::vector<Tile> tilesStore, std::vector<Wall> wallsStore,
 		Cup cupStore, Tee teeStore);
@@ -20,6 +21,8 @@ public:
 	std::vector<Wall> wallsStore;
 	Cup cupStore;
 	Tee teeStore;
+
+	void setRenderingState(bool isDrawn);
 
 	void addWall(Wall& wall);
 	void addTile(Tile& tile);

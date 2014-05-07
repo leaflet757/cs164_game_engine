@@ -43,13 +43,13 @@ void Graphics::init()
 	GLfloat amb_light[] = { 0.1, 0.1, 0.1, 1.0 };
 	GLfloat diffuse[] = { 0.6, 0.6, 0.6, 1 };
 	GLfloat specular[] = { 0.7, 0.7, 0.3, 1 };
-	GLfloat lightPosition[] = {-5, 5, -5};
-	GLfloat lightDirection[] = {1,-1,1};
+	GLfloat lightPosition[] = {5, 5, 5};
+	GLfloat lightDirection[] = {0,0,0};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb_light);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDirection);
+	//glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDirection);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
 	glShadeModel(GL_SMOOTH);
@@ -98,6 +98,7 @@ void Graphics::update(float delta)
 			else
 			{
 				std::vector<glm::vec3>& verts = actor->getVertices();
+				glm::vec3& normals = actor->getNormals();
 				std::vector<glm::vec3>& color = actor->getColor();
 				glm::vec3& pos = actor->getPosition();
 				glm::vec3& rotation = actor->getRotation();
@@ -110,18 +111,13 @@ void Graphics::update(float delta)
 				glRotated(rotation.y, 0.0, 1.0, 0.0);
 				glRotated(rotation.z, 0.0, 0.0, 1.0);
 
-				if (actor->isWall)
-				{
-					std::cout << "wall";
-				}
-
 				glBegin(GL_QUADS);
 				int i = 0;
 				for (const glm::vec3 &v : verts)
 				{
 					const glm::vec3 &c = color[i++];
-					//glColor3ub(0.0, 255, 0.0);
 					glColor3f(c.r, c.g, c.b);
+					glNormal3f(normals.x, normals.y, normals.z);
 					glVertex3f(v.x, v.y, v.z);
 				}
 				glEnd();

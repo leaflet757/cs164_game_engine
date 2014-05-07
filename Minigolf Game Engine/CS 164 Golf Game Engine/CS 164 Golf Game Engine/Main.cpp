@@ -182,7 +182,7 @@ void initialize(int argc, char **argv)
 			}
 			for (auto & w : l->wallsStore)
 			{
-				graphics->add(&w);
+				//graphics->add(&w);
 			}
 			tee = l->teeStore;
 		}
@@ -238,11 +238,13 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		camera.downMove();
 		break;
 	case KEY_B:
-		
+		camera.tilt(0.1, false, false, true, false);
+		std::cout << "B Key Pressed" << std::endl;
 		break;
 	case KEY_N:
 		// next Level
-		
+		camera.tilt(0.1, false, false, false, true);
+		std::cout << "N Key Pressed" << std::endl;
 		break;
 	default:
 		break;
@@ -271,12 +273,12 @@ void mouse_motion(int x, int y)
 		if (x < mPrevx)
 		{
 			// left
-			camera.tilt(0.1, false, false, true, false);
+			//camera.tilt(0.1, false, false, true, false);
 		}
 		if (x > mPrevx)
 		{
 			// right
-			camera.tilt(0.1, false, false, false, true);
+			//camera.tilt(0.1, false, false, false, true);
 		}
 		if (y < mPrevy)
 		{

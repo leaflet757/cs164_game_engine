@@ -1,5 +1,6 @@
 #pragma once
 
+#include <GL\glut.h>
 #include <iostream>
 #include <glm\vec3.hpp>
 #include <vector>
@@ -21,7 +22,7 @@ protected:
 
 	std::vector<glm::vec3>							verts;
 	std::vector<glm::vec3>							color;
-	std::vector<glm::vec3>							normals;
+	glm::vec3										normals;
 
 	// TODO: Creat more things related to phys, like bool mover and velocity
 
@@ -42,6 +43,7 @@ public:
 	glm::vec3										getRotation() const { return rotation; }
 	glm::vec3										getScale() const { return scale; }
 	std::vector<glm::vec3>							getVertices() const { return verts; }
+	glm::vec3										getNormals() const { return normals; }
 	std::vector<glm::vec3>							getColor() const { return color; }
 
 	// Set Functions

@@ -54,3 +54,17 @@ void Level::setTee(Tee& tee)
 {
 	teeStore = tee;
 }
+
+void Level::setRenderingState(bool isDrawn)
+{
+	if (isDrawn)
+	{
+		// set all the actors in the level to visible
+		// set all the actors to be collidable
+	}
+	else
+	{
+		// set all the actors in the level to not visible
+		// set all the actors to be collidable
+	}
+}

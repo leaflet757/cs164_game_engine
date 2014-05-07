@@ -22,9 +22,9 @@ private:
 	// TODO: More physics stuff to be abstracted
 	glm::vec3 velocity;
 
-	void setDirectionF(glm::vec3&);
-	void setDirectionU(glm::vec3&);
-	void setDirectionS(glm::vec3&);
+	void setDirectionF();
+	void setDirectionU();
+	void setDirectionS();
 
 	void rotateAboutCenter(float x, float y, float z,
 		float a, float b, float c,
