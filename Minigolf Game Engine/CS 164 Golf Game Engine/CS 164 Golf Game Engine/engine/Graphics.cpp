@@ -115,8 +115,11 @@ void Graphics::update(float delta)
 				int i = 0;
 				for (const glm::vec3 &v : verts)
 				{
-					const glm::vec3 &c = color[i++];
-					glColor3f(c.r, c.g, c.b);
+					if (i < color.size())
+					{
+						const glm::vec3 &c = color[i++];
+						glColor3f(c.r, c.g, c.b);
+					}
 					glNormal3f(normals.x, normals.y, normals.z);
 					glVertex3f(v.x, v.y, v.z);
 				}
