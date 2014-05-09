@@ -5,13 +5,21 @@ int Actor3D::idnumber = 0;
 Actor3D::Actor3D() :
 id(++idnumber),
 _isDrawable(false),
+_isMover(false),
+_isCollisionObject(false),
+_isTile(false),
 useCustomDraw(false),
 position(0.0),
 rotation(0.0),
 scale(1.0, 1.0, 1.0),
+mass(1),
+direction(0.0,0.0,-1.0),
+velocity(0.0),
+acceleration(0.0),
 verts(),
 color(),
-normals()
+normals(),
+radius(0)
 {
 	isWall = false;
 }
@@ -19,13 +27,21 @@ normals()
 Actor3D::Actor3D(const Actor3D& copy) :
 id(copy.id),
 useCustomDraw(copy.useCustomDraw),
+_isTile(copy._isTile),
 position(copy.position),
 rotation(copy.rotation),
 scale(copy.scale),
+mass(copy.mass),
+direction(copy.direction),
+velocity(copy.velocity),
+acceleration(copy.acceleration),
 color(copy.color),
-normals(copy.normals)
+normals(copy.normals),
+radius(copy.radius)
 {
 	_isDrawable = copy.isDrawable();
+	_isMover = copy.isMover();
+	_isCollisionObject = copy.isCollisionObject(),
 	isWall = copy.isWall;
 	verts = copy.verts;
 }
@@ -49,11 +65,47 @@ void Actor3D::setRotation(float x, float y, float z)
 	rotation.z = z;
 }
 
+void Actor3D::setVelocity(float x, float y, float z)
+{
+	velocity.x = x;
+	velocity.y = y;
+	velocity.z = z;
+
+	direction = velocity;
+	float length = sqrt(direction.x*direction.x + 
+		direction.y*direction.y + direction.z*direction.z);
+	direction.x = direction.x / length;
+	direction.y = direction.y / length;
+	direction.z = direction.z / length;
+}
+
+void Actor3D::setAcceleration(float x, float y, float z)
+{
+	acceleration.x = x;
+	acceleration.y = y;
+	acceleration.z = z;
+}
+
 Actor3D& Actor3D::operator=(const Actor3D& other)
 {
 	id = other.id;
+	_isDrawable = other.isDrawable();
+	_isMover = other.isMover();
+	_isTile = other.isTile();
+	_isCollisionObject = other.isCollisionObject();
+	useCustomDraw = other.useCustomDraw;
 	position = other.position;
 	rotation = other.rotation;
+	scale = other.scale;
+	direction = other.direction;
+	velocity = other.velocity;
+	acceleration = other.acceleration;
+	verts = other.verts;
+	color = other.color;
+	mass = other.mass;
+	radius = other.radius;
+	normals = other.normals;
+
 	return *this;
 }
 
@@ -77,4 +129,16 @@ void Actor3D::addVert(float x, float y, float z)
 
 		normals = n;
 	}
+}
+
+void Actor3D::setMass(float m)
+{
+	mass = m;
+}
+
+glm::vec3 Actor3D::getDirection() const
+{
+	float length = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2)
+		+ pow(velocity.z, 2));
+	return velocity / length;
 }

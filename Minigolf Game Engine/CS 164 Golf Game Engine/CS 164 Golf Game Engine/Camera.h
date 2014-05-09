@@ -20,7 +20,7 @@ private:
 	glm::vec3 directionS;
 
 	// TODO: More physics stuff to be abstracted
-	glm::vec3 velocity;
+	//glm::vec3 velocity;
 
 	void setDirectionF();
 	void setDirectionU();

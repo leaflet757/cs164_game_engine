@@ -4,6 +4,8 @@
 Tile::Tile()
 {
 	_isDrawable = true;
+	_isCollisionObject = true;
+	_isTile = true;
 
 	x = std::vector<float>();
 	y = std::vector<float>();

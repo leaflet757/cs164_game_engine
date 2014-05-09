@@ -24,6 +24,8 @@ IOManager* io;
 Ticker* ticker;
 Physics* physics;
 
+Ball *ball;
+
 Camera camera;
 
 // What should be inlucded in this file:
@@ -54,7 +56,7 @@ void update()
 
 	camera.update(delta);
 	ticker->update(delta);
-	//physics.update
+	physics->update(delta);
 	graphics->update(delta);
 }
 
@@ -68,18 +70,22 @@ void createTestLevel()
 	t->tileID = 0;
 	t->neighbors.push_back(1);
 	graphics->add(t);
+	physics->add(t);
 	Wall *w = new Wall();
 	w->setPosition(0, 0, 1);
 	graphics->add(w);
+	physics->add(w);
 	Wall *w2 = new Wall();
 	w2->setPosition(1, 0, 0);
 	w2->setRotation(0, 90, 0);
 	graphics->add(w2);
+	physics->add(w2);
 	Wall *w3 = new Wall();
 	w3->setPosition(0, 0, 0);
 	w3->setPosition(-1, 0, 0);
 	w3->setRotation(0, 90, 0);
 	graphics->add(w3);
+	physics->add(w3);
 	Tile *p = new Tile();
 	p->addVert(-1.0, 0.0, 1.0);
 	p->addVert(-1.0, 0.0, -1.0);
@@ -88,6 +94,7 @@ void createTestLevel()
 	p->tileID = 1;
 	p->setPosition(0, 0, -2);
 	graphics->add(p);
+	physics->add(p);
 	Tile *q = new Tile();
 	q->addVert(-1.0, 0.0, 1.0);
 	q->addVert(-1.0, 0.0, -1.0);
@@ -96,17 +103,21 @@ void createTestLevel()
 	q->setPosition(-2, 0, -2);
 	q->tileID = 2;
 	graphics->add(q);
+	physics->add(q);
 	Wall *w4 = new Wall();
 	w4->setPosition(2, 0, -1);
 	graphics->add(w4);
+	physics->add(w4);
 	Wall *w5 = new Wall();
 	w5->setPosition(3, 0, -2);
 	w5->setRotation(0, 90, 0);
 	graphics->add(w5);
+	physics->add(w5);
 	Wall *w6 = new Wall();
 	w6->setPosition(0, 0, 0);
 	w6->setPosition(2, 0, -3);
 	graphics->add(w6);
+	physics->add(w6);
 	Tile *r = new Tile();
 	r->addVert(-1.0, 0.0, 1.0);
 	r->addVert(-1.0, 0.0, -1.0);
@@ -115,26 +126,33 @@ void createTestLevel()
 	r->setPosition(2, 0, -2);
 	r->tileID = 3;
 	graphics->add(r);
+	physics->add(r);
 	Wall *w7 = new Wall();
 	w7->setPosition(-2, 0, -1);
 	graphics->add(w7);
+	physics->add(w7);
 	Wall *w8 = new Wall();
 	w8->setPosition(-3, 0, -2);
 	w8->setRotation(0, 90, 0);
 	graphics->add(w8);
+	physics->add(w8);
 	Wall *w9 = new Wall();
 	w9->setPosition(0, 0, 0);
 	w9->setPosition(-2, 0, -3);
 	graphics->add(w9);
+	physics->add(w9);
 	Wall *w10 = new Wall();
 	w10->setPosition(0, 0, -3);
 	graphics->add(w10);
+	physics->add(w10);
 	Tee *tee = new Tee();
 	tee->setPosition(0, 0.001, 0);
 	graphics->add(tee);
+	physics->add(tee);
 	Cup *cup = new Cup();
 	cup->setPosition(-2, 0.0001, -2);
 	graphics->add(cup);
+	physics->add(cup);
 	currentLevel = new Level();
 	/*currentLevel->addTile(t);
 	currentLevel->addTile(p);
@@ -168,7 +186,7 @@ void initialize(int argc, char **argv)
 
 	// Load Levels
 	io = new IOManager();
-	levels = io->loadLevels(argc, argv);
+	/*levels = io->loadLevels(argc, argv);
 	
 	Tee tee;
 	for (auto & l = levels->begin(); l < levels->end(); ++l)
@@ -186,7 +204,7 @@ void initialize(int argc, char **argv)
 			}
 			tee = l->teeStore;
 		}
-	}
+	}*/
 
 	// Set up ticker
 	ticker = new Ticker();
@@ -194,11 +212,13 @@ void initialize(int argc, char **argv)
 	// Set up Physics
 	physics = new Physics();
 
-	Ball *ball = new Ball();
+	ball = new Ball();
+	ball->setPosition(0,0.1,0);
 	graphics->add(ball);
+	physics->add(ball);
 
 	// Debug
-	//createTestLevel();
+	createTestLevel();
 	
 	// TODO: initialize Keyboard
 }
@@ -238,12 +258,14 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		camera.downMove();
 		break;
 	case KEY_B:
-		camera.tilt(0.1, false, false, true, false);
+		// previous level if there is one
+		ball->setVelocity(0, 0, -0.2);
+		ball->_isCollisionObject = true;
 		std::cout << "B Key Pressed" << std::endl;
 		break;
 	case KEY_N:
 		// next Level
-		camera.tilt(0.1, false, false, false, true);
+		ball->_isCollisionObject = false;
 		std::cout << "N Key Pressed" << std::endl;
 		break;
 	default:

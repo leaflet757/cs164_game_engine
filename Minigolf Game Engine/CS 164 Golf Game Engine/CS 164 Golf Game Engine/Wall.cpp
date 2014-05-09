@@ -7,6 +7,7 @@ Wall::Wall()
 	isWall = true;
 
 	_isDrawable = true;
+	_isCollisionObject = true;
 
 	x1 = std::vector<float>();
 	y1 = std::vector<float>();
@@ -21,6 +22,13 @@ Wall::Wall()
 	color.push_back(glm::vec3(3, 0, 0));
 	color.push_back(glm::vec3(3, 0, 0));
 	color.push_back(glm::vec3(3, 0, 0));
+
+	// debug
+	addVert(1, 0.5, 0);
+	addVert(-1, 0.5, 0);
+	addVert(-1, 0, 0);
+	addVert(1, 0, 0);
+
 }
 
 
