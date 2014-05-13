@@ -24,10 +24,10 @@ Wall::Wall()
 	color.push_back(glm::vec3(3, 0, 0));
 
 	// debug
-	addVert(1, 0.5, 0);
-	addVert(-1, 0.5, 0);
-	addVert(-1, 0, 0);
-	addVert(1, 0, 0);
+	//addVert(1, 0.5, 0);
+	//addVert(-1, 0.5, 0);
+	//addVert(-1, 0, 0);
+	//addVert(1, 0, 0);
 
 }
 

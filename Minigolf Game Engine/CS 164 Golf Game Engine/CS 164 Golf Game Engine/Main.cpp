@@ -186,7 +186,7 @@ void initialize(int argc, char **argv)
 
 	// Load Levels
 	io = new IOManager();
-	/*levels = io->loadLevels(argc, argv);
+	levels = io->loadLevels(argc, argv);
 	
 	Tee tee;
 	for (auto & l = levels->begin(); l < levels->end(); ++l)
@@ -200,11 +200,11 @@ void initialize(int argc, char **argv)
 			}
 			for (auto & w : l->wallsStore)
 			{
-				//graphics->add(&w);
+				graphics->add(&w);
 			}
 			tee = l->teeStore;
 		}
-	}*/
+	}
 
 	// Set up ticker
 	ticker = new Ticker();
@@ -218,7 +218,7 @@ void initialize(int argc, char **argv)
 	physics->add(ball);
 
 	// Debug
-	createTestLevel();
+	//createTestLevel();
 	
 	// TODO: initialize Keyboard
 }

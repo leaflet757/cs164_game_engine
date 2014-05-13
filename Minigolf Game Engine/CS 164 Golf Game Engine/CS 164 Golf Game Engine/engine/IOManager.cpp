@@ -147,11 +147,13 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
 						wallsStore[wallsStore.size() - 1].xyz_1.push_back(glm::vec3(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter], tilesStore[tilesStore.size() - 1].z[counter]));
 						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter], tilesStore[tilesStore.size() - 1].z[counter]);
+						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter]+0.1, tilesStore[tilesStore.size() - 1].z[counter]);
 						// Stores second coordinate
 						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[counter+1]);
 						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[counter+1]);
 						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[counter+1]);
 						wallsStore[wallsStore.size() - 1].xyz_2.push_back(glm::vec3(tilesStore[tilesStore.size() - 1].x[counter+1], tilesStore[tilesStore.size() - 1].y[counter+1], tilesStore[tilesStore.size() - 1].z[counter+1]));
+						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter+1], tilesStore[tilesStore.size() - 1].y[counter+1]+0.1, tilesStore[tilesStore.size() - 1].z[counter+1]);
 						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter+1], tilesStore[tilesStore.size() - 1].y[counter+1], tilesStore[tilesStore.size() - 1].z[counter+1]);
 					} 
 					//If neighbor is 0 and we're at the last number, we get the current coordinates and the coordinates in the first slot.
@@ -162,11 +164,13 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 						wallsStore[wallsStore.size() - 1].z1.push_back(tilesStore[tilesStore.size() - 1].z[counter]);
 						wallsStore[wallsStore.size() - 1].xyz_1.push_back(glm::vec3(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter], tilesStore[tilesStore.size() - 1].z[counter]));
 						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter], tilesStore[tilesStore.size() - 1].z[counter]);
+						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter], tilesStore[tilesStore.size() - 1].y[counter]+0.1, tilesStore[tilesStore.size() - 1].z[counter]);
 						// Stores second coordinate.
 						wallsStore[wallsStore.size() - 1].x2.push_back(tilesStore[tilesStore.size() - 1].x[0]);
 						wallsStore[wallsStore.size() - 1].y2.push_back(tilesStore[tilesStore.size() - 1].y[0]);
 						wallsStore[wallsStore.size() - 1].z2.push_back(tilesStore[tilesStore.size() - 1].z[0]);
 						wallsStore[wallsStore.size() - 1].xyz_2.push_back(glm::vec3(tilesStore[tilesStore.size() - 1].x[0], tilesStore[tilesStore.size() - 1].y[0], tilesStore[tilesStore.size() - 1].z[0]));
+						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[0], tilesStore[tilesStore.size() - 1].y[0]+0.1, tilesStore[tilesStore.size() - 1].z[0]);
 						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[0], tilesStore[tilesStore.size() - 1].y[0], tilesStore[tilesStore.size() - 1].z[0]);
 					}
 				}
