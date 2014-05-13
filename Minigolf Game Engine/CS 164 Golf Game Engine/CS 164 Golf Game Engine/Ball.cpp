@@ -8,6 +8,7 @@ Ball::Ball()
 	_isCollisionObject = true;
 	useCustomDraw = true;
 	radius = 0.1;
+	tileLocation = nullptr;
 }
 
 Ball::~Ball()
@@ -29,5 +30,10 @@ void Ball::draw() const
 
 void Ball::tick(float delta) const
 {
-	std::cout << "The ball is ticking" << std::endl;
+	
+}
+
+void Ball::setTileLocation(Tile & tile)
+{
+	tileLocation = &tile;
 }

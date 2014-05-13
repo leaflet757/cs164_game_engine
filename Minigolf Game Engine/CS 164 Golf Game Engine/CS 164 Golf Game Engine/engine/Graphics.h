@@ -7,9 +7,6 @@
 
 #include "Actor3D.h"
 
-// TODO:
-// need a way to handle lighting and other shaders
-
 typedef struct {
 	int width;
 	int height;

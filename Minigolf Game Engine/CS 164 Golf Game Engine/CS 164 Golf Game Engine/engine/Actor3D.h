@@ -50,7 +50,7 @@ public:
 	bool											isCollisionObject() const { return _isCollisionObject; }
 	bool											hasCustomDraw() const { return useCustomDraw; }
 	bool											isTile() const { return _isTile; }
-
+	
 	// Get functions
 	int												getID() const { return id; }
 	glm::vec3										getPosition() const { return position; }

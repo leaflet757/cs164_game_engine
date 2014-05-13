@@ -25,11 +25,11 @@ Ticker* ticker;
 Physics* physics;
 
 Ball *ball;
+Tee *tee;
+Cup *cup;
 
 Camera camera;
 
-// What should be inlucded in this file:
-// TODO: List of Levels
 std::vector<Level> *levels;
 Level* currentLevel = nullptr;
 
@@ -154,22 +154,6 @@ void createTestLevel()
 	graphics->add(cup);
 	physics->add(cup);
 	currentLevel = new Level();
-	/*currentLevel->addTile(t);
-	currentLevel->addTile(p);
-	currentLevel->addTile(q);
-	currentLevel->addTile(r);
-	currentLevel->setCup(cup);
-	currentLevel->setTee(tee);
-	currentLevel->addWall(w);
-	currentLevel->addWall(w2);
-	currentLevel->addWall(w3);
-	currentLevel->addWall(w4);
-	currentLevel->addWall(w5);
-	currentLevel->addWall(w6);
-	currentLevel->addWall(w7);
-	currentLevel->addWall(w8);
-	currentLevel->addWall(w9);
-	currentLevel->addWall(w10);*/
 }
 
 void initialize(int argc, char **argv)
@@ -188,7 +172,8 @@ void initialize(int argc, char **argv)
 	io = new IOManager();
 	levels = io->loadLevels(argc, argv);
 	
-	Tee tee;
+	tee = nullptr;
+	cup = nullptr;
 	for (auto & l = levels->begin(); l < levels->end(); ++l)
 	{
 		if (currentLevel == nullptr)
@@ -202,7 +187,10 @@ void initialize(int argc, char **argv)
 			{
 				graphics->add(&w);
 			}
-			tee = l->teeStore;
+			tee = &(l->teeStore);
+			cup = &(l->cupStore);
+			graphics->add(tee);
+			graphics->add(cup);
 		}
 	}
 
@@ -213,21 +201,33 @@ void initialize(int argc, char **argv)
 	physics = new Physics();
 
 	ball = new Ball();
-	ball->setPosition(0,0.1,0);
+	for (Tile& t : currentLevel->tilesStore)
+	{
+		Tee& s = currentLevel->teeStore;
+		if (t.tileID == s.tID)
+		{
+			ball->setTileLocation(t);
+			ball->setPosition(s.x, s.y, s.z);
+
+			tee->setTileLocation(t);
+			tee->setPosition(tee->x, tee->y+0.001, tee->z);
+
+			cup->setTileLocation(t);
+			cup->setPosition(cup->x, cup->y + 0.001, cup->z);
+		}
+	}
 	graphics->add(ball);
 	physics->add(ball);
+	ticker->add(ball);
 
 	// Debug
 	//createTestLevel();
-	
-	// TODO: initialize Keyboard
 }
 
 int mPrevx;
 int mPrevy;
 void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 {
-	// TODO: we will probably want our own input manager but this is ok for now
 	switch (key)
 	{
 	case KEY_ESCAPE:
@@ -330,7 +330,6 @@ int main(int argc, char **argv)
 	
 	glutMainLoop();							// run GLUT mainloop
 	
-	//graphics.destroy()
 	delete graphics;
 	return 0;
 }

@@ -113,8 +113,9 @@ void Graphics::update(float delta)
 
 				glBegin(GL_QUADS);
 				int i = 0;
-				for (const glm::vec3 &v : verts)
+				for (int q = 0; q < verts.size(); q++)
 				{
+					const glm::vec3& v = verts[q];
 					if (i < color.size())
 					{
 						const glm::vec3 &c = color[i++];
