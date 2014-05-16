@@ -16,5 +16,7 @@ public:
 	std::vector<float> z2;
 	std::vector<glm::vec3> xyz_1;
 	std::vector<glm::vec3> xyz_2;
+
+	void draw() const;
 };
 

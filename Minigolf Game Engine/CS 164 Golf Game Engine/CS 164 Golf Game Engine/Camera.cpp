@@ -220,3 +220,7 @@ void Camera::rotateAboutCenter(float x, float y, float z,
 
 	// I DONT KNOW HOW TO MATH
 }
+
+void Camera::lookAtBall(float x, float y, float z){
+	setPosition(x+1.0, y+1.0, z+1.0);
+}

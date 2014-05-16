@@ -30,6 +30,9 @@ private:
 		float a, float b, float c,
 		float u, float v, float w, float theta);
 
+	
+
+
 public:
 	Camera() { };
 	Camera(double eyex,
@@ -55,6 +58,7 @@ public:
 	void setLookAt(float x, float y, float z);
 	void setUp(float x, float y, float z);
 	void tilt(float angle, bool up, bool down, bool left, bool right);
+	void lookAtBall(float x, float y, float z);
 
 	void setVelocity(float x, float y, float z);
 

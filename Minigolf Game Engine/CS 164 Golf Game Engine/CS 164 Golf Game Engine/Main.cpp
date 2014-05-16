@@ -222,6 +222,10 @@ void initialize(int argc, char **argv)
 
 	// Debug
 	//createTestLevel();
+
+	
+
+	
 }
 
 int mPrevx;
@@ -267,6 +271,21 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		// next Level
 		ball->_isCollisionObject = false;
 		std::cout << "N Key Pressed" << std::endl;
+		break;
+	case '1':
+		std::cout << "1 Key Pressed" << std::endl;
+		break;
+	case '2':
+		std::cout << "2 Key Pressed" << std::endl;
+		/*glTranslatef(1.0, 0, 0);
+		camera.leftMove();
+		camera.leftMove();
+		camera.leftMove();
+		camera.leftMove();*/
+		camera.lookAtBall(ball[0].getPosition().x, ball[0].getPosition().y, ball[0].getPosition().z);
+		break;
+	case '3':
+		std::cout << "3 Key Pressed" << std::endl;
 		break;
 	default:
 		break;

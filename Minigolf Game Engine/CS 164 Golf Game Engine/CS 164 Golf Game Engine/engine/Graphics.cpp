@@ -111,7 +111,7 @@ void Graphics::update(float delta)
 				glRotated(rotation.y, 0.0, 1.0, 0.0);
 				glRotated(rotation.z, 0.0, 0.0, 1.0);
 
-				glBegin(GL_QUADS);
+				glBegin(GL_POLYGON);
 				int i = 0;
 				for (int q = 0; q < verts.size(); q++)
 				{

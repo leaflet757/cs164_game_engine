@@ -21,5 +21,6 @@ public:
 
 	void setTileLocation(Tile & tile);
 	Tile getTileLocation() const { return *tileLocation; }
+	void draw() const;
 };
 
