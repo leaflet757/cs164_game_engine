@@ -31,6 +31,7 @@ Wall::Wall()
 
 }
 
+//Method to help render walls.
 void Wall::draw() const {
  std::vector<glm::vec3>& verts = getVertices();
  glm::vec3& normals = getNormals();

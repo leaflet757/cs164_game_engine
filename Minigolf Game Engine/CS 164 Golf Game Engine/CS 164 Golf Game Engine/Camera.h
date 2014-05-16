@@ -58,7 +58,8 @@ public:
 	void setLookAt(float x, float y, float z);
 	void setUp(float x, float y, float z);
 	void tilt(float angle, bool up, bool down, bool left, bool right);
-	void lookAtBall(float x, float y, float z);
+	void followBall(float x, float y, float z);
+	void rotate(float x, float y, float z);
 
 	void setVelocity(float x, float y, float z);
 

@@ -67,6 +67,7 @@ void Camera::setDirectionU()
 
 void Camera::update(float delta) const
 {
+	//glTranslatef(position.x, position.y, position.z);
 	gluLookAt(position.x, position.y, position.z,
 		lookAt.x, lookAt.y, lookAt.z,
 		up.x, up.y, up.z);
@@ -221,6 +222,11 @@ void Camera::rotateAboutCenter(float x, float y, float z,
 	// I DONT KNOW HOW TO MATH
 }
 
-void Camera::lookAtBall(float x, float y, float z){
-	setPosition(x+1.0, y+1.0, z+1.0);
+void Camera::followBall(float x, float y, float z){
+	setPosition(x+1.0, y+1.0, z+1.5);
+	setLookAt(x, y, z);
 }
+
+/*void Camera::rotate(float x, float y, float z){
+	glRotatef(
+}*/

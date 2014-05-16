@@ -29,6 +29,7 @@ void Tee::setTileLocation(Tile & tile)
 	tileLocation = &tile;
 }
 
+//Method to help render tee.
 void Tee::draw() const {
  std::vector<glm::vec3>& verts = getVertices();
  glm::vec3& normals = getNormals();

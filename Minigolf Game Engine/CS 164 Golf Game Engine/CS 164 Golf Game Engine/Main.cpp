@@ -273,19 +273,21 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		std::cout << "N Key Pressed" << std::endl;
 		break;
 	case '1':
+		//default view
 		std::cout << "1 Key Pressed" << std::endl;
+		camera.setPosition(4,2,0);
+		camera.setLookAt(0,0,0);
 		break;
 	case '2':
+		//close-up on ball (still needs following logic)
 		std::cout << "2 Key Pressed" << std::endl;
-		/*glTranslatef(1.0, 0, 0);
-		camera.leftMove();
-		camera.leftMove();
-		camera.leftMove();
-		camera.leftMove();*/
-		camera.lookAtBall(ball[0].getPosition().x, ball[0].getPosition().y, ball[0].getPosition().z);
+		camera.followBall(ball[0].getPosition().x, ball[0].getPosition().y, ball[0].getPosition().z);
 		break;
 	case '3':
+		//top-down
 		std::cout << "3 Key Pressed" << std::endl;
+		camera.setPosition(1.5,4,0);
+		camera.setLookAt(0,0,0);
 		break;
 	default:
 		break;
@@ -339,12 +341,14 @@ void mouse_motion(int x, int y)
 int main(int argc, char **argv)
 {
 	// initialize and run program
+
 	initialize(argc, argv);
 	glutDisplayFunc(update);						// register Display Function
 	glutIdleFunc(update);						// register Idle Function
 	glutKeyboardFunc(keyboard);						// register Keyboard Handler
 	glutMouseFunc(mouse_event);
 	glutMotionFunc(mouse_motion);
+	
 	//TODO: glutReshap
 	
 	glutMainLoop();							// run GLUT mainloop
