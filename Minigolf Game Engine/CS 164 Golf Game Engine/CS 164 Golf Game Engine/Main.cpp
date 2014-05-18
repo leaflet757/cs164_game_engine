@@ -68,7 +68,7 @@ void createTestLevel()
 	t->addVert(1.0, 0.0, -1.0);
 	t->addVert(1.0, 0.0, 1.0);
 	t->tileID = 0;
-	t->neighbors.push_back(1);
+	t->neighborID.push_back(1);
 	graphics->add(t);
 	physics->add(t);
 	Wall *w = new Wall();
@@ -207,7 +207,7 @@ void initialize(int argc, char **argv)
 		if (t.tileID == s.tID)
 		{
 			ball->setTileLocation(t);
-			ball->setPosition(s.x, s.y, s.z);
+			ball->setPosition(s.x, s.y + ball->getRadius(), s.z);
 
 			tee->setTileLocation(t);
 			tee->setPosition(tee->x, tee->y+0.001, tee->z);
@@ -216,6 +216,7 @@ void initialize(int argc, char **argv)
 			cup->setPosition(cup->x, cup->y + 0.001, cup->z);
 		}
 	}
+	ball->setVelocity(-0.2, 0, -.6);
 	graphics->add(ball);
 	physics->add(ball);
 	ticker->add(ball);
@@ -263,7 +264,7 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		break;
 	case KEY_B:
 		// previous level if there is one
-		ball->setVelocity(0, 0, -0.2);
+		
 		ball->_isCollisionObject = true;
 		std::cout << "B Key Pressed" << std::endl;
 		break;

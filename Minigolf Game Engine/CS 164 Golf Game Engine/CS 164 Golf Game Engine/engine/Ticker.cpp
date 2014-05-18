@@ -18,7 +18,7 @@ void Ticker::add(Actor3D* actor)
 
 void Ticker::update(float delta)
 {
-	for (auto const & i : list)
+	for (auto & i : list)
 	{
 		i->tick(delta);
 	}

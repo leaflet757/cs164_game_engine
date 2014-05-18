@@ -134,13 +134,13 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				for(counter = 0; counter <= counterCoordsAndNeigh-1; counter++){ // stores each number afterward within the neighbor resize
 					in >> stringNeigh;
 					if(is_int(stringNeigh)){ //Checks if positive integer.
-						tilesStore[tilesStore.size()-1].neighbors.push_back(atoi(stringNeigh.c_str())); // push neighbor onto vector
+						tilesStore[tilesStore.size()-1].neighborID.push_back(atoi(stringNeigh.c_str())); // push neighbor onto vector
 					} else {
-						std::cout << "Invalid character in neighbors.";
+						std::cout << "Invalid character in neighborID.";
 						exit(-1);
 					}
 					// If this is 0 and less than the size of edges, we store a pair of coordinates
-					if (atoi(stringNeigh.c_str()) == 0 && tilesStore[tilesStore.size()-1].neighbors.size() < counterCoordsAndNeigh){ 
+					if (atoi(stringNeigh.c_str()) == 0 && tilesStore[tilesStore.size()-1].neighborID.size() < counterCoordsAndNeigh){ 
 						// Stores first coordinate
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
@@ -157,7 +157,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 						wallsStore[wallsStore.size() - 1].addVert(tilesStore[tilesStore.size() - 1].x[counter+1], tilesStore[tilesStore.size() - 1].y[counter+1], tilesStore[tilesStore.size() - 1].z[counter+1]);
 					} 
 					//If neighbor is 0 and we're at the last number, we get the current coordinates and the coordinates in the first slot.
-					else if (atoi(stringNeigh.c_str()) == 0 && tilesStore[tilesStore.size()-1].neighbors.size() == counterCoordsAndNeigh){ 
+					else if (atoi(stringNeigh.c_str()) == 0 && tilesStore[tilesStore.size()-1].neighborID.size() == counterCoordsAndNeigh){ 
 						// Stores first coordinate
 						wallsStore[wallsStore.size() - 1].x1.push_back(tilesStore[tilesStore.size() - 1].x[counter]);
 						wallsStore[wallsStore.size() - 1].y1.push_back(tilesStore[tilesStore.size() - 1].y[counter]);
@@ -263,6 +263,20 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 		if (numCup == 0) {
 			std::cout << "You need one cup.";
 			exit(-1);
+		}
+		// O(n^3) SWAGGGGG
+		for (Tile & t : tilesStore)
+		{
+			for (int id : t.neighborID)
+			{
+				for (Tile & n : tilesStore)
+				{
+					if (id == n.tileID && (&t != &n))
+					{
+						t.neighbors.push_back(&n);
+					}
+				}
+			}
 		}
 		Level level(tilesStore, wallsStore, cupStore, teeStore);
 		levels->push_back(level);

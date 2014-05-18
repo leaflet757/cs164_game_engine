@@ -14,7 +14,8 @@ public:
 	std::vector<float> x;
 	std::vector<float> y;
 	std::vector<float> z;
-	std::vector<int> neighbors;
+	std::vector<int> neighborID;
+	std::vector<Tile*> neighbors;
 	std::vector<glm::vec3> xyz;
 };
 

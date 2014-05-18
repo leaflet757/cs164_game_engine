@@ -79,7 +79,7 @@ public:
 	virtual void									draw() const { }
 
 	// Overridable tick
-	virtual void									tick(float delta) const { }
+	virtual void									tick(float delta) { }
 
 	Actor3D& operator=(const Actor3D& other);
 };
