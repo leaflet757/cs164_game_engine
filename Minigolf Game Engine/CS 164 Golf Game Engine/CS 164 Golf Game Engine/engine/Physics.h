@@ -14,12 +14,8 @@ private:
 
 	std::vector<Actor3D*> colliders;
 
-	void						checkCollisions(float delta, Actor3D* actor);
-	void						checkForces(float delta, Actor3D* actor);
-	void						reflect(Actor3D* actor, glm::vec3 &normal);
+	void						applyForces(float delta, Actor3D* actor);
 	float						calcDistance(Actor3D* actor, Actor3D* other);
-	bool						rayIntersectTest(Actor3D* actor, Actor3D* other, float* d);
-	bool						inBounds(Actor3D* actor, Actor3D* other, float dist);
 
 public:
 	Physics();

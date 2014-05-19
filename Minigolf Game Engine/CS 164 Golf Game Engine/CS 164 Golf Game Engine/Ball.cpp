@@ -2,7 +2,7 @@
 
 
 Ball::Ball() :
-elastisity(0.95)
+elastisity(0.99)
 {
 	_isDrawable = true;
 	_isMover = true;
