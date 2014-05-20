@@ -1,8 +1,3 @@
-/**
-* Created using Unreal Script Wizard by RyanJon2040
-* Visit: www.dynamiceffects.net
-* Meet me on Facebook: www.facebook.com/satheeshpv
-*/
 
 class Scimitar_Weapon extends UTWeapon;
 
