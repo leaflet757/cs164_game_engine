@@ -10,6 +10,10 @@ elastisity(0.99)
 	useCustomDraw = true;
 	radius = 0.1;
 	tileLocation = nullptr;
+
+	power = 0.1;
+
+	glLineWidth(0.1);
 }
 
 Ball::~Ball()
@@ -27,15 +31,27 @@ void Ball::draw() const
 	glRotated(rotation.z, 0.0, 0.0, 1.0);
 	glutSolidSphere(radius, 8, 8);
 	glPopMatrix();
+
+	// draw direction line
+	glPushMatrix();
+	glBegin(GL_LINES);
+	glColor3f(1, 0.5, 0);
+	glm::vec3 & p = getPosition();
+	glVertex3f(p.x, p.y, p.z);
+	glm::vec3 & dir = getDirection();
+	glm::vec3 newpoint = dir  + p;
+	glVertex3f(newpoint.x, newpoint.y, newpoint.z);
+	glEnd();
+	glPopMatrix();
 }
 
-void Ball::tick(float delta)
+void Ball::checkWallCollisions()
 {
 	Tile * t = tileLocation;
 	std::vector<float>& x = t->x;
 	std::vector<float>& z = t->z;
 
-	float minx1 = std::min(x[0],x[1]);
+	float minx1 = std::min(x[0], x[1]);
 	float minx2 = std::min(x[2], x[3]);
 	float minx = std::min(minx1, minx2);
 	float minz1 = std::min(z[0], z[1]);
@@ -114,6 +130,17 @@ void Ball::tick(float delta)
 		std::cout << "z, " << maxz << std::endl;
 		findNewTileLocation(p.z, maxz, true);
 	}
+}
+
+void Ball::checkTileCollisions()
+{
+
+}
+
+void Ball::tick(float delta)
+{
+	checkWallCollisions();
+	checkTileCollisions();
 
 	// update the previous position
 	prevPos = position;

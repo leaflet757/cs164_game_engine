@@ -25,6 +25,7 @@ Ticker* ticker;
 Physics* physics;
 
 Ball *ball;
+float theta;
 Tee *tee;
 Cup *cup;
 
@@ -41,7 +42,33 @@ Level* currentLevel = nullptr;
 #define KEY_Q 113
 #define KEY_E 101
 #define KEY_B 98
+#define	KEY_SPACE 32
 #define KEY_N 110
+
+void cupCheck(float delta)
+{
+	std::vector<glm::vec3> & v = tee->getVertices();
+	float minx1 = min(v[0].x, v[1].x);
+	float minx2 = min(v[2].x, v[3].x);
+	float minx = min(minx1, minx2);
+	float minz1 = min(v[0].z, v[1].z);
+	float minz2 = min(v[2].z, v[3].z);
+	float minz = min(minz1, minz2);
+
+	float maxx1 = max(v[0].x, v[1].x);
+	float maxx2 = max(v[2].x, v[3].x);
+	float maxx = max(maxx1, maxx2);
+	float maxz1 = max(v[0].z, v[1].z);
+	float maxz2 = max(v[2].z, v[3].z);
+	float maxz = max(minz1, minz2);
+
+	glm::vec3 & pos = ball->getPosition();
+	if (pos.x < maxx && pos.x > minx &&
+		pos.z < maxz && pos.z > minz)
+	{
+		std::cout << "cup hit" << std::endl;
+	}
+}
 
 int prevTime = 0;
 void update()
@@ -56,6 +83,7 @@ void update()
 
 	camera.update(delta);
 	ticker->update(delta);
+	cupCheck(delta);
 	physics->update(delta);
 	graphics->update(delta);
 }
@@ -158,6 +186,8 @@ void createTestLevel()
 
 void initialize(int argc, char **argv)
 {
+	theta = 0;
+
 	graphics = new Graphics(argc, argv);
 
 	//TODO: add option to change window Size
@@ -216,7 +246,6 @@ void initialize(int argc, char **argv)
 			cup->setPosition(cup->x, cup->y + 0.001, cup->z);
 		}
 	}
-	ball->setVelocity(-0.2, 0, -.6);
 	graphics->add(ball);
 	physics->add(ball);
 	ticker->add(ball);
@@ -273,6 +302,31 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		ball->_isCollisionObject = false;
 		std::cout << "N Key Pressed" << std::endl;
 		break;
+	case 'j':
+		theta += 0.05;
+		ball->setDirection(sin(theta), 0, -cos(theta));
+		std::cout << "J key pressed" << std::endl;
+		break;
+	case 'k':
+		theta -= 0.05;
+		ball->setDirection(sin(theta), 0, -cos(theta));
+		std::cout << "K key pressed" << std::endl;
+		break;
+	case 'l':
+		ball->power += 0.05;
+		std::cout << "L key pressed" << std::endl;
+		break;
+	case 'm':
+		if (ball->power > 0) ball->power -= 0.05;
+		std::cout << "M key pressed" << std::endl;
+		break;
+	case KEY_SPACE: 
+	{
+		glm::vec3& d = ball->getDirection();
+		ball->setVelocity(ball->power * d.x, 0, ball->power * d.z);
+		std::cout << "SPACE key pressed" << std::endl;
+		break;
+	}
 	case '1':
 		//default view
 		std::cout << "1 Key Pressed" << std::endl;

@@ -138,7 +138,13 @@ void Actor3D::setMass(float m)
 
 glm::vec3 Actor3D::getDirection() const
 {
-	float length = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2)
-		+ pow(velocity.z, 2));
-	return velocity / length;
+	
+	return direction;
+}
+
+void Actor3D::setDirection(float x, float y, float z)
+{
+	direction.x = x;
+	direction.y = y;
+	direction.z = z;
 }

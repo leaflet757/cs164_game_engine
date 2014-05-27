@@ -17,5 +17,7 @@ public:
 	std::vector<int> neighborID;
 	std::vector<Tile*> neighbors;
 	std::vector<glm::vec3> xyz;
+
+	float getInterpolatedHeight(glm::vec3 v);
 };
 

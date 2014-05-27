@@ -72,6 +72,7 @@ public:
 	void											setVelocity(float x, float y, float z);
 	void											setAcceleration(float x, float y, float z);
 	void											setMass(float m);
+	void											setDirection(float x, float y, float z);
 
 	void											addVert(float x, float y, float z);
 

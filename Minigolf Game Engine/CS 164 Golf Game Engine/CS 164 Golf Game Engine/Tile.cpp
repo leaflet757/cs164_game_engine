@@ -24,3 +24,10 @@ Tile::Tile()
 Tile::~Tile()
 {
 }
+
+float Tile::getInterpolatedHeight(glm::vec3 v)
+{
+	
+
+	return 0;
+}

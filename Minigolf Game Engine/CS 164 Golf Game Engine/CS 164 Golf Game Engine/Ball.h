@@ -9,8 +9,12 @@ private:
 	glm::vec3 prevPos;
 	const float elastisity;
 	bool findNewTileLocation(float p, float edge, bool set);
+	void checkWallCollisions();
+	void checkTileCollisions();
 
 public:
+	float power;
+
 	Ball();
 	~Ball();
 
