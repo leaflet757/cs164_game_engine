@@ -48,19 +48,20 @@ Level* currentLevel = nullptr;
 void cupCheck(float delta)
 {
 	std::vector<glm::vec3> & v = tee->getVertices();
+	glm::vec3 & trans = tee->getPosition();
 	float minx1 = min(v[0].x, v[1].x);
 	float minx2 = min(v[2].x, v[3].x);
-	float minx = min(minx1, minx2);
+	float minx = min(minx1, minx2) + trans.x;
 	float minz1 = min(v[0].z, v[1].z);
 	float minz2 = min(v[2].z, v[3].z);
-	float minz = min(minz1, minz2);
+	float minz = min(minz1, minz2) - trans.z;
 
 	float maxx1 = max(v[0].x, v[1].x);
 	float maxx2 = max(v[2].x, v[3].x);
-	float maxx = max(maxx1, maxx2);
+	float maxx = max(maxx1, maxx2) + trans.x;
 	float maxz1 = max(v[0].z, v[1].z);
 	float maxz2 = max(v[2].z, v[3].z);
-	float maxz = max(minz1, minz2);
+	float maxz = max(maxz1, maxz2) - trans.z;
 
 	glm::vec3 & pos = ball->getPosition();
 	if (pos.x < maxx && pos.x > minx &&
