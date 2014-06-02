@@ -13,6 +13,9 @@
 #include "engine\IOManager.h"
 #include "engine\Ticker.h"
 #include "engine\Physics.h"
+#include "engine\HUDManager.h"
+#include "engine\HUDBackgroundElement.h"
+#include "engine\HUDTextElement.h"
 
 #include "LevelManager.h"
 #include "Level.h"
@@ -24,6 +27,7 @@ Graphics* graphics;
 IOManager* io;
 Ticker* ticker;
 Physics* physics;
+HUDManager* hud;
 
 LevelManager* levelManager;
 
@@ -80,13 +84,15 @@ void update()
 	float delta = deltaTime / 1000.0;
 	prevTime = currentTime;
 
-	graphics->clear();
-
 	camera.update(delta);
 	ticker->update(delta);
 	cupCheck(delta);
 	physics->update(delta);
+	graphics->clear();
 	graphics->update(delta);
+	graphics->enable2D();
+	//hud->update(levelManager); // passes to each hud element
+	graphics->enable3D();
 }
 
 void createTestLevel()
@@ -215,12 +221,18 @@ void initialize(int argc, char **argv)
 	// Set up Physics
 	physics = new Physics();
 
+	// finish setting up components
 	graphics->add(ball);
 	physics->add(ball);
 	ticker->add(ball);
 
 	// Debug
 	//createTestLevel();
+
+	// initialize hud
+	hud = new HUDManager();
+	// add new hudbackground element
+	// add new hud text elementSsssss
 }
 
 int mPrevx;

@@ -132,8 +132,7 @@ void Graphics::update(float delta)
 			}
 		}
 	}
-
-	glutSwapBuffers();
+	//glutSwapBuffers();
 }
 
 void Graphics::add(Actor3D *actor)
@@ -144,4 +143,37 @@ void Graphics::add(Actor3D *actor)
 Graphics* Graphics::getInstance()
 {
 	return _instance;
+}
+
+void Graphics::enable2D()
+{
+	// switch to 2d context
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0.0, win.width, win.height, 0.0, -1.0, 10.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glDisable(GL_CULL_FACE);
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	// TODO: remove
+	glBegin(GL_QUADS);
+	glColor3f(1.0f, 0.0f, 0.0);
+	glVertex2f(0.0, 0.0);
+	glVertex2f(10.0f, 0.0);
+	glVertex2f(10.0f, 10.0f);
+	glVertex2f(0.0, 10.0f);
+	glEnd();
+}
+
+void Graphics::enable3D()
+{
+	// Making sure we can render 3d again
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+
+	glutSwapBuffers();
 }

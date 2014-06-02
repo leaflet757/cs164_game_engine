@@ -111,6 +111,7 @@
     <ClCompile Include="engine\Physics.cpp" />
     <ClCompile Include="engine\stdafx.cpp" />
     <ClCompile Include="engine\Ticker.cpp" />
+    <ClCompile Include="HUDManager.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="engine\stdafx.h" />
     <ClInclude Include="engine\targetver.h" />
     <ClInclude Include="engine\Ticker.h" />
+    <ClInclude Include="HUDManager.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Tee.h" />

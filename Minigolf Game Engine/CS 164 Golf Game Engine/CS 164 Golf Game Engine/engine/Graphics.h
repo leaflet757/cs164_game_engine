@@ -32,6 +32,8 @@ public:
 	void											init();
 	void											createWindow(int argc, char** argv);
 	void											clear();
+	void											enable2D();
+	void											enable3D();
 	void											update(float delta);
 
 	void											add(Actor3D* actor);
