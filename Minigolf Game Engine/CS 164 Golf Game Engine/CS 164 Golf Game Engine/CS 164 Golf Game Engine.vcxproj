@@ -112,6 +112,7 @@
     <ClCompile Include="engine\stdafx.cpp" />
     <ClCompile Include="engine\Ticker.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Tee.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="engine\targetver.h" />
     <ClInclude Include="engine\Ticker.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Tee.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Wall.h" />

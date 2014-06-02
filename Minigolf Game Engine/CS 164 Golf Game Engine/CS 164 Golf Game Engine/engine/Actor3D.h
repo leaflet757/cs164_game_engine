@@ -14,6 +14,7 @@ private:
 protected:
 	int												id;
 	bool											_isDrawable;
+	bool											_isCollisionObject;
 	bool											_isMover;
 	bool											_isTile;
 	// colissions
@@ -40,8 +41,6 @@ public:
 	Actor3D(const Actor3D& copy);
 	~Actor3D();
 
-	bool											_isCollisionObject;
-
 	bool isWall;
 
 	// Conditionals
@@ -66,6 +65,9 @@ public:
 	float											getRadius() const { return radius; }
 
 	// Set Functions
+	void											setDrawableState(bool state);
+	void											setCollidableState(bool state);
+	void											setMoverState(bool state);
 	void											setPosition(float x, float y, float z);
 	void											setRotation(float x, float y, float z);
 	// setcolor, setscale

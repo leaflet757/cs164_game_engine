@@ -78,6 +78,9 @@
     <ClCompile Include="engine\Physics.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\Actor3D.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="engine\Physics.h">
       <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

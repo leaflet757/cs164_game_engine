@@ -18,23 +18,6 @@ Level::~Level()
 {
 }
 
-void Level::buildVerts()
-{
-	for (int i = 0; i < tilesStore.size(); i++)
-	{
-		tilesStore[i].addVert(tilesStore[i].x[i], tilesStore[i].y[i], tilesStore[i].z[i]);
-	}
-
-	for (int i = 0; i < wallsStore.size(); i++)
-	{
-		// something with walls
-	}
-
-	//cupStore.setPosition(cupStore.x, cupStore.y, cupStore.z);
-
-	//teeStore.setPosition(teeStore.x, teeStore.y, teeStore.z);
-}
-
 void Level::addTile(Tile& tile)
 {
 	tilesStore.push_back(tile);
@@ -57,14 +40,17 @@ void Level::setTee(Tee& tee)
 
 void Level::setRenderingState(bool isDrawn)
 {
-	if (isDrawn)
+	for (Tile & t : tilesStore)
 	{
-		// set all the actors in the level to visible
-		// set all the actors to be collidable
+		t.setDrawableState(isDrawn);
+		t.setCollidableState(isDrawn);
 	}
-	else
+	for (Wall & w : wallsStore)
 	{
-		// set all the actors in the level to not visible
-		// set all the actors to be collidable
+		w.setDrawableState(isDrawn);
+		w.setCollidableState(isDrawn);
 	}
+	cupStore.setDrawableState(isDrawn);
+	cupStore.setCollidableState(isDrawn);
+	teeStore.setDrawableState(isDrawn);
 }

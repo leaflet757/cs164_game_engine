@@ -28,7 +28,5 @@ public:
 	void addTile(Tile& tile);
 	void setCup(Cup& cup);
 	void setTee(Tee& tee);
-
-	void buildVerts();
 };
 

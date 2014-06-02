@@ -148,3 +148,18 @@ void Actor3D::setDirection(float x, float y, float z)
 	direction.y = y;
 	direction.z = z;
 }
+
+void Actor3D::setDrawableState(bool state)
+{
+	_isDrawable = state;
+}
+
+void Actor3D::setCollidableState(bool state)
+{
+	_isCollisionObject = state;
+}
+
+void Actor3D::setMoverState(bool state)
+{
+	_isMover = state;
+}

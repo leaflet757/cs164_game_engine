@@ -1,8 +1,9 @@
 #include "Graphics.h"
 
-Graphics::Graphics(int argc, char** argv)
+Graphics* _instance = new Graphics();
+
+Graphics::Graphics()
 {
-	glutInit(&argc, argv);                                      // GLUT initialization
 }
 
 
@@ -61,8 +62,10 @@ void Graphics::init()
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 }
 
-void Graphics::createWindow()
+void Graphics::createWindow(int argc, char** argv)
 {
+	glutInit(&argc, argv);
+
 	// set window values
 	win.width = 640;
 	win.height = 480;
@@ -136,4 +139,9 @@ void Graphics::update(float delta)
 void Graphics::add(Actor3D *actor)
 {
 	drawables.push_back(actor);
+}
+
+Graphics* Graphics::getInstance()
+{
+	return _instance;
 }

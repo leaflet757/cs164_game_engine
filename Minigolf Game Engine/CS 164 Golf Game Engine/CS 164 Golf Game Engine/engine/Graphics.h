@@ -23,16 +23,19 @@ private:
 	std::vector<Actor3D*> drawables;
 
 public:
-	Graphics(int argc, char** argv);
+	Graphics();
 	~Graphics();
 
 	glutWindow win;
 
+	static Graphics*								getInstance();
 	void											init();
-	void											createWindow();
+	void											createWindow(int argc, char** argv);
 	void											clear();
 	void											update(float delta);
 
 	void											add(Actor3D* actor);
 };
+
+extern Graphics* _instance;
 

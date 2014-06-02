@@ -13,8 +13,9 @@
 #include "engine\IOManager.h"
 #include "engine\Ticker.h"
 #include "engine\Physics.h"
-#include "Level.h"
 
+#include "LevelManager.h"
+#include "Level.h"
 #include "Camera.h"
 #include "Cube.h"
 #include "Ball.h"
@@ -24,15 +25,14 @@ IOManager* io;
 Ticker* ticker;
 Physics* physics;
 
+LevelManager* levelManager;
+
 Ball *ball;
 float theta;
 Tee *tee;
 Cup *cup;
 
 Camera camera;
-
-std::vector<Level> *levels;
-Level* currentLevel = nullptr;
 
 #define KEY_ESCAPE 27
 #define KEY_W 119
@@ -91,7 +91,7 @@ void update()
 
 void createTestLevel()
 {
-	Tile *t = new Tile();
+	/*Tile *t = new Tile();
 	t->addVert(-1.0, 0.0, 1.0);
 	t->addVert(-1.0, 0.0, -1.0);
 	t->addVert(1.0, 0.0, -1.0);
@@ -182,18 +182,17 @@ void createTestLevel()
 	cup->setPosition(-2, 0.0001, -2);
 	graphics->add(cup);
 	physics->add(cup);
-	currentLevel = new Level();
+	currentLevel = new Level(); */
 }
 
 void initialize(int argc, char **argv)
 {
 	theta = 0;
 
-	graphics = new Graphics(argc, argv);
+	graphics = Graphics::getInstance();
 
 	//TODO: add option to change window Size
-	graphics->createWindow();
-
+	graphics->createWindow(argc,argv);
 	graphics->init();
 
 	// Set-up camera
@@ -201,29 +200,14 @@ void initialize(int argc, char **argv)
 
 	// Load Levels
 	io = new IOManager();
-	levels = io->loadLevels(argc, argv);
-	
-	tee = nullptr;
-	cup = nullptr;
-	for (auto & l = levels->begin(); l < levels->end(); ++l)
-	{
-		if (currentLevel == nullptr)
-		{
-			currentLevel = &(*l);
-			for (auto & t : l->tilesStore)
-			{
-				graphics->add(&t);
-			}
-			for (auto & w : l->wallsStore)
-			{
-				graphics->add(&w);
-			}
-			tee = &(l->teeStore);
-			cup = &(l->cupStore);
-			graphics->add(tee);
-			graphics->add(cup);
-		}
-	}
+	levelManager = new LevelManager();
+	levelManager->loadContent(io->loadLevels(argc, argv));
+	levelManager->initialize();
+	levelManager->begin();
+
+	ball = levelManager->getBall();
+	tee = levelManager->getTee();
+	cup = levelManager->getCup();
 
 	// Set up ticker
 	ticker = new Ticker();
@@ -231,32 +215,12 @@ void initialize(int argc, char **argv)
 	// Set up Physics
 	physics = new Physics();
 
-	ball = new Ball();
-	for (Tile& t : currentLevel->tilesStore)
-	{
-		Tee& s = currentLevel->teeStore;
-		if (t.tileID == s.tID)
-		{
-			ball->setTileLocation(t);
-			ball->setPosition(s.x, s.y + ball->getRadius(), s.z);
-
-			tee->setTileLocation(t);
-			tee->setPosition(tee->x, tee->y+0.001, tee->z);
-
-			cup->setTileLocation(t);
-			cup->setPosition(cup->x, cup->y + 0.001, cup->z);
-		}
-	}
 	graphics->add(ball);
 	physics->add(ball);
 	ticker->add(ball);
 
 	// Debug
 	//createTestLevel();
-
-	
-
-	
 }
 
 int mPrevx;
@@ -293,31 +257,40 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		camera.downMove();
 		break;
 	case KEY_B:
+	{
 		// previous level if there is one
-		
-		ball->_isCollisionObject = true;
+		levelManager->previousLevel();
+		ball = levelManager->getBall();
+		tee = levelManager->getTee();
+		cup = levelManager->getCup();
 		std::cout << "B Key Pressed" << std::endl;
 		break;
+	}
 	case KEY_N:
+	{
 		// next Level
-		ball->_isCollisionObject = false;
+		levelManager->nextLevel();
+		ball = levelManager->getBall();
+		tee = levelManager->getTee();
+		cup = levelManager->getCup();
 		std::cout << "N Key Pressed" << std::endl;
 		break;
+	}
 	case 'j':
 		theta += 0.05;
 		ball->setDirection(sin(theta), 0, -cos(theta));
 		std::cout << "J key pressed" << std::endl;
 		break;
-	case 'k':
+	case 'u':
 		theta -= 0.05;
 		ball->setDirection(sin(theta), 0, -cos(theta));
 		std::cout << "K key pressed" << std::endl;
 		break;
-	case 'l':
+	case 'k':
 		ball->power += 0.05;
 		std::cout << "L key pressed" << std::endl;
 		break;
-	case 'm':
+	case 'i':
 		if (ball->power > 0) ball->power -= 0.05;
 		std::cout << "M key pressed" << std::endl;
 		break;
