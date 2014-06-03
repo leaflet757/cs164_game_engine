@@ -235,6 +235,7 @@ void initialize(int argc, char **argv)
 	// initialize hud
 	hud = new HUDManager();
 	// add new hudbackground element
+	//hud->addElement(new HUDBackgroundElement());
 	// add new hud text elementSsssss
 }
 

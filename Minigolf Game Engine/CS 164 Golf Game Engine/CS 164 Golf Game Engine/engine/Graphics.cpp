@@ -156,15 +156,6 @@ void Graphics::enable2D()
 	glDisable(GL_CULL_FACE);
 
 	glClear(GL_DEPTH_BUFFER_BIT);
-
-	// TODO: remove
-	glBegin(GL_QUADS);
-	glColor3f(1.0f, 0.0f, 0.0);
-	glVertex2f(0.0, 0.0);
-	glVertex2f(10.0f, 0.0);
-	glVertex2f(10.0f, 10.0f);
-	glVertex2f(0.0, 10.0f);
-	glEnd();
 }
 
 void Graphics::enable3D()
