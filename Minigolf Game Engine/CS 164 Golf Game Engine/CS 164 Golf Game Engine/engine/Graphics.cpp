@@ -132,7 +132,6 @@ void Graphics::update(float delta)
 			}
 		}
 	}
-	//glutSwapBuffers();
 }
 
 void Graphics::add(Actor3D *actor)

@@ -75,6 +75,7 @@ void cupCheck(float delta)
 	}
 }
 
+/* MAIN UPDATE LOOP : CAREFUL ABOUT CHANGING ORDER OF THESE */
 int prevTime = 0;
 void update()
 {
@@ -84,14 +85,16 @@ void update()
 	float delta = deltaTime / 1000.0;
 	prevTime = currentTime;
 
+	// must go before all updates
+	graphics->clear();
+
 	camera.update(delta);
 	ticker->update(delta);
 	cupCheck(delta);
 	physics->update(delta);
-	graphics->clear();
 	graphics->update(delta);
 	graphics->enable2D();
-	//hud->update(levelManager); // passes to each hud element
+	hud->update(levelManager); // passes to each hud element
 	graphics->enable3D();
 }
 
