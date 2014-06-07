@@ -238,6 +238,7 @@ void initialize(int argc, char **argv)
 	// add new hudbackground element
 	hud->addElement(new HUDBackgroundElement());
 	// add new hud text elementSsssss
+	hud->addElement(new HUDTextElement(5,20));
 }
 
 int mPrevx;

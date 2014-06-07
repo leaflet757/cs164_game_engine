@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include <iostream>
 #include <glm\vec2.hpp>
 #include <glm\vec3.hpp>
@@ -9,8 +10,9 @@
 class HUDElement
 {
 protected:
-	glm::vec2 position;
-	glm::vec3 backgroundColor;
+	glm::vec2								position;
+	glm::vec3								backgroundColor;
+	bool									visible;
 
 public:
 	HUDElement();
@@ -19,6 +21,8 @@ public:
 
 	void									hide();
 	void									show();
+	void									setBackgroundColor(float r, float g, float b);
+	bool									isVisible() { return visible; }
 	virtual void							update(LevelManager* levelManager) { }
 
 	HUDElement&								operator=(const HUDElement& other);
