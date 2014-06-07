@@ -18,3 +18,8 @@ void HUDManager::update(LevelManager* levelManager)
 		e->update(levelManager);
 	}
 }
+
+void HUDManager::addElement(HUDElement* element)
+{
+	elements.push_back(element);
+}

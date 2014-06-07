@@ -35,7 +35,9 @@ void LevelManager::initialize()
 			g->add(&w);
 		}
 		tee = &(l->teeStore);
-		cup = &(l->cupStore);
+		tee->setPosition(tee->x, tee->y + 0.001, tee->z);
+		cup = &(l->cupStore); 
+		cup->setPosition(cup->x, cup->y + 0.001, cup->z);
 		g->add(tee);
 		g->add(cup);
 		l->setRenderingState(false);

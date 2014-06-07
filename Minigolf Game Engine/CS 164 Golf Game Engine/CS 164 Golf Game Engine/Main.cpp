@@ -14,6 +14,7 @@
 #include "engine\Ticker.h"
 #include "engine\Physics.h"
 #include "engine\HUDManager.h"
+#include "engine\HUDElement.h"
 #include "engine\HUDBackgroundElement.h"
 #include "engine\HUDTextElement.h"
 
@@ -235,7 +236,7 @@ void initialize(int argc, char **argv)
 	// initialize hud
 	hud = new HUDManager();
 	// add new hudbackground element
-	//hud->addElement(new HUDBackgroundElement());
+	hud->addElement(new HUDBackgroundElement());
 	// add new hud text elementSsssss
 }
 
@@ -300,15 +301,15 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 	case 'u':
 		theta -= 0.05;
 		ball->setDirection(sin(theta), 0, -cos(theta));
-		std::cout << "K key pressed" << std::endl;
+		std::cout << "U key pressed" << std::endl;
 		break;
 	case 'k':
 		ball->power += 0.05;
-		std::cout << "L key pressed" << std::endl;
+		std::cout << "K key pressed" << std::endl;
 		break;
 	case 'i':
 		if (ball->power > 0) ball->power -= 0.05;
-		std::cout << "M key pressed" << std::endl;
+		std::cout << "I key pressed" << std::endl;
 		break;
 	case KEY_SPACE: 
 	{

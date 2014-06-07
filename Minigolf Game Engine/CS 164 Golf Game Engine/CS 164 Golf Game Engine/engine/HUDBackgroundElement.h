@@ -3,6 +3,9 @@
 
 class HUDBackgroundElement : public HUDElement
 {
+private:
+	float width;
+	float height;
 public:
 	HUDBackgroundElement();
 	~HUDBackgroundElement();
