@@ -18,15 +18,20 @@ HUDBackgroundElement::~HUDBackgroundElement()
 
 void HUDBackgroundElement::update(LevelManager* levelManager)
 {
-	// TODO: remove
 	glBegin(GL_QUADS);
 	glColor3f(backgroundColor.r, backgroundColor.g, backgroundColor.b);
-	glVertex2f(0.0, 0.0);
+	glVertex2f(position.x, position.y);
 	glColor3f(backgroundColor.r, backgroundColor.g, backgroundColor.b);
-	glVertex2f(width, 0.0);
+	glVertex2f(width + position.x, position.y);
 	glColor3f(backgroundColor.r, backgroundColor.g, backgroundColor.b);
-	glVertex2f(width, height);
+	glVertex2f(width + position.x, height + position.y);
 	glColor3f(backgroundColor.r, backgroundColor.g, backgroundColor.b);
-	glVertex2f(0.0, height);
+	glVertex2f(position.x, height + position.y);
 	glEnd();
+}
+
+void HUDBackgroundElement::setSize(float width, float height)
+{
+	this->width = width;
+	this->height = height;
 }

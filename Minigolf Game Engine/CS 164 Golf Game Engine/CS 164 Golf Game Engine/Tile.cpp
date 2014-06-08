@@ -14,10 +14,10 @@ Tile::Tile()
 	neighbors = std::vector<Tile*>();
 	xyz = std::vector<glm::vec3>(); //will hold xyz vec3 just in case. comment out later.
 
-	color.push_back(glm::vec3(0.0, 3, 0.0));
-	color.push_back(glm::vec3(0.0, 3, 0.0));
-	color.push_back(glm::vec3(0.0, 3, 0.0));
-	color.push_back(glm::vec3(0.0, 3, 0.0));
+	color.push_back(glm::vec3(0.0, 0.5, 0.0));
+	color.push_back(glm::vec3(0.0, 0.5, 0.0));
+	color.push_back(glm::vec3(0.0, 0.5, 0.0));
+	color.push_back(glm::vec3(0.0, 0.5, 0.0));
 }
 
 

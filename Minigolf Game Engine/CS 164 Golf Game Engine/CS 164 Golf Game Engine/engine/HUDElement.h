@@ -13,6 +13,7 @@ protected:
 	glm::vec2								position;
 	glm::vec3								backgroundColor;
 	bool									visible;
+	bool									hasDynamicElements;
 
 public:
 	HUDElement();
@@ -22,8 +23,10 @@ public:
 	void									hide();
 	void									show();
 	void									setBackgroundColor(float r, float g, float b);
+	void									setPosition(float x, float y);
 	bool									isVisible() { return visible; }
 	virtual void							update(LevelManager* levelManager) { }
+	void									setDynamicElements(bool state);
 
 	HUDElement&								operator=(const HUDElement& other);
 };

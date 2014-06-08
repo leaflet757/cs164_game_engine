@@ -9,6 +9,7 @@ _isMover(false),
 _isCollisionObject(false),
 _isTile(false),
 useCustomDraw(false),
+usePosition(false),
 position(0.0),
 rotation(0.0),
 scale(1.0, 1.0, 1.0),
@@ -30,6 +31,7 @@ useCustomDraw(copy.useCustomDraw),
 _isTile(copy._isTile),
 position(copy.position),
 rotation(copy.rotation),
+usePosition(copy.usePosition),
 scale(copy.scale),
 mass(copy.mass),
 direction(copy.direction),
@@ -104,6 +106,7 @@ Actor3D& Actor3D::operator=(const Actor3D& other)
 	color = other.color;
 	mass = other.mass;
 	radius = other.radius;
+	usePosition = other.usePosition;
 	normals = other.normals;
 
 	return *this;
@@ -119,8 +122,8 @@ void Actor3D::addVert(float x, float y, float z)
 		glm::vec3 & v2 = verts[1];
 		glm::vec3 & v3 = verts[2];
 
-		glm::vec3 d2 = v1 - v2;
-		glm::vec3 d1 = v1 - v3;
+		glm::vec3 d1 = v1 - v2;
+		glm::vec3 d2 = v1 - v3;
 
 		glm::vec3 n(0);
 		n.x = (d1.y * d2.z) - (d1.z * d2.y);
@@ -128,6 +131,11 @@ void Actor3D::addVert(float x, float y, float z)
 		n.z = (d1.x * d2.y) - (d1.y * d2.x);
 
 		normals = n;
+	}
+
+	if (verts.size() > 4)
+	{
+		std::cout << this->id << std::endl;
 	}
 }
 
@@ -162,4 +170,27 @@ void Actor3D::setCollidableState(bool state)
 void Actor3D::setMoverState(bool state)
 {
 	_isMover = state;
+}
+
+glm::vec3 Actor3D::getCenter() const
+{
+	if (verts.size() == 4)
+	{
+		float xc = 0.0f;
+		float yc = 0.0f;
+		float zc = 0.0f;
+		
+		for (int i = 0; i < verts.size(); i++)
+		{
+			const glm::vec3 & v = verts[i];
+			xc += v.x;
+			yc += v.y;
+			zc += v.z;
+		}
+		xc = xc / 4.0;
+		yc = yc / 4.0;
+		zc = zc / 4.0;;
+
+		return glm::vec3(xc, yc, zc);
+	}
 }

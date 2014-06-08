@@ -21,6 +21,7 @@ class Graphics
 {
 private:
 	std::vector<Actor3D*> drawables;
+	glm::vec3 lightPos;
 
 public:
 	Graphics();

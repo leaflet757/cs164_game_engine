@@ -21,8 +21,25 @@ void Physics::applyForces(float delta, Actor3D* actor)
 {
 	// check all the forces acting on the obj and update accel
 	// use accel to update vel
-
 	// this will determine if the object is accelerating
+	/*glm::vec3 v = actor->getVelocity();
+	v.x = v.x - v.x / 9.0;
+	v.y = v.y - v.y / 9.0;
+	v.z = v.z - v.z / 9.0;
+
+	if (v.x > -.001 && v.x < 0.001)
+	{
+		v.x = 0;
+	}
+	if (v.y > -.001 && v.y < 0.001)
+	{
+		v.y = 0;
+	}
+	if (v.z > -.001 && v.z < 0.001)
+	{
+		v.z = 0;
+	}
+	actor->setVelocity(v.x, v.y, v.z); */
 }
 
 void Physics::update(float delta)

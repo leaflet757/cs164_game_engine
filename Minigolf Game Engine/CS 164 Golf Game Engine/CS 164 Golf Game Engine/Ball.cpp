@@ -10,6 +10,7 @@ elastisity(0.99)
 	useCustomDraw = true;
 	radius = 0.1;
 	tileLocation = nullptr;
+	usePosition = true;
 
 	power = 0.1;
 

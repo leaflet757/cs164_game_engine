@@ -19,6 +19,7 @@ protected:
 	bool											_isTile;
 	// colissions
 	bool											useCustomDraw;
+	bool											usePosition;
 	
 	glm::vec3										position;
 	glm::vec3										rotation;
@@ -63,6 +64,7 @@ public:
 	glm::vec3										getDirection() const;
 	float											getMass() const { return mass; }
 	float											getRadius() const { return radius; }
+	glm::vec3										getCenter() const;
 
 	// Set Functions
 	void											setDrawableState(bool state);

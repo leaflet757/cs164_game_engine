@@ -22,13 +22,6 @@ Wall::Wall()
 	color.push_back(glm::vec3(3, 0, 0));
 	color.push_back(glm::vec3(3, 0, 0));
 	color.push_back(glm::vec3(3, 0, 0));
-
-	// debug
-	//addVert(1, 0.5, 0);
-	//addVert(-1, 0.5, 0);
-	//addVert(-1, 0, 0);
-	//addVert(1, 0, 0);
-
 }
 
 //Method to help render walls.
@@ -61,6 +54,19 @@ void Wall::draw() const {
   }
  glEnd();
  glPopMatrix();
+
+ // DEBUG ------------------------------------------
+ // draw direction line
+ //glPushMatrix();
+ //glBegin(GL_LINES);
+ //glColor3f(0, 0, 255);
+ //glm::vec3& p = getCenter();
+ //glVertex3f(p.x, p.y, p.z);
+ //glm::vec3 newpoint = normals + p;
+ //glVertex3f(newpoint.x, newpoint.y, newpoint.z);
+ //glEnd();
+ //glPopMatrix();
+ // ------------------------------------------------
 }
 
 

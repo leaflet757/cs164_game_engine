@@ -10,6 +10,8 @@ public:
 	HUDBackgroundElement();
 	~HUDBackgroundElement();
 
+	void								setSize(float width, float height);
+
 	virtual void						update(LevelManager* levelManager);
 };
 

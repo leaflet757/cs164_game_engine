@@ -44,7 +44,10 @@ void Graphics::init()
 	GLfloat amb_light[] = { 0.1, 0.1, 0.1, 1.0 };
 	GLfloat diffuse[] = { 0.6, 0.6, 0.6, 1 };
 	GLfloat specular[] = { 0.7, 0.7, 0.3, 1 };
-	GLfloat lightPosition[] = {5, 5, 5};
+	GLfloat lightPosition[] = {-3, 3, 3};
+	lightPos.x = -3;
+	lightPos.y = 3;
+	lightPos.z = 3;
 	GLfloat lightDirection[] = {0,0,0};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb_light);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
@@ -90,6 +93,14 @@ void Graphics::clear()
 
 void Graphics::update(float delta)
 {
+	// draw sun
+	glPushMatrix();
+	glColor3f(255, 255, 0);
+	glTranslatef(lightPos.x, lightPos.y, lightPos.z);
+	glutWireCube(0.1);
+	glPopMatrix();
+
+	// draw everything else :D
 	for (auto const &actor : drawables)
 	{
 		if (actor->isDrawable())
@@ -128,6 +139,22 @@ void Graphics::update(float delta)
 					glVertex3f(v.x, v.y, v.z);
 				}
 				glEnd();
+
+				// DEBUG ------------------------------------------
+				// draw direction line
+				glPushMatrix();
+				//glBegin(GL_LINES);
+				glColor3f(0, 0, 255);
+				glm::vec3& p = actor->getCenter();
+				glTranslatef(p.x, p.y, p.z);
+				//glutSolidSphere(0.05, 8, 8);
+				//glVertex3f(p.x, p.y, p.z);
+				//glm::vec3 newpoint = normals + p;
+				//glVertex3f(newpoint.x, newpoint.y, newpoint.z);
+				//glEnd();
+				glPopMatrix(); 
+				// ------------------------------------------------
+
 				glPopMatrix();
 			}
 		}

@@ -29,11 +29,14 @@ IOManager* io;
 Ticker* ticker;
 Physics* physics;
 HUDManager* hud;
+HUDBackgroundElement* powerBar;
+HUDTextElement* strokeText;
 
 LevelManager* levelManager;
 
 Ball *ball;
 float theta;
+int numberOfStrokes;
 Tee *tee;
 Cup *cup;
 
@@ -56,14 +59,14 @@ void cupCheck(float delta)
 	glm::vec3 & trans = tee->getPosition();
 	float minx1 = min(v[0].x, v[1].x);
 	float minx2 = min(v[2].x, v[3].x);
-	float minx = min(minx1, minx2) + trans.x;
+	float minx = min(minx1, minx2);
 	float minz1 = min(v[0].z, v[1].z);
 	float minz2 = min(v[2].z, v[3].z);
 	float minz = min(minz1, minz2) - trans.z;
 
 	float maxx1 = max(v[0].x, v[1].x);
 	float maxx2 = max(v[2].x, v[3].x);
-	float maxx = max(maxx1, maxx2) + trans.x;
+	float maxx = max(maxx1, maxx2);
 	float maxz1 = max(v[0].z, v[1].z);
 	float maxz2 = max(v[2].z, v[3].z);
 	float maxz = max(maxz1, maxz2) - trans.z;
@@ -73,6 +76,12 @@ void cupCheck(float delta)
 		pos.z < maxz && pos.z > minz)
 	{
 		std::cout << "cup hit" << std::endl;
+		// next Level
+		levelManager->nextLevel();
+		ball = levelManager->getBall();
+		tee = levelManager->getTee();
+		cup = levelManager->getCup();
+		numberOfStrokes = 0;
 	}
 }
 
@@ -95,6 +104,8 @@ void update()
 	physics->update(delta);
 	graphics->update(delta);
 	graphics->enable2D();
+	powerBar->setSize(ball->power * 150, 10);
+	strokeText->setText("Stroke #: " + std::to_string(numberOfStrokes));
 	hud->update(levelManager); // passes to each hud element
 	graphics->enable3D();
 }
@@ -198,6 +209,7 @@ void createTestLevel()
 void initialize(int argc, char **argv)
 {
 	theta = 0;
+	numberOfStrokes = 0;
 
 	graphics = Graphics::getInstance();
 
@@ -236,9 +248,26 @@ void initialize(int argc, char **argv)
 	// initialize hud
 	hud = new HUDManager();
 	// add new hudbackground element
-	hud->addElement(new HUDBackgroundElement());
+	HUDBackgroundElement* bg = new HUDBackgroundElement();
+	hud->addElement(bg);
 	// add new hud text elementSsssss
-	hud->addElement(new HUDTextElement(5,20));
+	HUDTextElement* courseText = new HUDTextElement(5, 20);
+	courseText->setText("Course: ");
+	hud->addElement(courseText);
+	// power element
+	HUDTextElement* powerText = new HUDTextElement(105, 20);
+	powerText->setText("Power: ");
+	powerText->setDynamicElements(false);
+	hud->addElement(powerText);
+	powerBar = new HUDBackgroundElement();
+	powerBar->setBackgroundColor(0, 255, 0);
+	powerBar->setPosition(160, 10);
+	hud->addElement(powerBar);
+	// strokes element
+	strokeText = new HUDTextElement(300, 20);
+	strokeText->setText("Stroke #: ");
+	strokeText->setDynamicElements(false);
+	hud->addElement(strokeText);
 }
 
 int mPrevx;
@@ -281,6 +310,7 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		ball = levelManager->getBall();
 		tee = levelManager->getTee();
 		cup = levelManager->getCup();
+		numberOfStrokes = 0;
 		std::cout << "B Key Pressed" << std::endl;
 		break;
 	}
@@ -291,6 +321,7 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		ball = levelManager->getBall();
 		tee = levelManager->getTee();
 		cup = levelManager->getCup();
+		numberOfStrokes = 0;
 		std::cout << "N Key Pressed" << std::endl;
 		break;
 	}
@@ -305,17 +336,19 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 		std::cout << "U key pressed" << std::endl;
 		break;
 	case 'k':
-		ball->power += 0.05;
+		if (ball->power < 0.8)
+			ball->power += 0.05;
 		std::cout << "K key pressed" << std::endl;
 		break;
 	case 'i':
-		if (ball->power > 0) ball->power -= 0.05;
+		if (ball->power >= 0.05) ball->power -= 0.05;
 		std::cout << "I key pressed" << std::endl;
 		break;
 	case KEY_SPACE: 
 	{
 		glm::vec3& d = ball->getDirection();
 		ball->setVelocity(ball->power * d.x, 0, ball->power * d.z);
+		numberOfStrokes++;
 		std::cout << "SPACE key pressed" << std::endl;
 		break;
 	}
