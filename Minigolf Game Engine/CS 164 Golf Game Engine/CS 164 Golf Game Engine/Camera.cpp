@@ -65,8 +65,11 @@ void Camera::setDirectionU()
 	std::cout << directionU.x << ", " << directionU.y << ", " << directionU.z << ", " << length << std::endl;
 }
 
-void Camera::update(float delta) const
+void Camera::update(float delta)
 {
+	if(state == FOLLOW){
+		followBall(TrackedItem->getPosition().x, TrackedItem->getPosition().y, TrackedItem->getPosition().z);
+	}
 	//glTranslatef(position.x, position.y, position.z);
 	gluLookAt(position.x, position.y, position.z,
 		lookAt.x, lookAt.y, lookAt.z,
@@ -96,6 +99,7 @@ void Camera::setVelocity(float x, float y, float z)
 
 void Camera::forward()
 {
+	if(state != FREE) return;
 	setPosition(-directionF.x + position.x,
 		-directionF.y + position.y,
 		-directionF.z + position.z);
@@ -106,6 +110,7 @@ void Camera::forward()
 }
 void Camera::backward()
 {
+	if(state != FREE) return;
 	setPosition(directionF.x + position.x,
 		directionF.y + position.y,
 		directionF.z + position.z);
@@ -117,6 +122,7 @@ void Camera::backward()
 
 void Camera::leftMove()
 {
+	if(state != FREE) return;
 	setPosition(-directionS.x + position.x,
 		-directionS.y + position.y,
 		-directionS.z + position.z);
@@ -128,6 +134,7 @@ void Camera::leftMove()
 
 void Camera::rightMove()
 {
+	if(state != FREE) return;
 	setPosition(directionS.x + position.x,
 		directionS.y + position.y,
 		directionS.z + position.z);
@@ -139,6 +146,7 @@ void Camera::rightMove()
 
 void Camera::upMove()
 {
+	if(state != FREE) return;
 	setPosition(directionU.x + position.x,
 		directionU.y + position.y,
 		directionU.z + position.z);
@@ -150,6 +158,7 @@ void Camera::upMove()
 
 void Camera::downMove()
 {
+	if(state != FREE) return;
 	setPosition(directionU.x + position.x,
 		directionU.y + position.y,
 		directionU.z + position.z);

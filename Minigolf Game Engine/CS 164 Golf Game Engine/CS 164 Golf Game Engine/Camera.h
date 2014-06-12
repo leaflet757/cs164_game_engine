@@ -5,6 +5,12 @@
 
 #include "engine\Actor3D.h"
 
+enum CameraState{
+	FREE,
+	TOPDOWN,
+	FOLLOW,
+};
+
 class Camera : public Actor3D
 {
 private:
@@ -30,7 +36,8 @@ private:
 		float a, float b, float c,
 		float u, float v, float w, float theta);
 
-	
+	CameraState state;
+	Actor3D *TrackedItem;
 
 
 public:
@@ -61,8 +68,11 @@ public:
 	void followBall(float x, float y, float z);
 	void rotate(float x, float y, float z);
 
+	void setCameraState(CameraState newState){ state = newState; }
+	void setTrackedItem(Actor3D &newItem){ TrackedItem = &newItem; }
+
 	void setVelocity(float x, float y, float z);
 
-	virtual void update(float delta) const;
+	virtual void update(float delta);
 };
 

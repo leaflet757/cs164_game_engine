@@ -355,17 +355,21 @@ void keyboard(unsigned char key, int mousePositionX, int mousePositionY)
 	case '1':
 		//default view
 		std::cout << "1 Key Pressed" << std::endl;
+		camera.setCameraState(FREE);
 		camera.setPosition(4,2,0);
 		camera.setLookAt(0,0,0);
 		break;
 	case '2':
 		//close-up on ball (still needs following logic)
 		std::cout << "2 Key Pressed" << std::endl;
+		camera.setCameraState(FOLLOW);
+		camera.setTrackedItem(ball[0]);
 		camera.followBall(ball[0].getPosition().x, ball[0].getPosition().y, ball[0].getPosition().z);
 		break;
 	case '3':
 		//top-down
 		std::cout << "3 Key Pressed" << std::endl;
+		camera.setCameraState(TOPDOWN);
 		camera.setPosition(1.5,4,0);
 		camera.setLookAt(0,0,0);
 		break;
