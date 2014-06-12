@@ -5,7 +5,13 @@ Leif Myer
 Jonah Nobelza
 
 Minigold game written in c++ using the Visual Studio 2012 compiler.
-To run the game, either launch the game from the debug folder by clicking on "CS 164 Golf Game Engine.exe", or launch the project from visual studio.
+To run the game, either launch the game from the 'release' folder by clicking on "CS 164 Golf Game Engine.exe", or launch the project from visual studio 2012 or 2013 in either release or debugging mode.
+
+Dependencies: 
+- freeglut
+- glm
+- glew
+- SDL2
 
 Change log from 6.2.14
 - HUD Suppport work in progress
