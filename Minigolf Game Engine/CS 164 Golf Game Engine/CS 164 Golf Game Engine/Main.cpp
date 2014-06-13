@@ -219,6 +219,8 @@ void initialize(int argc, char **argv)
 	graphics->createWindow(argc,argv);
 	graphics->init();
 
+	graphics->loadTexture("wood_cross_texture.ppm");
+
 	// Set-up camera
 	camera = Camera(4, 2, 0, 0, 0, 0, 0, 1, 0);
 

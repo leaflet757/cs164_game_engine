@@ -113,6 +113,7 @@
     <ClCompile Include="engine\HUDTextElement.cpp" />
     <ClCompile Include="engine\IOManager.cpp" />
     <ClCompile Include="engine\Physics.cpp" />
+    <ClCompile Include="engine\ppm_canvas.cpp" />
     <ClCompile Include="engine\stdafx.cpp" />
     <ClCompile Include="engine\Ticker.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="engine\HUDTextElement.h" />
     <ClInclude Include="engine\IOManager.h" />
     <ClInclude Include="engine\Physics.h" />
+    <ClInclude Include="engine\ppm_canvas.h" />
     <ClInclude Include="engine\stdafx.h" />
     <ClInclude Include="engine\targetver.h" />
     <ClInclude Include="engine\Ticker.h" />
@@ -150,6 +152,9 @@
     <None Include="levels\hole.02.db" />
     <None Include="minimal.frag" />
     <None Include="minimal.vert" />
+    <None Include="textures\wood_cross_texture.ppm" />
+    <None Include="textures\wood_light_texture.ppm" />
+    <None Include="textures\wood_planks_texture.ppm" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="levels\levels.txt" />

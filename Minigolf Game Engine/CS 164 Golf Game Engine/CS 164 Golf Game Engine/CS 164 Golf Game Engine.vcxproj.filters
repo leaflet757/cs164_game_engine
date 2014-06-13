@@ -31,6 +31,9 @@
     <Filter Include="Resource Files\levels">
       <UniqueIdentifier>{ea968e85-12d7-4cb1-875a-6fce7488b4fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\textures">
+      <UniqueIdentifier>{ecdc81f0-04c4-4f58-a270-bd4ea562f4f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -91,6 +94,9 @@
       <Filter>Source Files\engine</Filter>
     </ClCompile>
     <ClCompile Include="engine\HUDTextElement.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\ppm_canvas.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,6 +161,9 @@
     <ClInclude Include="engine\HUDTextElement.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>
+    <ClInclude Include="engine\ppm_canvas.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="minimal.frag">
@@ -171,6 +180,15 @@
     </None>
     <None Include="levels\hole.02.db">
       <Filter>Resource Files\levels</Filter>
+    </None>
+    <None Include="textures\wood_planks_texture.ppm">
+      <Filter>Resource Files\textures</Filter>
+    </None>
+    <None Include="textures\wood_cross_texture.ppm">
+      <Filter>Resource Files\textures</Filter>
+    </None>
+    <None Include="textures\wood_light_texture.ppm">
+      <Filter>Resource Files\textures</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

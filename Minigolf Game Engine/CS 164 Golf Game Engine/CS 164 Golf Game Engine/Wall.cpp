@@ -26,47 +26,67 @@ Wall::Wall()
 
 //Method to help render walls.
 void Wall::draw() const {
- std::vector<glm::vec3>& verts = getVertices();
- glm::vec3& normals = getNormals();
- std::vector<glm::vec3>& color = getColor();
- glm::vec3& pos = getPosition();
- glm::vec3& rotation = getRotation();
- glm::vec3& scale = getScale();
+	std::vector<glm::vec3>& verts = getVertices();
+	glm::vec3& normals = getNormals();
+	std::vector<glm::vec3>& color = getColor();
+	glm::vec3& pos = getPosition();
+	glm::vec3& rotation = getRotation();
+	glm::vec3& scale = getScale();
 
- glPushMatrix();
- glScaled(scale.x, scale.y, scale.z);
- glTranslated(pos.x, pos.y, pos.z);
- glRotated(rotation.x, 1.0, 0.0, 0.0);
- glRotated(rotation.y, 0.0, 1.0, 0.0);
- glRotated(rotation.z, 0.0, 0.0, 1.0);
+	glPushMatrix();
+	glScaled(scale.x, scale.y, scale.z);
+	glTranslated(pos.x, pos.y, pos.z);
+	glRotated(rotation.x, 1.0, 0.0, 0.0);
+	glRotated(rotation.y, 0.0, 1.0, 0.0);
+	glRotated(rotation.z, 0.0, 0.0, 1.0);
 
- glBegin(GL_QUADS);
-  int i = 0;
-  for (const glm::vec3 &v : verts)
-  {
-   if (i < color.size())
-   {
-    const glm::vec3 &c = color[i++];
-    glColor3f(c.r, c.g, c.b);
-   }
-   glNormal3f(normals.x, normals.y, normals.z);
-   glVertex3f(v.x, v.y, v.z);
-  }
- glEnd();
- glPopMatrix();
+	glBindTexture(GL_TEXTURE_2D, 1);
 
- // DEBUG ------------------------------------------
- // draw direction line
- //glPushMatrix();
- //glBegin(GL_LINES);
- //glColor3f(0, 0, 255);
- //glm::vec3& p = getCenter();
- //glVertex3f(p.x, p.y, p.z);
- //glm::vec3 newpoint = normals + p;
- //glVertex3f(newpoint.x, newpoint.y, newpoint.z);
- //glEnd();
- //glPopMatrix();
- // ------------------------------------------------
+	glBegin(GL_QUADS);
+	int i = 0;
+	for (const glm::vec3 &v : verts)
+	{
+		if (i < color.size())
+		{
+			const glm::vec3 &c = color[i++];
+			//glColor3f(c.r, c.g, c.b);
+			glColor3f(255.0f, 255.0f, 255.0f);
+
+			switch(i - 1) { 
+			case 0:
+				glTexCoord2d(0.0,0.0);
+				break;
+			case 1:
+				glTexCoord2d(1.0,0.0);
+				break;
+			case 2:
+				glTexCoord2d(1.0,1.0);
+				break;
+			case 3:
+				glTexCoord2d(0.0,1.0);
+				break;
+			};
+		}
+		glNormal3f(normals.x, normals.y, normals.z);
+		glVertex3f(v.x, v.y, v.z);
+	}
+	glEnd();
+	glPopMatrix();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// DEBUG ------------------------------------------
+	// draw direction line
+	//glPushMatrix();
+	//glBegin(GL_LINES);
+	//glColor3f(0, 0, 255);
+	//glm::vec3& p = getCenter();
+	//glVertex3f(p.x, p.y, p.z);
+	//glm::vec3 newpoint = normals + p;
+	//glVertex3f(newpoint.x, newpoint.y, newpoint.z);
+	//glEnd();
+	//glPopMatrix();
+	// ------------------------------------------------
 }
 
 

@@ -23,6 +23,8 @@ private:
 	std::vector<Actor3D*> drawables;
 	glm::vec3 lightPos;
 
+	GLuint nextAvalTex;
+
 public:
 	Graphics();
 	~Graphics();
@@ -38,6 +40,8 @@ public:
 	void											update(float delta);
 
 	void											add(Actor3D* actor);
+	
+	GLuint											loadTexture(std::string file);
 };
 
 extern Graphics* _instance;

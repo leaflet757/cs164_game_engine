@@ -1,4 +1,5 @@
 #include "Graphics.h"
+#include "ppm_canvas.h"
 
 Graphics* _instance = new Graphics();
 
@@ -63,6 +64,8 @@ void Graphics::init()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
+
+	glEnable(GL_TEXTURE_2D);
 }
 
 void Graphics::createWindow(int argc, char** argv)
@@ -144,7 +147,7 @@ void Graphics::update(float delta)
 				// draw direction line
 				glPushMatrix();
 				//glBegin(GL_LINES);
-				glColor3f(0, 0, 255);
+				//glColor3f(0, 0, 255);
 				glm::vec3& p = actor->getCenter();
 				glTranslatef(p.x, p.y, p.z);
 				//glutSolidSphere(0.05, 8, 8);
@@ -193,4 +196,40 @@ void Graphics::enable3D()
 	glMatrixMode(GL_MODELVIEW);
 
 	glutSwapBuffers();
+}
+
+GLuint Graphics::loadTexture(std::string filename) {
+ // Open the Texture File
+   canvas_t* file = new canvas_t();
+   ppmLoadCanvas(filename.c_str(),file);
+   int texWidth = file->width;
+   int texHeight = file->height;
+
+   /* This following code was taken from a tutorial and
+    * modified by me.
+    */
+
+   // set up the texture.
+   glGenTextures(1,&nextAvalTex);
+
+   // set the current texture to this one.
+   glBindTexture(GL_TEXTURE_2D, nextAvalTex);
+
+   // Select modulate to mix texture with color for shading
+   glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
+
+   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+
+   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+   gluBuild2DMipmaps(GL_TEXTURE_2D, 3, texWidth, texHeight, GL_RGBA, GL_UNSIGNED_BYTE, file->pixels);
+
+   delete file;
+
+   int texture = nextAvalTex++;
+
+   return texture;
 }
