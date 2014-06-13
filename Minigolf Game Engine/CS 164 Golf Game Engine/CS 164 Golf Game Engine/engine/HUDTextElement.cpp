@@ -21,7 +21,7 @@ void HUDTextElement::update(LevelManager* levelManager)
 	if (hasDynamicElements)
 	{
 		int level = levelManager->getLevelNumber();
-		text = "Course: " + std::to_string(levelManager->getLevelNumber());
+		text = "Course: " + std::to_string(levelManager->getLevelNumber()) + levelManager->getLevelName();
 	}
 
 	glColor3f(0.0f, 0.0f, 255.0f);//needs to be called before RasterPos

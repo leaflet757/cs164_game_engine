@@ -8,7 +8,7 @@ HUDBackgroundElement::HUDBackgroundElement()
 	backgroundColor.b = 0.0;
 
 	width = 640;
-	height = 30;
+	height = 60;
 }
 
 

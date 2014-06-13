@@ -11,8 +11,8 @@ public:
 	HUDTextElement(float x, float y);
 	~HUDTextElement();
 
-	void									setText(std::string str);
+	void setText(std::string str);
 
-	virtual void							update(LevelManager* levelManager);
+	virtual void update(LevelManager* levelManager);
 };
 

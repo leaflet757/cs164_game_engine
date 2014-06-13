@@ -36,5 +36,7 @@ public:
 	Tee*								getTee();
 	Cup*								getCup();
 	int									getLevelNumber() { return levelNumber; }
+	std::string							getLevelName() {return currentLevel->nameStore; }
+	int									getLevelPar(){ return currentLevel->parNum; }
 };
 

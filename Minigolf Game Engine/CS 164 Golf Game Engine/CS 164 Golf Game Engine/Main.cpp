@@ -31,6 +31,7 @@ Physics* physics;
 HUDManager* hud;
 HUDBackgroundElement* powerBar;
 HUDTextElement* strokeText;
+HUDTextElement* parText;
 
 LevelManager* levelManager;
 
@@ -106,6 +107,7 @@ void update()
 	graphics->enable2D();
 	powerBar->setSize(ball->power * 150, 10);
 	strokeText->setText("Stroke #: " + std::to_string(numberOfStrokes));
+	parText->setText("Par: " + std::to_string(levelManager->getLevelPar()));
 	hud->update(levelManager); // passes to each hud element
 	graphics->enable3D();
 }
@@ -255,19 +257,24 @@ void initialize(int argc, char **argv)
 	courseText->setText("Course: ");
 	hud->addElement(courseText);
 	// power element
-	HUDTextElement* powerText = new HUDTextElement(105, 20);
+	HUDTextElement* powerText = new HUDTextElement(5, 40);
 	powerText->setText("Power: ");
 	powerText->setDynamicElements(false);
 	hud->addElement(powerText);
 	powerBar = new HUDBackgroundElement();
 	powerBar->setBackgroundColor(0, 255, 0);
-	powerBar->setPosition(160, 10);
+	powerBar->setPosition(60, 30);
 	hud->addElement(powerBar);
 	// strokes element
-	strokeText = new HUDTextElement(300, 20);
+	strokeText = new HUDTextElement(200, 40);
 	strokeText->setText("Stroke #: ");
 	strokeText->setDynamicElements(false);
 	hud->addElement(strokeText);
+	// par element
+	parText = new HUDTextElement(360, 40);
+	parText->setText("Par: ");
+	parText->setDynamicElements(false);
+	hud->addElement(parText);
 }
 
 int mPrevx;
