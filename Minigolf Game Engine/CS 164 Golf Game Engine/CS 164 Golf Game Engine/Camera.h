@@ -5,6 +5,7 @@
 
 #include "engine\Actor3D.h"
 
+//Camera States.
 enum CameraState{
 	FREE,
 	TOPDOWN,
@@ -68,6 +69,7 @@ public:
 	void followBall(float x, float y, float z);
 	void rotate(float x, float y, float z);
 
+	// For setting state of the camera.
 	void setCameraState(CameraState newState){ state = newState; }
 	void setTrackedItem(Actor3D &newItem){ TrackedItem = &newItem; }
 

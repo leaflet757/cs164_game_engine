@@ -11,6 +11,8 @@ Camera::Camera(double eyex,
 	double upy,
 	double upz)
 {
+	state = FREE;
+
 	position = glm::vec3(eyex, eyey, eyez);
 	lookAt = glm::vec3(centerx, centery, centerz);
 	up = glm::vec3(upx, upy, upz);

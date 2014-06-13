@@ -38,6 +38,16 @@ void Level::setTee(Tee& tee)
 	teeStore = tee;
 }
 
+void Level::setPar(int par)
+{
+	parNum = par;
+}
+
+void Level::setName(std::string name)
+{
+	nameStore = name;
+}
+
 void Level::setRenderingState(bool isDrawn)
 {
 	for (Tile & t : tilesStore)

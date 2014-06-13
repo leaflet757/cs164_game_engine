@@ -21,6 +21,8 @@ public:
 	std::vector<Wall> wallsStore;
 	Cup cupStore;
 	Tee teeStore;
+	int parNum;
+	std::string nameStore;
 
 	void setRenderingState(bool isDrawn);
 
@@ -28,5 +30,7 @@ public:
 	void addTile(Tile& tile);
 	void setCup(Cup& cup);
 	void setTee(Tee& tee);
+	void setPar(int par);
+	void setName(std::string name);
 };
 

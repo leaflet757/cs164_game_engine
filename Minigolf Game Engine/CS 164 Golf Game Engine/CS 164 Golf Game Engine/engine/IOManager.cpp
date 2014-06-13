@@ -26,26 +26,48 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 {
 	std::vector<Level>* levels = new std::vector<Level>();
 
-	for (int i = 1; i < argc; i++)
-	{
-		//Storage for Tiles/Cups/Tee
-		std::vector<Tile> tilesStore = std::vector<Tile>();
-		std::vector<Wall> wallsStore = std::vector<Wall>();
-		Cup cupStore = Cup();
-		Tee teeStore = Tee();
-		//Counter for counting number of Tiles, Cups, and Tees.
-		int numTiles = 0;
-		int numCup = 0;
-		int numTee = 0;
-		//Counters to assist with adding to vectors.
-		int counterTotalTiles = 0;
-		//These get cleared every time it reads in Tiles/Cups/Tees.
-		int counter = 0;
-		int counterTiles = 0;
-		int counterCoordsAndNeigh = 0;
-		int counterCup = 0;
-		int counterTee = 0;
+	std::ifstream fileName;
 
+	std::string courseName = "";
+	int numberOfHoles = 0;
+
+	std::string str = "./levels/"; //may or may not need/want
+	str.append((char *)argv[1]);
+
+	// open the file
+	fileName.open(str);
+
+	//read stream line by line
+	for (std::string line; std::getline(fileName, line);)   {
+		std::istringstream in(line);      //make a stream for the line itself
+
+		std::string type;
+		in >> type;
+
+		if(type == "course"){
+			
+			std::string token = "";
+
+			while(!in.eof()){
+				in >> token;
+
+				if(!is_int(token)) {
+					courseName.append(token);
+				} else {
+					numberOfHoles = atoi(token.c_str());
+				}
+			}
+			std::cout << courseName << " " << numberOfHoles << std::endl;
+		}
+
+		else if(type == "begin_hole"){
+			// call load level if "begin_hole".
+			levels->push_back(loadLevel(fileName));
+		}
+	}
+
+	/*for (int i = 1; i < argc; i++)
+	{
 		std::ifstream fileName;
 
 		std::string str = "./levels/";
@@ -60,15 +82,66 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 			std::cout << "Unable to open file";
 			exit(-1);
 		}
+		levels->push_back(loadLevel(fileName));
+	}*/
 
-		for (std::string line; std::getline(fileName, line);)   //read stream line by line
+	return levels;
+}
+
+//
+Level IOManager::loadLevel(std::ifstream &fileName){
+	//Storage for Tiles/Cups/Tee
+		std::vector<Tile> tilesStore = std::vector<Tile>();
+		std::vector<Wall> wallsStore = std::vector<Wall>();
+		Cup cupStore = Cup();
+		Tee teeStore = Tee();
+		int parNum = 0;
+		std::string name = "";
+
+		//Counter for counting number of Tiles, Cups, and Tees.
+		int numTiles = 0;
+		int numCup = 0;
+		int numTee = 0;
+		//Counters to assist with adding to vectors.
+		int counterTotalTiles = 0;
+		//These get cleared every time it reads in Tiles/Cups/Tees.
+		int counter = 0;
+		int counterTiles = 0;
+		int counterCoordsAndNeigh = 0;
+		int counterCup = 0;
+		int counterTee = 0;
+		//for Course checking.
+		int courseNum = 0;
+
+	for (std::string line; std::getline(fileName, line);)   //read stream line by line
 		{
 			std::istringstream in(line);      //make a stream for the line itself
 
 			std::string type;
 			in >> type;                  //and read the first whitespace-separated token
 
-			if (type == "Tile" || type == "tile")       //and check its value
+			if(type == "end_hole"){ //if end_hole, break out of for loop.
+				break;
+			}
+
+			else if(type == "par"){ // Gets par and stores par number.
+				std::string parStr = std::string();
+				in >> parStr;
+				if(is_int(parStr)){
+					parNum = atoi(parStr.c_str());
+				} else {
+					std::cout << "Par is not a number.";
+					exit(-1);
+				}
+			}
+			
+			else if(type == "name"){ // Stores name.
+				std::getline(in, name);
+				//std::cout << name << std::endl;
+			}
+			
+			// Checks for course.
+			else if (type == "Tile" || type == "tile")       //and check its value
 			{
 				numTiles = numTiles + 1;
 				Tile newTile = Tile();
@@ -185,7 +258,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 				//read in first.
 				in >> teeID;
 
-				if(is_int(teeID)){ //if it's a positive intefer, store it.
+				if(is_int(teeID)){ //if it's a positive integer, store it.
 					teeStore.tID = atoi(teeID.c_str());
 					if(teeStore.tID < 1) //if the ID is 0 or less, error.
 					{
@@ -279,8 +352,7 @@ std::vector<Level>* IOManager::loadLevels(int argc, char **argv)
 			}
 		}
 		Level level(tilesStore, wallsStore, cupStore, teeStore);
-		levels->push_back(level);
-	}
-
-	return levels;
+		level.setPar(parNum);
+		level.setName(name);
+		return level;
 }

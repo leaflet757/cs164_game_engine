@@ -20,5 +20,6 @@ public:
 	~IOManager();
 
 	std::vector<Level>* loadLevels(int argc, char **argv);
+	Level loadLevel(std::ifstream &fileName);
 };
 
